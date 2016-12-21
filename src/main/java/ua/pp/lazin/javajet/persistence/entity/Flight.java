@@ -1,14 +1,16 @@
-package ua.pp.lazin.javajet.entities;
+package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
-@Table(name = "flights", schema = "public", catalog = "javajet")
-public class FlightsEntity {
+public class Flight {
     private Long flightId;
     private Timestamp departureTime;
 
@@ -37,10 +39,10 @@ public class FlightsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FlightsEntity that = (FlightsEntity) o;
+        Flight flight = (Flight) o;
 
-        if (flightId != null ? !flightId.equals(that.flightId) : that.flightId != null) return false;
-        if (departureTime != null ? !departureTime.equals(that.departureTime) : that.departureTime != null)
+        if (flightId != null ? !flightId.equals(flight.flightId) : flight.flightId != null) return false;
+        if (departureTime != null ? !departureTime.equals(flight.departureTime) : flight.departureTime != null)
             return false;
 
         return true;

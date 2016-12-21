@@ -2,12 +2,12 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="persistenceUnit">
-        <class>ua.pp.lazin.javajet.entities.AircraftsEntity</class>
-        <class>ua.pp.lazin.javajet.entities.AirportsEntity</class>
-        <class>ua.pp.lazin.javajet.entities.FlightMembersEntity</class>
-        <class>ua.pp.lazin.javajet.entities.FlightsEntity</class>
-        <class>ua.pp.lazin.javajet.entities.MembersEntity</class>
-        <class>ua.pp.lazin.javajet.entities.RolesEntity</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.Aircraft</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.Airport</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.Flight</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.FlightUsers</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.Role</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.User</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.3.99:5432/javajet"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

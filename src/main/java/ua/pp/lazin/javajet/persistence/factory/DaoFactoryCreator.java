@@ -10,11 +10,11 @@ import java.util.Properties;
  *
  *
  */
-public class FactoryCreator {
+public class DaoFactoryCreator {
     private static DaoFactory daoFactory;
-    private final static Logger logger = Logger.getLogger(FactoryCreator.class);
+    private final static Logger logger = Logger.getLogger(DaoFactoryCreator.class);
 
-    private FactoryCreator() {
+    private DaoFactoryCreator() {
     }
 
     public static synchronized DaoFactory getFactory() {

@@ -1,13 +1,15 @@
-package ua.pp.lazin.javajet.entities;
+package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
-@Table(name = "airports", schema = "public", catalog = "javajet")
-public class AirportsEntity {
+public class Airport {
     private Long airportId;
     private String iataCode;
     private String nameRus;
@@ -102,16 +104,16 @@ public class AirportsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AirportsEntity that = (AirportsEntity) o;
+        Airport airport = (Airport) o;
 
-        if (airportId != null ? !airportId.equals(that.airportId) : that.airportId != null) return false;
-        if (iataCode != null ? !iataCode.equals(that.iataCode) : that.iataCode != null) return false;
-        if (nameRus != null ? !nameRus.equals(that.nameRus) : that.nameRus != null) return false;
-        if (nameEng != null ? !nameEng.equals(that.nameEng) : that.nameEng != null) return false;
-        if (cityRus != null ? !cityRus.equals(that.cityRus) : that.cityRus != null) return false;
-        if (cityEng != null ? !cityEng.equals(that.cityEng) : that.cityEng != null) return false;
-        if (countryRus != null ? !countryRus.equals(that.countryRus) : that.countryRus != null) return false;
-        if (countryEng != null ? !countryEng.equals(that.countryEng) : that.countryEng != null) return false;
+        if (airportId != null ? !airportId.equals(airport.airportId) : airport.airportId != null) return false;
+        if (iataCode != null ? !iataCode.equals(airport.iataCode) : airport.iataCode != null) return false;
+        if (nameRus != null ? !nameRus.equals(airport.nameRus) : airport.nameRus != null) return false;
+        if (nameEng != null ? !nameEng.equals(airport.nameEng) : airport.nameEng != null) return false;
+        if (cityRus != null ? !cityRus.equals(airport.cityRus) : airport.cityRus != null) return false;
+        if (cityEng != null ? !cityEng.equals(airport.cityEng) : airport.cityEng != null) return false;
+        if (countryRus != null ? !countryRus.equals(airport.countryRus) : airport.countryRus != null) return false;
+        if (countryEng != null ? !countryEng.equals(airport.countryEng) : airport.countryEng != null) return false;
 
         return true;
     }

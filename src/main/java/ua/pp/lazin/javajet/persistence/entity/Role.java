@@ -1,13 +1,15 @@
-package ua.pp.lazin.javajet.entities;
+package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
-@Table(name = "roles", schema = "public", catalog = "javajet")
-public class RolesEntity {
+public class Role {
     private Long roleId;
     private String title;
 
@@ -36,10 +38,10 @@ public class RolesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RolesEntity that = (RolesEntity) o;
+        Role role = (Role) o;
 
-        if (roleId != null ? !roleId.equals(that.roleId) : that.roleId != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (roleId != null ? !roleId.equals(role.roleId) : role.roleId != null) return false;
+        if (title != null ? !title.equals(role.title) : role.title != null) return false;
 
         return true;
     }

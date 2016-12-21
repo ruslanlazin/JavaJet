@@ -1,17 +1,14 @@
 package ua.pp.lazin.javajet.filters;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.ConnectionManager;
-import ua.pp.lazin.javajet.persistence.factory.FactoryCreator;
+import ua.pp.lazin.javajet.persistence.jdbcutils.ConnectionManager;
+import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 
 /**
@@ -49,7 +46,7 @@ public class AuthFilter implements Filter {
         Object username = request.getSession().getAttribute("username");
 
 
-        FactoryCreator.getFactory();
+        DaoFactoryCreator.getFactory();
         ConnectionManager.getConnection();
 
 

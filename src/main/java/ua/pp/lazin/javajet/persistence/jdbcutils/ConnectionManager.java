@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.persistence;
+package ua.pp.lazin.javajet.persistence.jdbcutils;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.exception.DataAccessException;
@@ -8,7 +8,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.UncheckedIOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;

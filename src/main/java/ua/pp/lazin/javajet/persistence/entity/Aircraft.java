@@ -1,13 +1,15 @@
-package ua.pp.lazin.javajet.entities;
+package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
-@Table(name = "aircrafts", schema = "public", catalog = "javajet")
-public class AircraftsEntity {
+public class Aircraft {
     private Long aircraftId;
     private String model;
     private String regNumber;
@@ -47,11 +49,11 @@ public class AircraftsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AircraftsEntity that = (AircraftsEntity) o;
+        Aircraft aircraft = (Aircraft) o;
 
-        if (aircraftId != null ? !aircraftId.equals(that.aircraftId) : that.aircraftId != null) return false;
-        if (model != null ? !model.equals(that.model) : that.model != null) return false;
-        if (regNumber != null ? !regNumber.equals(that.regNumber) : that.regNumber != null) return false;
+        if (aircraftId != null ? !aircraftId.equals(aircraft.aircraftId) : aircraft.aircraftId != null) return false;
+        if (model != null ? !model.equals(aircraft.model) : aircraft.model != null) return false;
+        if (regNumber != null ? !regNumber.equals(aircraft.regNumber) : aircraft.regNumber != null) return false;
 
         return true;
     }

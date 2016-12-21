@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.util;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.factory.FactoryCreator;
+import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -17,7 +17,7 @@ public class PropertiesLoader {
     static {
         dbProperties = new Properties();
         try {
-            dbProperties.load(FactoryCreator.class.getClassLoader()
+            dbProperties.load(DaoFactoryCreator.class.getClassLoader()
                                             .getResourceAsStream("database.properties"));
         } catch (IOException e) {
             logger.error("Cannot load database.properties", e);
