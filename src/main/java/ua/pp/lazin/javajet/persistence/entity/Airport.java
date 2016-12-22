@@ -1,9 +1,7 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * @author Ruslan Lazin
@@ -18,6 +16,8 @@ public class Airport {
     private String cityEng;
     private String countryRus;
     private String countryEng;
+    private Collection<Flight> flightsByAirportId;
+    private Collection<Flight> flightsByAirportId_0;
 
     @Id
     @Column(name = "airport_id")
@@ -129,5 +129,23 @@ public class Airport {
         result = 31 * result + (countryRus != null ? countryRus.hashCode() : 0);
         result = 31 * result + (countryEng != null ? countryEng.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "airportByFrom")
+    public Collection<Flight> getFlightsByAirportId() {
+        return flightsByAirportId;
+    }
+
+    public void setFlightsByAirportId(Collection<Flight> flightsByAirportId) {
+        this.flightsByAirportId = flightsByAirportId;
+    }
+
+    @OneToMany(mappedBy = "airportByTo")
+    public Collection<Flight> getFlightsByAirportId_0() {
+        return flightsByAirportId_0;
+    }
+
+    public void setFlightsByAirportId_0(Collection<Flight> flightsByAirportId_0) {
+        this.flightsByAirportId_0 = flightsByAirportId_0;
     }
 }

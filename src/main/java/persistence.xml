@@ -8,6 +8,9 @@
         <class>ua.pp.lazin.javajet.persistence.entity.FlightUsers</class>
         <class>ua.pp.lazin.javajet.persistence.entity.Role</class>
         <class>ua.pp.lazin.javajet.persistence.entity.User</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.User</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.User</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.User</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.3.99:5432/javajet"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

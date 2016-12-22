@@ -1,6 +1,8 @@
 package ua.pp.lazin.javajet.filters;
 
 import org.apache.log4j.Logger;
+import ua.pp.lazin.javajet.persistence.dao.UserDao;
+import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.PostgresqlUserDao;
 import ua.pp.lazin.javajet.persistence.jdbcutils.ConnectionManager;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
@@ -46,8 +48,8 @@ public class AuthFilter implements Filter {
         Object username = request.getSession().getAttribute("username");
 
 
-        DaoFactoryCreator.getFactory();
-        ConnectionManager.getConnection();
+        UserDao userDao = new PostgresqlUserDao();
+        System.out.println(userDao.findByUsername("a"));
 
 
         logger.debug("username=" + username);

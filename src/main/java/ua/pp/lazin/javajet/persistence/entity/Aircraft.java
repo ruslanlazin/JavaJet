@@ -1,9 +1,7 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * @author Ruslan Lazin
@@ -13,6 +11,7 @@ public class Aircraft {
     private Long aircraftId;
     private String model;
     private String regNumber;
+    private Collection<Flight> flightsByAircraftId;
 
     @Id
     @Column(name = "aircraft_id")
@@ -64,5 +63,14 @@ public class Aircraft {
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (regNumber != null ? regNumber.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "aircraftByAircraftId")
+    public Collection<Flight> getFlightsByAircraftId() {
+        return flightsByAircraftId;
+    }
+
+    public void setFlightsByAircraftId(Collection<Flight> flightsByAircraftId) {
+        this.flightsByAircraftId = flightsByAircraftId;
     }
 }

@@ -10,6 +10,10 @@ import javax.persistence.*;
 public class FlightUsers {
     private Long id;
     private Boolean confirmed;
+    private Flight flightByFlightId;
+    private Long flightId;
+    private Long userId;
+    private User userByUserId;
 
     @Id
     @Column(name = "id")
@@ -49,5 +53,45 @@ public class FlightUsers {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (confirmed != null ? confirmed.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "flight_id", referencedColumnName = "flight_id", nullable = false)
+    public Flight getFlightByFlightId() {
+        return flightByFlightId;
+    }
+
+    public void setFlightByFlightId(Flight flightByFlightId) {
+        this.flightByFlightId = flightByFlightId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    public User getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(User userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
+    @Basic
+    @Column(name = "flight_id")
+    public Long getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

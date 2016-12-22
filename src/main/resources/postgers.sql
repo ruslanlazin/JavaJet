@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS flight_users;
 DROP TABLE IF EXISTS flight;
 DROP TABLE IF EXISTS aircraft;
 DROP TABLE IF EXISTS airport;
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS role;
 
 CREATE TABLE aircraft
@@ -44,6 +44,7 @@ CREATE TABLE users
   role_id     BIGINT             NOT NULL,
   first_name  VARCHAR(255)       NOT NULL,
   second_name VARCHAR(255)       NOT NULL,
+  username    VARCHAR(255)       NOT NULL,
   password    VARCHAR(255)       NOT NULL,
   email       VARCHAR(255)       NOT NULL,
   CONSTRAINT users_role FOREIGN KEY (role_id) REFERENCES role (role_id)
@@ -55,5 +56,5 @@ CREATE TABLE flight_users
   user_id   BIGINT                NOT NULL,
   confirmed BOOLEAN DEFAULT FALSE NOT NULL,
   CONSTRAINT flight_users_flight_id_fkey FOREIGN KEY (flight_id) REFERENCES flight (flight_id),
-  CONSTRAINT flight_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES user (user_id)
+  CONSTRAINT flight_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (user_id)
 );

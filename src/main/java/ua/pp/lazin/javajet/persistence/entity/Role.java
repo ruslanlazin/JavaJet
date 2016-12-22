@@ -1,9 +1,7 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * @author Ruslan Lazin
@@ -12,6 +10,13 @@ import javax.persistence.Id;
 public class Role {
     private Long roleId;
     private String title;
+
+    public Role() {
+    }
+
+    public Role(String title) {
+        this.title = title;
+    }
 
     @Id
     @Column(name = "role_id")

@@ -1,18 +1,24 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
  */
-@Entity()
+@Entity
 @Table(name = "users")
 public class User {
     private Long userId;
+    private Role role;
     private String firstName;
     private String secondName;
+    private String username;
     private String password;
     private String email;
+    private Set<Flight> flights;
+
 
     @Id
     @Column(name = "user_id")
@@ -45,6 +51,16 @@ public class User {
     }
 
     @Basic
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
     @Column(name = "password")
     public String getPassword() {
         return password;
@@ -64,6 +80,24 @@ public class User {
         this.email = email;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false)
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role roleByRoleId) {
+        this.role = roleByRoleId;
+    }
+
+    @OneToMany(mappedBy = "getUserByUserId")
+    public Set<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(Set<Flight> flights) {
+        this.flights = flights;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,6 +108,7 @@ public class User {
         if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (secondName != null ? !secondName.equals(user.secondName) : user.secondName != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
 
@@ -85,8 +120,20 @@ public class User {
         int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
 }
