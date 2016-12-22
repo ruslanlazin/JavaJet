@@ -11,4 +11,4 @@ FROM users u
 WHERE u.username = ?;
 
 INSERT INTO users (first_name, second_name,
-                  username, password, email) VALUES (?, ?, ?, ?, ?);
+                  username, password, email, role_id) VALUES (?, ?, ?, ?, ?, ?);

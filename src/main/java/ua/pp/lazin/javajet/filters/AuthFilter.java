@@ -3,8 +3,11 @@ package ua.pp.lazin.javajet.filters;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.PostgresqlUserDao;
+import ua.pp.lazin.javajet.persistence.entity.Role;
+import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.ConnectionManager;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
+import ua.pp.lazin.javajet.services.AuthService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -49,11 +52,22 @@ public class AuthFilter implements Filter {
 
 
         UserDao userDao = new PostgresqlUserDao();
-        System.out.println(userDao.findByUsername("a"));
-
+        System.out.println(userDao.findByUsername("b"));
+//        User user = new User();
+//        user.setUserId(null);
+//        user.setFirstName("bill");
+//        user.setSecondName("bobikov");
+//        user.setUsername("b");
+//        user.setPassword("b");
+//        user.setEmail("b@b.ua");
+//        Role role = new Role();
+//        role.setRoleId(1L);
+//        user.setRole(role);
+//        AuthService authService = new AuthService();
+//        authService.register(user);
 
         logger.debug("username=" + username);
-                if (username == null && (!request.getRequestURI().equals("/login"))) {
+        if (username == null && (!request.getRequestURI().equals("/login"))) {
             response.sendRedirect("login");
             return;
         }

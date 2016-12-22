@@ -130,10 +130,12 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
+                ", role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
-
 }
