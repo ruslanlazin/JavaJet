@@ -16,7 +16,7 @@ import org.apache.commons.codec.binary.Base64;
  *
  * @author Ruslan Lazin
  */
-public class PasswordAuthentication {
+public class PasswordEncoder {
 
 
     // The higher the number of iterations the more

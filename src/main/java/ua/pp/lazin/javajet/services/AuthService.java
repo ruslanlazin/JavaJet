@@ -24,15 +24,19 @@ public class AuthService {
         if (user == null) {
             return false;
         }
-        if (PasswordAuthentication.check(password, user.getPassword())) {
+        if (PasswordEncoder.check(password, user.getPassword())) {
             return false;
         }
         request.getSession().setAttribute(USER_ATTRIBUTE_NAME, user);
         return true;
     }
 
+    public void logout(HttpServletRequest request) {
+        request.getSession().setAttribute(USER_ATTRIBUTE_NAME, null);
+    }
+
     public void register(User user) {
-        user.setPassword(PasswordAuthentication.getSaltedHash(user.getPassword()));
+        user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
         userDao.create(user);
     }
 

@@ -14,6 +14,19 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class PostgresqlUserDao implements UserDao {
+
+
+    private static final String FIND_ALL_SQL = "SELECT * FROM `user`";
+
+    private static final String READ_SQL = "SELECT * FROM `user` WHERE id=?";
+
+    private static final String READ_BY_USERNAME_SQL = "SELECT * FROM `user` WHERE username=?";
+
+    private static final String UPDATE_SQL = "UPDATE `user` SET `username`=?, `firstName`=?," +
+            " `lastName`=?, `password`=?, `discount`=? WHERE `id`=?";
+
+    private static final String DELETE_SQL = "DELETE FROM `user` WHERE id=?";
+
     private static final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<User>();
     private static final RowMapper<User> rowMapper = new RowMapper<User>() {
         @Override
@@ -31,9 +44,13 @@ public class PostgresqlUserDao implements UserDao {
         }
     };
 
+    private static final String CREATE_SQL = "INSERT INTO users (first_name, second_name,\n" +
+            "                  username, password, email, role_id) VALUES (?, ?, ?, ?, ?);";
 
     @Override
     public Long create(User user) {
+        jdbcTemplate.insert(CREATE_SQL, user.getFirstName(), user.getSecondName(), user.getUsername(),
+                user.getPassword(), user.getEmail(), user.getRole().getRoleId());
         return null;
     }
 
