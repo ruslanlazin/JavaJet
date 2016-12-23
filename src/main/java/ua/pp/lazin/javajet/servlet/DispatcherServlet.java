@@ -18,7 +18,7 @@ import java.io.IOException;
  *
  * @author Ruslan Lazin
  */
-@WebServlet("/main")
+@WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
 
     /**

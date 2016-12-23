@@ -90,7 +90,6 @@
 }
 .form input .submit {
      font-family: "Roboto", sans-serif;
-    color: #1a1a1a;
      text-transform: uppercase;
      outline: 0;
      background: #4CAF50;
@@ -104,7 +103,7 @@
      cursor: pointer;
  }
 body {
-    background-image: url("/resources/images/hero.jpg");
+    background-image: url("/resources/images/javajet.jpg");
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
