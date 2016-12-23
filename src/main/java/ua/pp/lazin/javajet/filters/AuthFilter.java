@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author Ruslan Lazin
  */
 
-@WebFilter("/*")
+@WebFilter("/")
 public class AuthFilter implements Filter {
     private final static Logger logger = Logger.getLogger(AuthFilter.class);
 
