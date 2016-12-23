@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.services;
+package ua.pp.lazin.javajet.util;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

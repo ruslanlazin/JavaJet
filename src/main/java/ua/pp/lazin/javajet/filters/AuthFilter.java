@@ -1,13 +1,8 @@
 package ua.pp.lazin.javajet.filters;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.dao.UserDao;
-import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.PostgresqlUserDao;
-import ua.pp.lazin.javajet.persistence.entity.Role;
 import ua.pp.lazin.javajet.persistence.entity.User;
-import ua.pp.lazin.javajet.persistence.jdbcutils.ConnectionManager;
-import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
-import ua.pp.lazin.javajet.services.AuthService;
+import ua.pp.lazin.javajet.service.AuthService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -48,11 +43,11 @@ public class AuthFilter implements Filter {
 //        }
 
         logger.debug("request " + request.getRequestURI());
-        Object username = request.getSession().getAttribute("username");
 
 
-        UserDao userDao = new PostgresqlUserDao();
-        System.out.println(userDao.findByUsername("b"));
+
+//        UserDao userDao = new PostgresqlUserDao();
+//
 //        User user = new User();
 //        user.setUserId(null);
 //        user.setFirstName("bill");
@@ -63,14 +58,21 @@ public class AuthFilter implements Filter {
 //        Role role = new Role();
 //        role.setRoleId(1L);
 //        user.setRole(role);
-//        AuthService authService = new AuthService();
-//        authService.register(user);
 
-        logger.debug("username=" + username);
-        if (username == null && (!request.getRequestURI().equals("/login"))) {
+        AuthService authService = new AuthService();
+        if (!authService.isAuthenticated(request)) {
+            logger.debug("checkandadd");
+            System.out.println(authService.login(request, "b", "b"));
+        }
+        User user = (User) request.getSession().getAttribute("user");
+
+        logger.debug("user=" + user);
+        if (user == null && (!request.getRequestURI().equals("/login"))) {
             response.sendRedirect("login");
             return;
         }
+
+        System.out.println(request.getMethod());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

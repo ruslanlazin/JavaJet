@@ -1,9 +1,10 @@
-package ua.pp.lazin.javajet.services;
+package ua.pp.lazin.javajet.service;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.PostgresqlUserDao;
 import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.util.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +25,7 @@ public class AuthService {
         if (user == null) {
             return false;
         }
-        if (PasswordEncoder.check(password, user.getPassword())) {
+        if (!PasswordEncoder.check(password, user.getPassword())) {
             return false;
         }
         request.getSession().setAttribute(USER_ATTRIBUTE_NAME, user);
