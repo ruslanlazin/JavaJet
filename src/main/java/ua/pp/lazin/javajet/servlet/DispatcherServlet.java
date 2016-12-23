@@ -77,7 +77,14 @@ public class DispatcherServlet extends HttpServlet {
         } catch (Exception e) {
             logger.error("exception when try execute command: " + e);
         }
-        forward(page, request, response);
+
+        if (page.startsWith("redirect:")) {
+            redirect(page, request, response);
+        } else {
+            forward(page, request, response);
+        }
+
+
 //
 //        if (null != page) {
 //            //Ok. We get page from Command class
@@ -112,12 +119,21 @@ public class DispatcherServlet extends HttpServlet {
     }
 
 
+    private void redirect(String target, HttpServletRequest request, HttpServletResponse response) {
+        target = target.split(":")[1];
+        try {
+            response.sendRedirect(target);
+        } catch (IOException e) {
+            logger.error("An error occurred during redirecting to " + target, e);
+        }
+    }
+
     private void forward(String target, HttpServletRequest request, HttpServletResponse response) {
         target = String.format("/WEB-INF/pages/%s.jsp", target);
         try {
             request.getRequestDispatcher(target).forward(request, response);
         } catch (ServletException | IOException e) {
-            logger.error("An error occurred during page rendering", e);
+            logger.error("An error occurred during page " + target + " rendering", e);
         }
     }
 }
