@@ -24,6 +24,7 @@ public class DispatcherServlet extends HttpServlet {
     private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/pages/";
     private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
     private static final String REDIRECT_PREFIX = "redirect:";
+    private static final String REDIRECT_DELIMITER = ":";
 
 
     /**
@@ -99,7 +100,7 @@ public class DispatcherServlet extends HttpServlet {
 
 
     private void redirect(String target, HttpServletRequest request, HttpServletResponse response) {
-        target = target.split(":")[1];
+        target = target.split(REDIRECT_DELIMITER)[1];
         try {
             response.sendRedirect(target);
         } catch (IOException e) {
