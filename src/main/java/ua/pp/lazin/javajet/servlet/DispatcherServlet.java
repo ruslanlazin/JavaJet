@@ -19,6 +19,12 @@ import java.io.IOException;
  */
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
+    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
+    private static final String ERROR_PAGE = "error";
+    private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/pages/";
+    private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
+    private static final String REDIRECT_PREFIX = "redirect:";
+
 
     /**
      * logger use Log4j library. @see (http://logging.apache.org/log4j/)
@@ -62,60 +68,33 @@ public class DispatcherServlet extends HttpServlet {
      *
      * @param request  from user.
      * @param response by server.
+     * @see CommandResolver
      */
     private void performTask(HttpServletRequest request,
                              HttpServletResponse response) {
 
-        String page = null;
-
+        Command command = null;
+        String pageName = null;
         try {
-            Command command = CommandResolver.getCommand(request);
+            command = CommandResolver.getCommand(request);
             logger.debug("command is: " + command.getClass().getName());
 
-            page = command.execute(request, response);
-            logger.debug("page is: " + page);
+            pageName = command.execute(request, response);
+            logger.debug("pageName is: " + pageName);
         } catch (Exception e) {
-            logger.error("exception when try execute command: " + e);
+            logger.error("exception when try execute command " + command, e);
         }
 
-        if (page.startsWith("redirect:")) {
-            redirect(page, request, response);
+        if (pageName == null) {
+            request.setAttribute(MESSAGE_ATTRIBUTE_NAME, "Requested path is incorrect");
+            forward(ERROR_PAGE, request, response);
+            return;
+        }
+        if (pageName.startsWith(REDIRECT_PREFIX)) {
+            redirect(pageName, request, response);
         } else {
-            forward(page, request, response);
+            forward(pageName, request, response);
         }
-
-
-//
-//        if (null != page) {
-//            //Ok. We get page from Command class
-//            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-//
-//            try {
-//                dispatcher.forward(request, response);
-//            } catch (ServletException e) {
-//                logger.error("Servlet execption: " + e);
-//            } catch (IOException e) {
-//                logger.error("IO execption: " + e);
-//            }
-//        } else {
-//            logger.error("page is null!");
-//
-//            //redirect to main page:
-////            PageManager pageManager = PageManager.getInstance();
-////            page = pageManager.getPage(PageEnum.MAIN_PAGE_PATH);
-//            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-//
-//            try {
-//                dispatcher.forward(request, response);
-//            } catch (ServletException e) {
-//                logger.error("Servlet execption: " + e);
-//            } catch (IOException e) {
-//                logger.error("IO execption: " + e);
-//            }
-//
-//            logger.debug("user is served");
-//            return;
-//        }
     }
 
 
@@ -129,7 +108,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void forward(String target, HttpServletRequest request, HttpServletResponse response) {
-        target = String.format("/WEB-INF/pages/%s.jsp", target);
+        target = String.format(VIEW_RESOLVER_PREFIX + "%s" + VIEW_RESOLVER_SUFFIX, target);
         try {
             request.getRequestDispatcher(target).forward(request, response);
         } catch (ServletException | IOException e) {
