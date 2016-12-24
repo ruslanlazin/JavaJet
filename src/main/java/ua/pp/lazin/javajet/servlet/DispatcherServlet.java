@@ -73,6 +73,7 @@ public class DispatcherServlet extends HttpServlet {
      */
     private void performTask(HttpServletRequest request,
                              HttpServletResponse response) {
+        System.err.println(request.getPathInfo() + ".pathiifoDS");
 
         Command command = null;
         String pageName = null;
@@ -102,7 +103,7 @@ public class DispatcherServlet extends HttpServlet {
     private void redirect(String target, HttpServletRequest request, HttpServletResponse response) {
         target = target.split(REDIRECT_DELIMITER)[1];
         try {
-            response.sendRedirect(target);
+            response.sendRedirect(request.getContextPath() + target);
         } catch (IOException e) {
             logger.error("An error occurred during redirecting to " + target, e);
         }

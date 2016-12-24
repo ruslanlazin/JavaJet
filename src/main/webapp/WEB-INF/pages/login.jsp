@@ -5,7 +5,9 @@
 <html>
 <head>
     <title>Sign in</title>
-    <link href="<c:url value='/resources/css/login.css' />" rel="stylesheet"/>
+    <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet"/>
+    <style>body {background-image: url("<c:url value="/resources/images/javajet.jpg"/>")}</style>
+
 </head>
 
 <body>

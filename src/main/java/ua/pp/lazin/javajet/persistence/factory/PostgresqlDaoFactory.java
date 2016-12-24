@@ -1,10 +1,38 @@
 package ua.pp.lazin.javajet.persistence.factory;
 
+import ua.pp.lazin.javajet.persistence.dao.*;
+import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.*;
+
 /**
  * @author Ruslan Lazin
  */
-public class PostgresqlDaoFactory implements DaoFactory {
+class PostgresqlDaoFactory implements DaoFactory {
 
     PostgresqlDaoFactory() {
+    }
+
+    @Override
+    public AircraftDao getAircraftDao() {
+        return new PostgresqlAircraftDao();
+    }
+
+    @Override
+    public AirportDao getAirportDao() {
+        return new PostgresqlAirportDao();
+    }
+
+    @Override
+    public FlightDao getFlightDao() {
+        return new PostgresqlFlightDao();
+    }
+
+    @Override
+    public RoleDao getRoleDao() {
+        return new PostgresqlRoleDao();
+    }
+
+    @Override
+    public UserDao getUserDao() {
+        return new PostgresqlUserDao();
     }
 }

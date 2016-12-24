@@ -40,11 +40,12 @@ class CommandResolver {
 
 
     static Command getCommand(HttpServletRequest request) {
+        String path = request.getRequestURI().substring(request.getContextPath().length());
         switch (request.getMethod()) {
             case METHOD_GET:
-                return mappingGET.get(request.getRequestURI());
+                return mappingGET.get(path);
             case METHOD_POST:
-                return mappingPOST.get(request.getRequestURI());
+                return mappingPOST.get(path);
             default:
                 throw new UnsupportedOperationException(
                         "Method " + request.getMethod() + " isn't supported");
