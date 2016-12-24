@@ -18,10 +18,10 @@ import java.io.IOException;
 @WebFilter("/*")
 public class AuthFilter implements Filter {
     private final static Logger logger = Logger.getLogger(AuthFilter.class);
-    private final static AuthService authService = new AuthService();
+    private final static AuthService authService = AuthService.getINSTANCE();
     private final static String USER_ATTRIBUTE_NAME = "user";
     private final static String LOGIN_URI = "/login";
-    private final static String RESOURCES_URI = "/resources/";
+    private final static String RESOURCES_URI_PREFIX = "/resources/";
 
 
     @Override
@@ -68,8 +68,8 @@ public class AuthFilter implements Filter {
 //        user.setRole(role);
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        if (authService.isAuthenticated(request) || path.equals(LOGIN_URI) ||
-                path.startsWith(RESOURCES_URI)) {
+        if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request)
+                || path.equals(LOGIN_URI)) {
             if (logger.isDebugEnabled()) {
                 User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE_NAME);
                 logger.debug("Request from user: " + user + " to: " + path);

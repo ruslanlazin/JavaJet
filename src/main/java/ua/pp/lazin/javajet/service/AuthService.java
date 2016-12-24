@@ -16,6 +16,14 @@ public class AuthService {
     private final static String USER_ATTRIBUTE_NAME = "user";
     private final static Logger logger = Logger.getLogger(AuthService.class);
     private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
+    private static AuthService INSTANCE = new AuthService();
+
+    private AuthService() {
+    }
+
+    public static AuthService getINSTANCE() {
+        return INSTANCE;
+    }
 
     public boolean isAuthenticated(HttpServletRequest request) {
         return request.getSession().getAttribute(USER_ATTRIBUTE_NAME) != null;

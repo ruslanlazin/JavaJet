@@ -14,7 +14,7 @@ public class LoginCommandPOST implements Command {
     private static final String USERNAME_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String WRONGLOGIN_ATTRIBUTE_NAME = "wronglogin";
-    private static final AuthService authService = new AuthService();
+    private static final AuthService authService = AuthService.getINSTANCE();
 
     @Override
 
