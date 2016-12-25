@@ -29,12 +29,22 @@ public class UserService {
         return (User) request.getSession().getAttribute(USER_ATTRIBUTE_NAME);
     }
 
-    public void register(User user) {
+    public User create(User user) {
         user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
-        userDao.create(user);
+        Long id = userDao.create(user);
+        user.setId(id);
+        return user;
     }
 
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        return userDao.findByUsername(username) != null;
+    }
+
+    public boolean isEmailAvailable(String email) {
+        return userDao.findByEmail(email) != null;
     }
 }

@@ -20,7 +20,7 @@ public class PostgresqlUserDao implements UserDao {
 
     private static final String READ_SQL = "SELECT * FROM `user` WHERE id=?";
 
-    private static final String READ_BY_USERNAME_SQL = "SELECT * FROM `user` WHERE username=?";
+    private static final String READ_BY_USERNAME_SQL = "SELECT * FROM `user` WHERE username = ?";
 
     private static final String UPDATE_SQL = "UPDATE `user` SET `username`=?, `firstName`=?," +
             " `lastName`=?, `password`=?, `discount`=? WHERE `id`=?";
@@ -38,7 +38,10 @@ public class PostgresqlUserDao implements UserDao {
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
-            user.setRole(new Role(rs.getString("title")));
+            Role role = new Role();
+            role.setId(rs.getLong("role_id"));
+            role.setTitle(rs.getString("title"));
+            user.setRole(role);
 
             return user;
         }
@@ -49,19 +52,14 @@ public class PostgresqlUserDao implements UserDao {
 
     @Override
     public Long create(User user) {
-        jdbcTemplate.insert(CREATE_SQL, user.getFirstName(), user.getSecondName(), user.getUsername(),
+        return jdbcTemplate.insert(CREATE_SQL, user.getFirstName(), user.getSecondName(), user.getUsername(),
                 user.getPassword(), user.getEmail(), user.getRole().getId());
-        return null;
     }
 
     @Override
     public User findByUsername(String username) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT\n" +
-                        "  u.*,\n" +
-                        "  r.title\n" +
-                        "FROM users u\n" +
-                        "  JOIN role r ON u.role_id = r.role_id where u.username = ?", username);
+                "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id where u.username = ?", username);
     }
 
     @Override
@@ -77,5 +75,11 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public int delete(User user) {
         return 0;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return jdbcTemplate.findEntity(rowMapper,
+                "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id where u.email = ?", email);
     }
 }

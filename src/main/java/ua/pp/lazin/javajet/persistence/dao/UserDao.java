@@ -17,4 +17,7 @@ public interface UserDao {
     int update(User user);
 
     int delete(User user);
+
+    User findByEmail(String email);
 }
+

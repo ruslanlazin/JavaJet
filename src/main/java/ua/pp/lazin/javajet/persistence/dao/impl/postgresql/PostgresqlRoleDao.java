@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Ruslan Lazin
  */
-public class PostgresqlRoleDao implements RoleDao{
+public class PostgresqlRoleDao implements RoleDao {
     private static final JdbcTemplate<Role> jdbcTemplate = new JdbcTemplate<>();
     private static final RowMapper<Role> rowMapper = new RowMapper<Role>() {
         @Override
@@ -31,8 +31,8 @@ public class PostgresqlRoleDao implements RoleDao{
     }
 
     @Override
-    public User findById(Role role) {
-        return null;
+    public Role findByTitle(String title) {
+        return jdbcTemplate.findEntity(rowMapper, "SELECT * FROM role WHERE role.title=?", title);
     }
 
     @Override

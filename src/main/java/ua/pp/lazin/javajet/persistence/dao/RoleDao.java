@@ -11,7 +11,7 @@ import java.util.List;
 public interface RoleDao {
     Long create(Role role);
 
-    User findById(Role role);
+    Role findByTitle(String title);
 
     List<Role> findAll();
 

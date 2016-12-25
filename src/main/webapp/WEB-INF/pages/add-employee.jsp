@@ -30,42 +30,47 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" for="username">Username:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="Enter username" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd">Password:</label>
                 <div class="col-sm-4">
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                    <input type="password" class="form-control" id="pwd" name="password"
+                           placeholder="Enter password" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="firstname">Firstname:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="firstname" placeholder="Enter firsname">
+                    <input type="text" class="form-control" id="firstname" name="firstname"
+                           placeholder="Enter firsname" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="secondname">Secondname:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="secondname" placeholder="Enter secondname">
+                    <input type="text" class="form-control" id="secondname" name="secondname"
+                           placeholder="Enter secondname" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-4">
-                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" name="email"
+                           placeholder="Enter email" autocomplete="off" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="sel1">Select Position:</label>
+                <label class="control-label col-sm-2" for="role">Select Position:</label>
                 <div class="col-sm-4">
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" id="role" name="role">
                         <c:forEach var="role" items="${roles}">
                             <option>${role.title}</option>
                         </c:forEach>

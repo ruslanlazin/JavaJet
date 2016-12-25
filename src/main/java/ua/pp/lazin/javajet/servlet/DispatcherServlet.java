@@ -76,8 +76,8 @@ public class DispatcherServlet extends HttpServlet {
 
         Command command = CommandResolver.getCommand(request);
         if (command == null) {
-            logger.info("Incorrect request path " + request.getRequestURI());
-            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE_NAME, "Requested path is incorrect");
+            logger.info("Incorrect request path " + request.getRequestURI() + request.getMethod());
+            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE_NAME, "Requested path doesn't exist");
             // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;
@@ -85,7 +85,7 @@ public class DispatcherServlet extends HttpServlet {
         String viewName = null;
         try {
             viewName = command.execute(request, response);
-            logger.debug("command is: " + command + "viewName is: " + viewName);
+            logger.debug("command: " + command + " viewName: " + viewName);
         } catch (Exception e) {
             logger.error("An exception occurred during command " + command + " executing", e);
             // TODO: 25.12.2016 add error message
