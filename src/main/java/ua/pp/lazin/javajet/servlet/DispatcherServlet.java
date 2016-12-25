@@ -30,7 +30,7 @@ public class DispatcherServlet extends HttpServlet {
     /**
      * logger use Log4j library. @see (http://logging.apache.org/log4j/)
      */
-    private static Logger logger =
+    private static final Logger logger =
             Logger.getLogger(DispatcherServlet.class);
 
     /**
@@ -73,29 +73,30 @@ public class DispatcherServlet extends HttpServlet {
      */
     private void performTask(HttpServletRequest request,
                              HttpServletResponse response) {
-        System.err.println(request.getPathInfo() + ".pathiifoDS");
 
-        Command command = null;
-        String pageName = null;
-        try {
-            command = CommandResolver.getCommand(request);
-            logger.debug("command is: " + command.getClass().getName());
 
-            pageName = command.execute(request, response);
-            logger.debug("pageName is: " + pageName);
-        } catch (Exception e) {
-            logger.error("exception when try execute command " + command, e);
-        }
+        String viewName = null;
 
-        if (pageName == null) {
+        Command command = CommandResolver.getCommand(request);
+        if (command == null) {
             request.setAttribute(MESSAGE_ATTRIBUTE_NAME, "Requested path is incorrect");
+            // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;
         }
-        if (pageName.startsWith(REDIRECT_PREFIX)) {
-            redirect(pageName, request, response);
+        try {
+            viewName = command.execute(request, response);
+            logger.debug("command is: " + command + "viewName is: " + viewName);
+        } catch (Exception e) {
+            logger.error("An exception occurred during command " + command + " executing", e);
+            forward(ERROR_PAGE, request, response);
+            return;
+        }
+
+        if (viewName.startsWith(REDIRECT_PREFIX)) {
+            redirect(viewName, request, response);
         } else {
-            forward(pageName, request, response);
+            forward(viewName, request, response);
         }
     }
 
