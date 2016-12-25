@@ -7,6 +7,7 @@ import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Ruslan Lazin
@@ -33,4 +34,7 @@ public class UserService {
         userDao.create(user);
     }
 
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
 }

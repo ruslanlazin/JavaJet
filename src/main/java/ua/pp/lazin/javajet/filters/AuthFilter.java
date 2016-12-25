@@ -49,7 +49,7 @@ public class AuthFilter implements Filter {
 //        if (!allowedRequest) {
 //            HttpSession session = request.getSession(false);
 //            if (null == session) {
-//                response.sendRedirect("index.jsp");
+//                response.sendRedirect("redundant.jsp");
 //            }
 //        }
 

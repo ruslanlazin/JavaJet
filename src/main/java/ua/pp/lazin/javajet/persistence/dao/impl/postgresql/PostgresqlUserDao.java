@@ -32,7 +32,7 @@ public class PostgresqlUserDao implements UserDao {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
-            user.setUserId(rs.getLong("user_id"));
+            user.setId(rs.getLong("user_id"));
             user.setFirstName(rs.getString("first_name"));
             user.setSecondName(rs.getString("second_name"));
             user.setUsername(rs.getString("username"));
@@ -66,7 +66,7 @@ public class PostgresqlUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "select * from users");
+        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id");
     }
 
     @Override

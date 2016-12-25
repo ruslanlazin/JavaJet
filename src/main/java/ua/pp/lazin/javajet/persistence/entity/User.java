@@ -1,7 +1,6 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -10,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-    private Long userId;
+    private Long Id;
     private Role role;
     private String firstName;
     private String secondName;
@@ -22,12 +21,12 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return Id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long userId) {
+        this.Id = userId;
     }
 
     @Basic
@@ -105,7 +104,7 @@ public class User {
 
         User user = (User) o;
 
-        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
+        if (Id != null ? !Id.equals(user.Id) : user.Id != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (secondName != null ? !secondName.equals(user.secondName) : user.secondName != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
@@ -117,7 +116,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
+        int result = Id != null ? Id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
@@ -129,12 +128,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "userId=" + Id +
                 ", role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
