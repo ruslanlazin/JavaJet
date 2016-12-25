@@ -1,14 +1,13 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
 public class Role {
-    private Long roleId;
+    private Long Id;
     private String title;
 
     public Role() {
@@ -20,12 +19,12 @@ public class Role {
 
     @Id
     @Column(name = "role_id")
-    public Long getRoleId() {
-        return roleId;
+    public Long getId() {
+        return Id;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setId(Long roleId) {
+        this.Id = roleId;
     }
 
     @Basic
@@ -45,7 +44,7 @@ public class Role {
 
         Role role = (Role) o;
 
-        if (roleId != null ? !roleId.equals(role.roleId) : role.roleId != null) return false;
+        if (Id != null ? !Id.equals(role.Id) : role.Id != null) return false;
         if (title != null ? !title.equals(role.title) : role.title != null) return false;
 
         return true;
@@ -53,7 +52,7 @@ public class Role {
 
     @Override
     public int hashCode() {
-        int result = roleId != null ? roleId.hashCode() : 0;
+        int result = Id != null ? Id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }
@@ -61,7 +60,7 @@ public class Role {
     @Override
     public String toString() {
         return "Role{" +
-                "roleId=" + roleId +
+                "Id=" + Id +
                 ", title='" + title + '\'' +
                 '}';
     }

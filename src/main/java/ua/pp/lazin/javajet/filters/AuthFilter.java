@@ -64,7 +64,7 @@ public class AuthFilter implements Filter {
 //        user.setPassword("b");
 //        user.setEmail("b@b.ua");
 //        Role role = new Role();
-//        role.setRoleId(1L);
+//        role.setId(1L);
 //        user.setRole(role);
         String path = request.getRequestURI().substring(request.getContextPath().length());
 

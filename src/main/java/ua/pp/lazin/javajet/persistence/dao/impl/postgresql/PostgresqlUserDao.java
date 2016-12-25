@@ -50,7 +50,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public Long create(User user) {
         jdbcTemplate.insert(CREATE_SQL, user.getFirstName(), user.getSecondName(), user.getUsername(),
-                user.getPassword(), user.getEmail(), user.getRole().getRoleId());
+                user.getPassword(), user.getEmail(), user.getRole().getId());
         return null;
     }
 
