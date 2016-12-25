@@ -20,6 +20,16 @@
 <%@include file="navbar.jsp" %>
 
 
+<form class="register-form" action="register" method="POST" id="registerForm">
+
+    <input type="text" placeholder="name" name="username" id="username" autocomplete="off" required/>
+    <input type="password" placeholder="password" name="password" id="password" required/>
+    <input type="email" placeholder="email address" name="email" id="email" autocomplete="off" required/>
+    <input type="text" placeholder="Your Name" name="name" id="name" required/>
+    <input type="text" placeholder="Your Surname" name="surname" id="surname" required/>
+    <button id = "create-button">create</button>
+</form>
+
 
 <a href="<c:url value="/flights"/>">flights</a> <br>
 <a href="<c:url value="/employees"/>">employees</a><br>

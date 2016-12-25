@@ -38,15 +38,22 @@
                         <td>${employee.id}</td>
                         <td>${employee.firstName}</td>
                         <td>${employee.secondName}</td>
-                        <td> ${employee.role.title}</td>
-                        <td> ${employee.email}</td>
+                        <td>${employee.role.title}</td>
+                        <td>${employee.email}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-lg-1 col-lg-offset-7">
+            <a href="<c:url value="/add-employee"/>"
+               class="btn btn-default btn-info active" role="button">
+                <fmt:message key="employees.button.add-employee"/>
+            </a>
+        </div>
+    </div>
 
     <a href="<c:url value="/flights"/>">flights</a> <br>
     <a href="<c:url value="/employees"/>">employees</a><br>

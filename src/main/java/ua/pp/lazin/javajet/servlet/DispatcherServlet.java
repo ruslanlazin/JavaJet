@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
-    private static final String MESSAGE_ATTRIBUTE_NAME = "message";
+    private static final String ERROR_MESSAGE_ATTRIBUTE_NAME = "message";
     private static final String ERROR_PAGE = "error";
     private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/pages/";
     private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
@@ -74,25 +74,24 @@ public class DispatcherServlet extends HttpServlet {
     private void performTask(HttpServletRequest request,
                              HttpServletResponse response) {
 
-
-        String viewName = null;
-
         Command command = CommandResolver.getCommand(request);
         if (command == null) {
-            request.setAttribute(MESSAGE_ATTRIBUTE_NAME, "Requested path is incorrect");
+            logger.info("Incorrect request path " + request.getRequestURI());
+            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE_NAME, "Requested path is incorrect");
             // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;
         }
+        String viewName = null;
         try {
             viewName = command.execute(request, response);
             logger.debug("command is: " + command + "viewName is: " + viewName);
         } catch (Exception e) {
             logger.error("An exception occurred during command " + command + " executing", e);
+            // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;
         }
-
         if (viewName.startsWith(REDIRECT_PREFIX)) {
             redirect(viewName, request, response);
         } else {
