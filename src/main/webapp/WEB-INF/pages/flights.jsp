@@ -26,20 +26,22 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th><fmt:message key="shared.firstname"/></th>
-                    <th><fmt:message key="shared.secondname"/></th>
-                    <th><fmt:message key="shared.position"/></th>
-                    <th><fmt:message key="shared.email"/></th>
+                    <th><fmt:message key="flights.time"/> (UTC)</th>
+                    <th><fmt:message key="flights.from"/></th>
+                    <th><fmt:message key="flights.to"/></th>
+                    <th><fmt:message key="flights.aircraft.type"/></th>
+                    <th><fmt:message key="flights.aircraft.number"/></th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${employees}" var="flight">
+                <c:forEach items="${flights}" var="flight">
                     <tr>
                         <td>${flight.id}</td>
-                        <td>${flight.firstName}</td>
-                        <td>${flight.secondName}</td>
-                        <td>${flight.role.title}</td>
-                        <td>${flight.email}</td>
+                        <td>${flight.departureTime}</td>
+                        <td>${flight.from.iataCode}</td>
+                        <td>${flight.to.iataCode}</td>
+                        <td>${flight.aircraft.model}</td>
+                        <td>${flight.aircraft.regNumber}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -48,9 +50,9 @@
     </div>
     <div class="row">
         <div class="col-lg-1 col-lg-offset-7">
-            <a href="<c:url value="/add-employee"/>"
+            <a href="<c:url value="/add-flight"/>"
                class="btn btn-default btn-info active" role="button">
-                <fmt:message key="employees.button.add-employee"/>
+                <fmt:message key="flights.button.add-flight"/>
             </a>
         </div>
     </div>

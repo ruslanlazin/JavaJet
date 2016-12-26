@@ -27,7 +27,7 @@ public class PostgresqlUserDao implements UserDao {
 
     private static final String DELETE_SQL = "DELETE FROM `user` WHERE id=?";
 
-    private static final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<User>();
+    private static final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
     private static final RowMapper<User> rowMapper = new RowMapper<User>() {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {

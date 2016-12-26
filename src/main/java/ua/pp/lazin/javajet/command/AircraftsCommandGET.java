@@ -10,7 +10,7 @@ public class AircraftsCommandGET implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return "main";
+        return "aircraft";
     }
 }
 

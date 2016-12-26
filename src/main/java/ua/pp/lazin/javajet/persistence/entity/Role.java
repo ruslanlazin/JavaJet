@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Role {
-    private Long Id;
+    private Long id;
     private String title;
 
     public Role() {
@@ -20,11 +20,11 @@ public class Role {
     @Id
     @Column(name = "role_id")
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long roleId) {
-        this.Id = roleId;
+        this.id = roleId;
     }
 
     @Basic
@@ -44,7 +44,7 @@ public class Role {
 
         Role role = (Role) o;
 
-        if (Id != null ? !Id.equals(role.Id) : role.Id != null) return false;
+        if (id != null ? !id.equals(role.id) : role.id != null) return false;
         if (title != null ? !title.equals(role.title) : role.title != null) return false;
 
         return true;
@@ -52,7 +52,7 @@ public class Role {
 
     @Override
     public int hashCode() {
-        int result = Id != null ? Id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }
@@ -60,7 +60,7 @@ public class Role {
     @Override
     public String toString() {
         return "Role{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 '}';
     }

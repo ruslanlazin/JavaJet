@@ -36,9 +36,9 @@
         <form id="login-form" class="login-form" method="post">
             <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
             <input id="login" type="text" name="login" autocomplete="off"
-                   placeholder="<fmt:message key="login.placeholder.username"/>"/>
+                   placeholder="<fmt:message key="shared.username"/>"/>
             <input type="password" name="password"
-                   placeholder="<fmt:message key="login.placeholder.password"/>"/>
+                   placeholder="<fmt:message key="shared.password"/>"/>
             <fmt:message key="login.button.submit" var="buttonValue"/>
             <button id="login-button" class="submit" type="submit">${buttonValue}</button>
         </form>

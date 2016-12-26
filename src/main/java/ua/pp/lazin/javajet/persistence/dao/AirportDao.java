@@ -11,7 +11,7 @@ import java.util.List;
 public interface AirportDao {
     Long create(Airport airport);
 
-    User findByCode(String code);
+    Airport findByCode(String iataCode);
 
     List<Airport> findAll();
 

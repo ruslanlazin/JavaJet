@@ -41,10 +41,10 @@ public class UserService {
     }
 
     public boolean isUsernameAvailable(String username) {
-        return userDao.findByUsername(username) != null;
+        return userDao.findByUsername(username) == null;
     }
 
     public boolean isEmailAvailable(String email) {
-        return userDao.findByEmail(email) != null;
+        return userDao.findByEmail(email) == null;
     }
 }

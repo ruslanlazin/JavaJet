@@ -1,42 +1,81 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
+
+import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
  */
 @Entity
 public class Flight {
-    private Long flightId;
-    private Timestamp departureTime;
-    private Aircraft aircraftByAircraftId;
-    private Airport airportByFrom;
-    private Airport airportByTo;
-    private Collection<FlightUsers> flightUsersesByFlightId;
-    private Long aircraftId;
-    private Long from;
-    private Long to;
+    private Long id;
+    private Date departureTime;
+    private Aircraft aircraft;
+    private Airport from;
+    private Airport to;
+    private Set<User> crew;
+
 
     @Id
     @Column(name = "flight_id")
-    public Long getFlightId() {
-        return flightId;
+    public Long getId() {
+        return id;
     }
 
-    public void setFlightId(Long flightId) {
-        this.flightId = flightId;
+    public void setId(Long flightId) {
+        this.id = flightId;
     }
 
     @Basic
     @Column(name = "departure_time")
-    public Timestamp getDepartureTime() {
+    public Date getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
+    public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id", nullable = false)
+    public Aircraft getAircraft() {
+        return aircraft;
+    }
+
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "from", referencedColumnName = "airport_id", nullable = false)
+    public Airport getFrom() {
+        return from;
+    }
+
+    public void setFrom(Airport airportByFrom) {
+        this.from = airportByFrom;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "to", referencedColumnName = "airport_id", nullable = false)
+    public Airport getTo() {
+        return to;
+    }
+
+    public void setTo(Airport airportByTo) {
+        this.to = airportByTo;
+    }
+
+    @OneToMany(mappedBy = "flight_id")
+    public Set<User> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(Set<User> crew) {
+        this.crew = crew;
     }
 
     @Override
@@ -46,7 +85,7 @@ public class Flight {
 
         Flight flight = (Flight) o;
 
-        if (flightId != null ? !flightId.equals(flight.flightId) : flight.flightId != null) return false;
+        if (id != null ? !id.equals(flight.id) : flight.id != null) return false;
         if (departureTime != null ? !departureTime.equals(flight.departureTime) : flight.departureTime != null)
             return false;
 
@@ -55,77 +94,8 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        int result = flightId != null ? flightId.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (departureTime != null ? departureTime.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id", nullable = false)
-    public Aircraft getAircraftByAircraftId() {
-        return aircraftByAircraftId;
-    }
-
-    public void setAircraftByAircraftId(Aircraft aircraftByAircraftId) {
-        this.aircraftByAircraftId = aircraftByAircraftId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "from", referencedColumnName = "airport_id", nullable = false)
-    public Airport getAirportByFrom() {
-        return airportByFrom;
-    }
-
-    public void setAirportByFrom(Airport airportByFrom) {
-        this.airportByFrom = airportByFrom;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "to", referencedColumnName = "airport_id", nullable = false)
-    public Airport getAirportByTo() {
-        return airportByTo;
-    }
-
-    public void setAirportByTo(Airport airportByTo) {
-        this.airportByTo = airportByTo;
-    }
-
-    @OneToMany(mappedBy = "flightByFlightId")
-    public Collection<FlightUsers> getFlightUsersesByFlightId() {
-        return flightUsersesByFlightId;
-    }
-
-    public void setFlightUsersesByFlightId(Collection<FlightUsers> flightUsersesByFlightId) {
-        this.flightUsersesByFlightId = flightUsersesByFlightId;
-    }
-
-    @Basic
-    @Column(name = "aircraft_id")
-    public Long getAircraftId() {
-        return aircraftId;
-    }
-
-    public void setAircraftId(Long aircraftId) {
-        this.aircraftId = aircraftId;
-    }
-
-    @Basic
-    @Column(name = "from")
-    public Long getFrom() {
-        return from;
-    }
-
-    public void setFrom(Long from) {
-        this.from = from;
-    }
-
-    @Basic
-    @Column(name = "to")
-    public Long getTo() {
-        return to;
-    }
-
-    public void setTo(Long to) {
-        this.to = to;
     }
 }

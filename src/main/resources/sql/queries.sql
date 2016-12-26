@@ -12,3 +12,6 @@ WHERE u.username = ?;
 
 INSERT INTO users (first_name, second_name,
                   username, password, email, role_id) VALUES (?, ?, ?, ?, ?, ?);
+
+
+SELECT f.* a.* FROM flight f JOIN aircraft a ON f.aircraft_id=a.aircraft_id

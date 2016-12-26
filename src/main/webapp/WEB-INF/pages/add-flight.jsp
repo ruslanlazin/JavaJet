@@ -23,13 +23,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="add-employee.header"/></h4>
+                <h4><fmt:message key="add-flight.header"/></h4>
             </div>
         </div>
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
-                    <fmt:message key="add-employee.success"/>
+                    <fmt:message key="add-flight.success"/>
                 </div>
             </c:if>
         </div>
@@ -99,11 +99,8 @@
                 </label>
                 <div class="col-sm-4">
                     <select class="form-control" id="role" name="role">
-                        <c:forEach var="role" items="${roles}">
-                            <option  <c:if test="${role.id == employee.role.id}">
-                                        selected="selected"
-                                    </c:if>
-                            >${role.title}</option>
+                        <c:forEach var="airport" items="${airports}">
+                            <option  >${airport.iataCode}</option>
                         </c:forEach>
                     </select>
                 </div>

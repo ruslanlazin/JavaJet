@@ -26,6 +26,10 @@ public class AddEmployeeCommandPOST implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        List<Role> roles = roleDao.findAll();
+        request.setAttribute(ROLES_ATTRIBUTE_NAME, roles);
+
+
         User user = new User();
         user.setUsername(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
@@ -34,7 +38,6 @@ public class AddEmployeeCommandPOST implements Command {
         user.setEmail(request.getParameter("email"));
         Role role = roleDao.findByTitle(request.getParameter("role"));
         user.setRole(role);
-
 
         if (!userService.isUsernameAvailable(user.getUsername())) {
             request.setAttribute(KEY_USERNAME_ERROR, true);
@@ -47,13 +50,8 @@ public class AddEmployeeCommandPOST implements Command {
             return "add-employee";
         }
 
-        user = userService.create(user);
-
-        System.out.println(user);
+        userService.create(user);
         request.setAttribute(KEY_SUCCESS, true);
-
-        List<Role> roles = roleDao.findAll();
-        request.setAttribute(ROLES_ATTRIBUTE_NAME, roles);
         return "add-employee";
     }
 }
