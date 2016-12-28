@@ -26,9 +26,10 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th><fmt:message key="flights.time"/> (UTC)</th>
-                    <th><fmt:message key="flights.from"/></th>
-                    <th><fmt:message key="flights.to"/></th>
+                    <th><fmt:message key="shared.time"/> (UTC)</th>
+                    <th><fmt:message key="shared.localtime"/></th>
+                    <th><fmt:message key="shared.from"/></th>
+                    <th><fmt:message key="shared.to"/></th>
                     <th><fmt:message key="flights.aircraft.type"/></th>
                     <th><fmt:message key="flights.aircraft.number"/></th>
                 </tr>
@@ -37,7 +38,10 @@
                 <c:forEach items="${flights}" var="flight">
                     <tr>
                         <td>${flight.id}</td>
-                        <td>${flight.departureTime}</td>
+                        <td><fmt:formatDate value="${flight.departureTime}"
+                                            pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
+                        <td><fmt:formatDate value="${flight.departureTime}" pattern="HH:mm"
+                                            timeZone="${flight.departureTimezone}"/></td>
                         <td>${flight.from.iataCode}</td>
                         <td>${flight.to.iataCode}</td>
                         <td>${flight.aircraft.model}</td>

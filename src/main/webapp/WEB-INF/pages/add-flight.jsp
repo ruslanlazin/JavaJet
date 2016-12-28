@@ -34,73 +34,56 @@
             </c:if>
         </div>
         <form class="form-horizontal" method="POST">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="username">
-                    <fmt:message key="shared.username"/>:</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="username" name="username"
-                           value="${employee.username}" required>
-                </div>
-                <c:if test="${wrongusername}">
-                    <span class="text-danger">
-                        <fmt:message key="add-employee.wrong.username"/>
-                    </span>
-                </c:if>
-            </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">
-                    <fmt:message key="shared.password"/>:
+                <label class="control-label col-sm-2" for="time">
+                    <fmt:message key="shared.time"/>:
                 </label>
                 <div class="col-sm-4">
-                    <input type="password" class="form-control" id="pwd" name="password"
+                    <input type="datetime-local" class="form-control" id="time"
+                           name="departureTime"
                            required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="firstname">
-                    <fmt:message key="shared.firstname"/>:
+                <label class="control-label col-sm-2" for="from">
+                    <fmt:message key="shared.from"/>:
                 </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="firstname" name="firstname"
-                           value="${employee.firstName}" required>
+                    <input type="text" class="form-control" id="from" name="from"
+                           value="" pattern="[a-zA-Z]{3,4}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="from1">
+                    <fmt:message key="shared.from"/>:
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="from1" name="from"
+                           value="" pattern="[a-zA-Z]{3,4}" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="secondname">
-                    <fmt:message key="shared.secondname"/>:
+                <label class="control-label col-sm-2" for="to">
+                    <fmt:message key="shared.to"/>:
                 </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="secondname" name="secondname"
-                           value="${employee.secondName}" required>
+                    <input type="text" pattern="[a-zA-Z]{3,4}" class="form-control" id="to" name="to"
+                           value=""  title="" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="email">
-                    <fmt:message key="shared.email"/>:
+                <label class="control-label col-sm-2" for="aircraft">
+                    <fmt:message key="shared.aircraft"/>:
                 </label>
                 <div class="col-sm-4">
-                    <input type="email" class="form-control" id="email" name="email"
-                           value="${employee.email}" autocomplete="off" required>
-                </div>
-                <c:if test="${wrongemail}">
-                    <span class="text-danger">
-                        <fmt:message key="add-employee.wrong.email"/>
-                    </span>
-                </c:if>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="role">
-                    <fmt:message key="shared.position"/>:
-                </label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="role" name="role">
-                        <c:forEach var="airport" items="${airports}">
-                            <option  >${airport.iataCode}</option>
+                    <select class="form-control" id="aircraft" name="aircraft">
+                        <c:forEach var="aircraft" items="${aircrafts}">
+                            <option value="${aircraft.id}">${aircraft.regNumber} (${aircraft.model})
+                            </option>
                         </c:forEach>
                     </select>
                 </div>

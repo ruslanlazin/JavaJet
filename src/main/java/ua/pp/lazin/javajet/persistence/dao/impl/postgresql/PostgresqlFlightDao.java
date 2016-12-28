@@ -24,6 +24,7 @@ public class PostgresqlFlightDao implements FlightDao {
             Flight flight = new Flight();
             flight.setId(rs.getLong("flight_id"));
             flight.setDepartureTime(rs.getTimestamp("departure_time"));
+            flight.setDepartureTimezone(rs.getString("departure_timezone"));
 
             Aircraft aircraft = new Aircraft();
             aircraft.setId(rs.getLong("aircraft_id"));
@@ -31,13 +32,12 @@ public class PostgresqlFlightDao implements FlightDao {
             aircraft.setRegNumber(rs.getString("reg_number"));
             flight.setAircraft(aircraft);
 
-            Airport airportTo = new Airport();
-            airportTo.setIataCode(rs.getString("to"));
-            flight.setTo(airportTo);
-
             Airport airportFrom = new Airport();
             airportFrom.setIataCode(rs.getString("from"));
             flight.setFrom(airportFrom);
+            Airport airportTo = new Airport();
+            airportTo.setIataCode(rs.getString("to"));
+            flight.setTo(airportTo);
 
             return flight;
         }

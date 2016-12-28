@@ -12,10 +12,12 @@ import java.util.Set;
 public class Flight {
     private Long id;
     private Date departureTime;
+    private String departureTimezone;
     private Aircraft aircraft;
     private Airport from;
     private Airport to;
     private Set<User> crew;
+    private Date lastModified;
 
 
     @Id
@@ -38,6 +40,15 @@ public class Flight {
         this.departureTime = departureTime;
     }
 
+    @Basic
+    @Column(name = "departure_timezone")
+    public String getDepartureTimezone() {
+        return departureTimezone;
+    }
+
+    public void setDepartureTimezone(String departureTimezone) {
+        this.departureTimezone = departureTimezone;
+    }
 
     @ManyToOne
     @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id", nullable = false)
@@ -76,6 +87,14 @@ public class Flight {
 
     public void setCrew(Set<User> crew) {
         this.crew = crew;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override
