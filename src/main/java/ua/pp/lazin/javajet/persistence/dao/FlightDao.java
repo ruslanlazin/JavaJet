@@ -18,4 +18,6 @@ public interface FlightDao {
     int update(Flight flight);
 
     int delete(Flight flight);
+
+    Flight findById(Long flightId);
 }

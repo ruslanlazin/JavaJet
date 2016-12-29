@@ -22,6 +22,7 @@ public class AddFlightCommandPOST implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final AirportService airportService = AirportService.getINSTANCE();
+
     private static final String AIRCRAFTS_ATTRIBUTE_NAME = "aircrafts";
     private static final String SUCCESS_ATTRIBUTE_NAME = "success";
 
@@ -44,7 +45,7 @@ public class AddFlightCommandPOST implements Command {
         aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER_NAME)));
         flight.setAircraft(aircraft);
 
-        flightService.create(flight);
+        flightService.create(flight); // TODO: 29.12.2016 validate
 
         List<Aircraft> aircrafts = aircraftService.findAll();
         request.setAttribute(AIRCRAFTS_ATTRIBUTE_NAME, aircrafts);

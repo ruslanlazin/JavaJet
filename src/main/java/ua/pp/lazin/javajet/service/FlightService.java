@@ -33,4 +33,8 @@ public class FlightService {
         flight.setId(id);
         return flight;
     }
+
+    public Flight findById(Long flightId) {
+        return flightDao.findById(flightId);
+    }
 }

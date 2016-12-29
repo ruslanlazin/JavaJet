@@ -46,6 +46,16 @@
                         <td>${flight.destination.iataCode}</td>
                         <td>${flight.aircraft.model}</td>
                         <td>${flight.aircraft.regNumber}</td>
+
+                        <td>
+                            <form action="<c:url value="/flight"/>">
+                                <input type="hidden" name="flightId" value="${flight.id}">
+                                <input type="submit" class="btn btn-xs  btn-default"
+                                       value="<fmt:message key="flights.button.edit"/>">
+                            </form>
+                        </td>
+
+
                     </tr>
                 </c:forEach>
                 </tbody>
