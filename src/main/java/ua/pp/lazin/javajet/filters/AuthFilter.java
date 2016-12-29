@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 
 /**
@@ -35,11 +36,13 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String url = request.getServletPath();
-        System.err.println(url + ".sevletPath");
-        System.err.println(request.getContextPath() + ".contextpath");
-        System.err.println(request.getRequestURI() + ".requestUri");
-        System.err.println(request.getPathInfo() + ".pathiifo");
+//        String url = request.getServletPath();
+//        System.err.println(url + ".sevletPath");
+//        System.err.println(request.getContextPath() + ".contextpath");
+//        System.err.println(request.getRequestURI() + ".requestUri");
+//        System.err.println(request.getPathInfo() + ".pathiifo");
+//
+//        System.out.println(new Date().getTime());
 
 //        boolean allowedRequest = false;
 //

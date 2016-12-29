@@ -4,12 +4,12 @@ import ua.pp.lazin.javajet.persistence.dao.FlightDao;
 import ua.pp.lazin.javajet.persistence.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.entity.Airport;
 import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,25 +33,23 @@ public class PostgresqlFlightDao implements FlightDao {
             flight.setAircraft(aircraft);
 
             Airport airportFrom = new Airport();
-            airportFrom.setIataCode(rs.getString("from"));
-            flight.setFrom(airportFrom);
+            airportFrom.setIataCode(rs.getString("departure"));
+            flight.setDeparture(airportFrom);
             Airport airportTo = new Airport();
-            airportTo.setIataCode(rs.getString("to"));
-            flight.setTo(airportTo);
+            airportTo.setIataCode(rs.getString("destination"));
+            flight.setDestination(airportTo);
 
             return flight;
         }
     };
+    private static final String CREATE_SQL = "INSERT INTO flight (departure_time, departure_timezone, " +
+            "aircraft_id, departure, destination, last_modified) VALUES (?, ?, ?, ?, ?, ?);";
 
 
     @Override
     public Long create(Flight flight) {
-        return null;
-    }
-
-    @Override
-    public User findByID(Long id) {
-        return null;
+        return jdbcTemplate.insert(CREATE_SQL, flight.getDepartureTime(), flight.getDepartureTimezone(),
+                flight.getAircraft().getId(), flight.getDeparture().getIataCode(), flight.getDestination().getIataCode(), new Date());
     }
 
     @Override

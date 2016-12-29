@@ -11,8 +11,6 @@ import java.util.List;
 public interface FlightDao {
     Long create(Flight flight);
 
-    User findByID(Long id);
-
     List<Flight> findAll();
 
     List<Flight> findAllExpected();

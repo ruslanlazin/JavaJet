@@ -14,8 +14,8 @@ public class Flight {
     private Date departureTime;
     private String departureTimezone;
     private Aircraft aircraft;
-    private Airport from;
-    private Airport to;
+    private Airport departure;
+    private Airport destination;
     private Set<User> crew;
     private Date lastModified;
 
@@ -61,23 +61,23 @@ public class Flight {
     }
 
     @ManyToOne
-    @JoinColumn(name = "from", referencedColumnName = "airport_id", nullable = false)
-    public Airport getFrom() {
-        return from;
+    @JoinColumn(name = "departure", referencedColumnName = "airport_id", nullable = false)
+    public Airport getDeparture() {
+        return departure;
     }
 
-    public void setFrom(Airport airportByFrom) {
-        this.from = airportByFrom;
+    public void setDeparture(Airport airportByFrom) {
+        this.departure = airportByFrom;
     }
 
     @ManyToOne
-    @JoinColumn(name = "to", referencedColumnName = "airport_id", nullable = false)
-    public Airport getTo() {
-        return to;
+    @JoinColumn(name = "destination", referencedColumnName = "airport_id", nullable = false)
+    public Airport getDestination() {
+        return destination;
     }
 
-    public void setTo(Airport airportByTo) {
-        this.to = airportByTo;
+    public void setDestination(Airport airportByTo) {
+        this.destination = airportByTo;
     }
 
     @OneToMany(mappedBy = "flight_id")

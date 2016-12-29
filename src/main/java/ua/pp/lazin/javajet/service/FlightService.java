@@ -28,7 +28,9 @@ public class FlightService {
         return flightDao.findAll();
     }
 
-//    public Airport findByCode(String iataCode){
-//        return airportDao.findByCode(iataCode);
-//    }
+    public Flight create(Flight flight) {
+        Long id = flightDao.create(flight);
+        flight.setId(id);
+        return flight;
+    }
 }

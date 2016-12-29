@@ -2,11 +2,7 @@ package ua.pp.lazin.javajet.persistence.jdbcutils;
 
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +20,11 @@ public class JdbcTemplate<T> {
                      = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
+                if (params[i] instanceof java.util.Date) {
+                    preparedStatement.setObject(i + 1, params[i], Types.TIMESTAMP);
+                } else {
+                    preparedStatement.setObject(i + 1, params[i]);
+                }
             }
             preparedStatement.executeUpdate();
 

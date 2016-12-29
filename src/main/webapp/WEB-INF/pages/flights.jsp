@@ -42,8 +42,8 @@
                                             pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
                         <td><fmt:formatDate value="${flight.departureTime}" pattern="HH:mm"
                                             timeZone="${flight.departureTimezone}"/></td>
-                        <td>${flight.from.iataCode}</td>
-                        <td>${flight.to.iataCode}</td>
+                        <td>${flight.departure.iataCode}</td>
+                        <td>${flight.destination.iataCode}</td>
                         <td>${flight.aircraft.model}</td>
                         <td>${flight.aircraft.regNumber}</td>
                     </tr>
