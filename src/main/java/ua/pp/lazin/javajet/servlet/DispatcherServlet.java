@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
-    private static final String ERROR_MESSAGE_ATTRIBUTE_NAME = "message";
+    private static final String ERROR_MESSAGE_ATTRIBUTE = "message";
     private static final String ERROR_PAGE = "error";
     private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/pages/";
     private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
@@ -77,7 +77,7 @@ public class DispatcherServlet extends HttpServlet {
         Command command = CommandResolver.getCommand(request);
         if (command == null) {
             logger.info("Incorrect request path " + request.getRequestURI() + request.getMethod());
-            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE_NAME, "Requested path doesn't exist");
+            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, "Requested path doesn't exist");
             // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;

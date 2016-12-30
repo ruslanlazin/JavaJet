@@ -16,9 +16,9 @@
             <a class="navbar-brand" href="<c:url value="/" />">JavaJet AirLines</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="<c:url value="/fr"/>">Friends</a></li>
-            <li><a href="<c:url value="/lo"/>">Followers</a></li>
-            <li><a href="<c:url value="/lo"/>">All</a></li>
+            <li><a href="<c:url value="/flights"/>"><fmt:message key="shared.flights"/></a></li>
+            <li><a href="<c:url value="/employees"/>"><fmt:message key="shared.employees"/></a></li>
+            <li><a href="<c:url value="/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -32,7 +32,7 @@
             </li>
             <li><a href="/settings">Settings</a></li>
             <c:if test="${not empty user}">
-                <li><a href="<c:url value="/logout"/>"><fmt:message key="navbar.link.logout"/> </a></li>
+                <li><a href="<c:url value="/logout"/>"><fmt:message key="navbar.link.logout"/></a></li>
             </c:if>
         </ul>
     </div>

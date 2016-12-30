@@ -20,7 +20,7 @@ import java.util.Date;
 public class AuthFilter implements Filter {
     private final static Logger logger = Logger.getLogger(AuthFilter.class);
     private final static AuthService authService = AuthService.getINSTANCE();
-    private final static String USER_ATTRIBUTE_NAME = "user";
+    private final static String USER_ATTRIBUTE = "user";
     private final static String LOGIN_URI = "/login";
     private final static String RESOURCES_URI_PREFIX = "/resources/";
 
@@ -74,7 +74,7 @@ public class AuthFilter implements Filter {
         if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request)
                 || path.equals(LOGIN_URI)) {
             if (logger.isDebugEnabled()) {
-                User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE_NAME);
+                User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
                 logger.debug("Request from user: " + user + " to: " + path);
             }
             filterChain.doFilter(servletRequest, servletResponse);

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Ruslan Lazin
  */
 public class AuthService {
-    private final static String USER_ATTRIBUTE_NAME = "user";
+    private final static String USER_ATTRIBUTE = "user";
     private final static Logger logger = Logger.getLogger(AuthService.class);
     private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
     private static AuthService INSTANCE = new AuthService();
@@ -26,7 +26,7 @@ public class AuthService {
     }
 
     public boolean isAuthenticated(HttpServletRequest request) {
-        return request.getSession().getAttribute(USER_ATTRIBUTE_NAME) != null;
+        return request.getSession().getAttribute(USER_ATTRIBUTE) != null;
     }
 
     public boolean login(HttpServletRequest request, String login, String password) {
@@ -35,14 +35,14 @@ public class AuthService {
             return false;
         }
         if (PasswordEncoder.check(password, user.getPassword())) {
-            request.getSession().setAttribute(USER_ATTRIBUTE_NAME, user);
+            request.getSession().setAttribute(USER_ATTRIBUTE, user);
             return true;
         }
         return false;
     }
 
     public void logout(HttpServletRequest request) {
-        request.getSession().setAttribute(USER_ATTRIBUTE_NAME, null);
+        request.getSession().setAttribute(USER_ATTRIBUTE, null);
     }
 
     public void register(User user) {

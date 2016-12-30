@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class EmployeesCommandGET implements Command {
     private static final UserService userService = UserService.getINSTANCE();
-    private static final String EMPLOYEES_ATTRIBUTE_NAME = "employees";
+    private static final String EMPLOYEES_ATTRIBUTE = "employees";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<User> users = userService.findAll();
-        request.setAttribute(EMPLOYEES_ATTRIBUTE_NAME,users);
+        request.setAttribute(EMPLOYEES_ATTRIBUTE,users);
         return "employees";
     }
 }

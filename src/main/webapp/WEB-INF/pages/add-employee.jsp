@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -101,8 +100,8 @@
                     <select class="form-control" id="role" name="role">
                         <c:forEach var="role" items="${roles}">
                             <option  <c:if test="${role.id == employee.role.id}">
-                                        selected="selected"
-                                    </c:if>
+                                selected="selected"
+                            </c:if>
                             >${role.title}</option>
                         </c:forEach>
                     </select>

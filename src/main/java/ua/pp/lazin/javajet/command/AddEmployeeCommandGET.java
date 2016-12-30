@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class AddEmployeeCommandGET implements Command {
     private static final RoleDao roleDao = DaoFactoryCreator.getFactory().getRoleDao();
-    private static final String ROLES_ATTRIBUTE_NAME = "roles";
+    private static final String ROLES_ATTRIBUTE = "roles";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Role> roles = roleDao.findAll();
-        request.setAttribute(ROLES_ATTRIBUTE_NAME, roles);
+        request.setAttribute(ROLES_ATTRIBUTE, roles);
         return "add-employee";
     }
 }

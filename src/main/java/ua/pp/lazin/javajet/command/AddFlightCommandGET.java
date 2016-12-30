@@ -20,13 +20,13 @@ import java.util.List;
 public class AddFlightCommandGET implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
-    private static final String AIRCRAFTS_ATTRIBUTE_NAME = "aircrafts";
+    private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         List<Aircraft> aircrafts = aircraftService.findAll();
-        request.setAttribute(AIRCRAFTS_ATTRIBUTE_NAME, aircrafts);
+        request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircrafts);
         return "add-flight";
     }
 }

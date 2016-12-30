@@ -13,7 +13,7 @@ public class LoginCommandPOST implements Command {
     private static final Logger logger = Logger.getLogger(LoginCommandPOST.class);
     private static final String USERNAME_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
-    private static final String WRONGLOGIN_ATTRIBUTE_NAME = "wronglogin";
+    private static final String WRONGLOGIN_ATTRIBUTE = "wronglogin";
     private static final AuthService authService = AuthService.getINSTANCE();
 
     @Override
@@ -27,7 +27,7 @@ public class LoginCommandPOST implements Command {
             logger.info(username + " successfully authorized ");
             return "redirect:/";
         }
-        request.setAttribute(WRONGLOGIN_ATTRIBUTE_NAME, true);
+        request.setAttribute(WRONGLOGIN_ATTRIBUTE, true);
         logger.info(username + " unsuccessfully tried to authorize");
         return "login";
     }

@@ -17,17 +17,17 @@ public class AddEmployeeCommandPOST implements Command {
     // TODO: 25.12.2016 RoleService
     private static final RoleDao roleDao = DaoFactoryCreator.getFactory().getRoleDao();
     private static final UserService userService = UserService.getINSTANCE();
-    private static final String ROLES_ATTRIBUTE_NAME = "roles";
+    private static final String ROLES_ATTRIBUTE = "roles";
     private static final String KEY_USERNAME_ERROR = "wrongusername";
     private static final String KEY_EMAIL_ERROR = "wrongemail";
     private static final String KEY_SUCCESS = "success";
-    private static final String EMPLOYEE_ATTRIBUTE_NAME = "employee";
+    private static final String EMPLOYEE_ATTRIBUTE = "employee";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         List<Role> roles = roleDao.findAll();
-        request.setAttribute(ROLES_ATTRIBUTE_NAME, roles);
+        request.setAttribute(ROLES_ATTRIBUTE, roles);
 
 
         User user = new User();
@@ -41,12 +41,12 @@ public class AddEmployeeCommandPOST implements Command {
 
         if (!userService.isUsernameAvailable(user.getUsername())) {
             request.setAttribute(KEY_USERNAME_ERROR, true);
-            request.setAttribute(EMPLOYEE_ATTRIBUTE_NAME, user);
+            request.setAttribute(EMPLOYEE_ATTRIBUTE, user);
             return "add-employee";
         }
         if (!userService.isEmailAvailable(user.getEmail())) {
             request.setAttribute(KEY_EMAIL_ERROR, true);
-            request.setAttribute(EMPLOYEE_ATTRIBUTE_NAME, user);
+            request.setAttribute(EMPLOYEE_ATTRIBUTE, user);
             return "add-employee";
         }
 

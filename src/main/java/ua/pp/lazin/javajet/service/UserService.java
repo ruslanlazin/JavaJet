@@ -13,7 +13,7 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class UserService {
-    private final static String USER_ATTRIBUTE_NAME = "user";
+    private final static String USER_ATTRIBUTE = "user";
     private final static Logger logger = Logger.getLogger(UserService.class);
     private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
     private static UserService INSTANCE = new UserService();
@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User getCurrentUser(HttpServletRequest request) {
-        return (User) request.getSession().getAttribute(USER_ATTRIBUTE_NAME);
+        return (User) request.getSession().getAttribute(USER_ATTRIBUTE);
     }
 
     public User create(User user) {

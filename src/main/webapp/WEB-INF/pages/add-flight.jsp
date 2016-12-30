@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -47,21 +46,12 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="from">
-                    <fmt:message key="shared.from"/>:
-                </label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="from" name="from"
-                           value="" pattern="[a-zA-Z]{3,4}" required>
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="control-label col-sm-2" for="from1">
                     <fmt:message key="shared.from"/>:
                 </label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="from1" name="from"
-                           value="" pattern="[a-zA-Z]{3,4}" required>
+                           value="" pattern="[a-zA-Z]{3}" required>
                 </div>
             </div>
 
@@ -70,7 +60,7 @@
                     <fmt:message key="shared.to"/>:
                 </label>
                 <div class="col-sm-4">
-                    <input type="text" pattern="[a-zA-Z]{3,4}" class="form-control" id="to" name="to"
+                    <input type="text" pattern="[a-zA-Z]{3}" class="form-control" id="to" name="to"
                            value=""  title="" required>
                 </div>
             </div>
