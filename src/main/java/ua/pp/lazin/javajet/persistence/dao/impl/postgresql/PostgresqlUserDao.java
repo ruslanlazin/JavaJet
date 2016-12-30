@@ -1,6 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
+import ua.pp.lazin.javajet.persistence.entity.Flight;
 import ua.pp.lazin.javajet.persistence.entity.Role;
 import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
@@ -63,8 +64,14 @@ public class PostgresqlUserDao implements UserDao {
     }
 
     @Override
+    public List<User> findUsersByFlight(Flight flight) {
+        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id JOIN flight_users f ON u.user_id = f.user_id " +
+                "WHERE f.flight_id = ?", flight.getId());
+    }
+
+    @Override
     public List<User> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id");
+        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id ORDER BY u.second_name");
     }
 
     @Override

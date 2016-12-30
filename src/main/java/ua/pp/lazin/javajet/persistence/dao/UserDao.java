@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao;
 
+import ua.pp.lazin.javajet.persistence.entity.Flight;
 import ua.pp.lazin.javajet.persistence.entity.User;
 
 import java.util.List;
@@ -12,12 +13,14 @@ public interface UserDao {
 
     User findByUsername(String username);
 
+    User findByEmail(String email);
+
+    List<User> findUsersByFlight(Flight flight);
+
     List<User> findAll();
 
     int update(User user);
 
     int delete(User user);
-
-    User findByEmail(String email);
 }
 

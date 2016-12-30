@@ -56,7 +56,7 @@ public class PostgresqlFlightDao implements FlightDao {
     public List<Flight> findAll() {
         return jdbcTemplate.findEntities(rowMapper,
                 "SELECT * FROM flight f JOIN aircraft a ON " +
-                "f.aircraft_id=a.aircraft_id");
+                "f.aircraft_id=a.aircraft_id ORDER BY departure_time");
     }
 
     @Override
@@ -77,6 +77,6 @@ public class PostgresqlFlightDao implements FlightDao {
     @Override
     public Flight findById(Long flightId) {
         return jdbcTemplate.findEntity(rowMapper,"SELECT * FROM flight f JOIN aircraft a ON " +
-                "f.aircraft_id=a.aircraft_id WHERE f.flight_id = ?",flightId);
+                "f.aircraft_id=a.aircraft_id WHERE f.flight_id = ?", flightId);
     }
 }

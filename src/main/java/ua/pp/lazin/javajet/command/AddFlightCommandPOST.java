@@ -25,12 +25,11 @@ public class AddFlightCommandPOST implements Command {
 
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String SUCCESS_ATTRIBUTE = "success";
-
     private static final String AIRCRAFT_PARAMETER = "aircraft";
     private static final String FROM_PARAMETER = "from";
     private static final String TO_PARAMETER = "to";
     private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
-    private static final String ISO_8601_FORMAT = "yyyy-MM-dd'T'HH:mm";
+    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
     private static final String UTC = "UTC";
 
     @Override
@@ -47,6 +46,7 @@ public class AddFlightCommandPOST implements Command {
 
         flightService.create(flight); // TODO: 29.12.2016 validate
 
+
         List<Aircraft> aircrafts = aircraftService.findAll();
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircrafts);
         request.setAttribute(SUCCESS_ATTRIBUTE, true);
@@ -56,7 +56,7 @@ public class AddFlightCommandPOST implements Command {
 
     private Date parseUTC(String dateAsISO8601String) {
 
-        final DateFormat dateFormat = new SimpleDateFormat(ISO_8601_FORMAT);
+        final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         dateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
         Date date = null;
         try {

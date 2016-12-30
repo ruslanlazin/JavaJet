@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link href="<c:url value="/resources/css/navbar.css" />" rel="stylesheet"/>
+<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"

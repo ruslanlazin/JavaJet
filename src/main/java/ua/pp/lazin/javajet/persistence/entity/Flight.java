@@ -3,6 +3,7 @@ package ua.pp.lazin.javajet.persistence.entity;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +17,7 @@ public class Flight {
     private Aircraft aircraft;
     private Airport departure;
     private Airport destination;
-    private Set<User> crew;
+    private List<User> crew;
     private Date lastModified;
 
 
@@ -81,11 +82,11 @@ public class Flight {
     }
 
     @OneToMany(mappedBy = "flight_id")
-    public Set<User> getCrew() {
+    public List<User> getCrew() {
         return crew;
     }
 
-    public void setCrew(Set<User> crew) {
+    public void setCrew(List<User> crew) {
         this.crew = crew;
     }
 

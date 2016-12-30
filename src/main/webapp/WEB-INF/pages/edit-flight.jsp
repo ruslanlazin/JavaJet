@@ -23,12 +23,10 @@
     <div class="container">
         <%--Back Button--%>
         <div class="row">
-            <button type="submit" class="btn btn-default">
-                <fmt:message key="shared.button.back"/>
-            </button>
+            <a href="<c:url value="/flights"/>"><fmt:message key="shared.button.back"/></a>
         </div>
         <%--Header--%>
-        <div class="row">
+        <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
                 <h4><fmt:message key="edit-flight.header"/> ${flight.id}</h4>
             </div>
@@ -101,6 +99,69 @@
                     </select>
                 </div>
             </div>
+
+
+            <%--Select Pilots Fields--%>
+            <c:set var="position" value="Pilot" scope="page"/>
+            <c:forEach var="crewMember" items="${flight.crew}">
+                <c:if test="${crewMember.role.title == position}">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="${position}">
+                            <fmt:message key="shared.from"/>:
+                        </label>
+                        <div class="input-group col-sm-4">
+                            <select class="form-control" id="${position}" name="crew">
+                                <c:forEach var="employee" items="${employees}">
+                                    <c:if test="${employee.role.title == position}">
+                                        <option
+                                                <c:if test="${crewMember.id == employee.id}">
+                                                    selected="selected"
+                                                </c:if>
+                                                value="${employee.id}">${employee.firstName} ${employee.secondName}
+                                            (${employee.role.title})
+                                        </option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </c:if>
+            </c:forEach>
+
+            <form>
+                <div id="inputi">
+                    <div><input name="crew" type="text">
+                        <input type="button" class="btn-default btn btn-info" value="+"
+                               onclick="add_input(this.parentNode)"></div>
+                </div>
+            </form>
+            <script>
+//                 Теперь эта функция будет принимать указатель на объект, после которого нужно
+//                 осуществить вставку
+                function add_input(obj) {
+                    var new_input = document.createElement('div');
+                    new_input.innerHTML = '<br><br><input name="crew">';
+//                  Дописываем рядом с input-ом кнопку, она будет добовлять элемент именно под input,
+//                  рядом с которым она находится
+                    new_input.innerHTML = new_input.innerHTML + '<input type="button" value="+" ' +
+                            'onclick="add_input(this.parentNode)">';
+//                  И еще одна кнопочка для его удаления.
+                    new_input.innerHTML = new_input.innerHTML + '<input type="button" value="-" ' +
+                            'onclick="del_input(this.parentNode)">';
+//                  Ищем присутствует ли следующий узел в структуре DOM-а
+                    if (obj.nextSibling)
+                    // если да - то создаем после него
+                        document.getElementById('inputi').insertBefore(new_input, obj.nextSibling);
+//                  если такого не нашлось то просто добавляем в конец
+                    else document.getElementById('inputi').appendChild(new_input);
+                }
+                // А эта функция будет принимать указатель на объект, который нужно удалить
+                function del_input(obj) {
+                    document.getElementById('inputi').removeChild(obj)
+                }
+            </script>
+
+
             <%--Save Button--%>
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-4">

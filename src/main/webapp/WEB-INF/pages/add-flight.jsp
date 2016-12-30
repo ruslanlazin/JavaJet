@@ -5,24 +5,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign in</title>
+    <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
-
-
+    <link href="<c:url value="/resources/css/bootstrap-datetimepicker.min.css" />" rel="stylesheet"/>
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"></script>
 </head>
 
 <body>
-<%--<c:import url="navbar.jsp"/>--%>
 <div class="container-fluid">
+    <%--Navbar. Also contains shared Locale Init Section and taglib Declarations--%>
     <%@include file="navbar.jsp" %>
-
+    <%--Page Content--%>
     <div class="container">
+        <%--Back Button--%>
         <div class="row">
+            <a href="<c:url value="/flights"/>"><fmt:message key="shared.button.back"/></a>
+        </div>
+        <%--Header--%>
+        <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="add-flight.header"/></h4>
+                <h4><fmt:message key="add-flight.header"/> ${flight.id}</h4>
             </div>
         </div>
         <div class="row">
@@ -33,52 +39,67 @@
             </c:if>
         </div>
         <form class="form-horizontal" method="POST">
-
+            <%--Input Time Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="time">
                     <fmt:message key="shared.time"/>:
                 </label>
-                <div class="col-sm-4">
-                    <input type="datetime-local" class="form-control" id="time"
-                           name="departureTime"
-                           required>
+                <div class="input-group date col-sm-4" id="datetimepicker">
+                    <input type='text' class="form-control" id="time"
+                           name="departureTime" onkeydown="return false" required>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
             </div>
-
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker').datetimepicker({
+                        format: 'DD/MM/YYYY HH:mm',
+                        defaultDate: '${flight.departureTime}',
+                        minDate: moment(),
+                        maxDate: moment().add(90, 'days')
+                    });
+                });
+            </script>
+            <%--Input From Field--%>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="from1">
+                <label class="control-label col-sm-2" for="from">
                     <fmt:message key="shared.from"/>:
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="from1" name="from"
-                           value="" pattern="[a-zA-Z]{3}" required>
+                <div class="input-group col-sm-4">
+                    <input type="text" class="form-control" id="from" name="from"
+                           value="${flight.departure.iataCode}" pattern="[A-Z]{3}" required>
                 </div>
             </div>
-
+            <%--Input To Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="to">
                     <fmt:message key="shared.to"/>:
                 </label>
-                <div class="col-sm-4">
-                    <input type="text" pattern="[a-zA-Z]{3}" class="form-control" id="to" name="to"
-                           value=""  title="" required>
+                <div class="input-group col-sm-4">
+                    <input type="text" pattern="[A-Z]{3}" class="form-control" id="to" name="to"
+                           value="${flight.destination.iataCode}" title="" required>
                 </div>
             </div>
-
+            <%--Select Aircraft Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="aircraft">
                     <fmt:message key="shared.aircraft"/>:
                 </label>
-                <div class="col-sm-4">
+                <div class="input-group col-sm-4">
                     <select class="form-control" id="aircraft" name="aircraft">
                         <c:forEach var="aircraft" items="${aircrafts}">
-                            <option value="${aircraft.id}">${aircraft.regNumber} (${aircraft.model})
+                            <option <c:if test="${aircraft.id == flight.aircraft.id}">
+                                selected="selected"
+                            </c:if>
+                                    value="${aircraft.id}">${aircraft.regNumber} (${aircraft.model})
                             </option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
-
+            <%--Create Button--%>
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-4">
                     <button type="submit" class="btn btn-default btn-info">
@@ -87,20 +108,6 @@
                 </div>
             </div>
         </form>
-
-        <a href="<c:url value="/flights"/>">flights</a> <br>
-        <a href="<c:url value="/employees"/>">employees</a><br>
-        <a href="<c:url value="/aircrafts"/>">aircrafts</a><br>
-        <br>
-
-        <a href="<c:url value="/flight"/>">flight</a><br>
-        <a href="<c:url value="/employee"/>">employee</a><br>
-        <a href="<c:url value="/aircraft"/>">aircraft</a><br>
-        <br>
-
-        <a href="<c:url value="/add-flight"/>">add-flight</a><br>
-        <a href="<c:url value="/add-employee"/>">add-employee</a><br>
-        <a href="<c:url value="/add-aircraft"/>">add-aircraft</a><br>
     </div>
 </div>
 </body>
