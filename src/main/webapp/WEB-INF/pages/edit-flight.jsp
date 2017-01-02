@@ -9,26 +9,32 @@
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-datetimepicker.min.css" />" rel="stylesheet"/>
-    <script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
+    <link href="<c:url value="/resources/css/select2.min.css" />" rel="stylesheet"/>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/moment-with-locales.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/bootstrap.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/bootstrap-datetimepicker.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/select2.min.js" />"></script>
+    <script defer type="text/javascript" src="<c:url value="/resources/js/flight.js" />"></script>
 </head>
 
 <body>
 <div class="container-fluid">
     <%--Navbar. Also contains shared Locale Init Section and taglib Declarations--%>
     <%@include file="navbar.jsp" %>
+
+    <!-- Values passed to javascript -->
+    <input type="hidden" id="departureTime" value="${flight.departureTime}"/>
+    <input type="hidden" id="language" value="${language}"/>
+
     <%--Page Content--%>
     <div class="container">
+
         <%--Back Button--%>
         <div class="row">
             <a href="<c:url value="/flights"/>"><fmt:message key="shared.button.back"/></a>
         </div>
+
         <%--Header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
@@ -43,6 +49,7 @@
             </c:if>
         </div>
         <form class="form-horizontal" method="POST">
+
             <%--Input Time Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="time">
@@ -56,36 +63,35 @@
                     </span>
                 </div>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepicker').datetimepicker({
-                        format: 'DD/MM/YYYY HH:mm',
-                        defaultDate: '${flight.departureTime}',
-                        minDate: moment(),
-                        maxDate: moment().add(90, 'days')
-                    });
-                });
-            </script>
+
             <%--Input From Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="from">
                     <fmt:message key="shared.from"/>:
                 </label>
                 <div class="input-group col-sm-4">
-                    <input type="text" class="form-control" id="from" name="from"
-                           value="${flight.departure.iataCode}" pattern="[A-Z]{3}" required>
+                    <select class="form-control airport-select" id="from" name="from" required>
+                        <option value="${flight.departure.iataCode}" selected="selected">
+                            ${flight.departure.iataCode}
+                        </option>
+                    </select>
                 </div>
             </div>
+
             <%--Input To Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="to">
                     <fmt:message key="shared.to"/>:
                 </label>
                 <div class="input-group col-sm-4">
-                    <input type="text" pattern="[A-Z]{3}" class="form-control" id="to" name="to"
-                           value="${flight.destination.iataCode}" title="" required>
+                    <select class="form-control airport-select" id="to" name="to" required>
+                        <option value="${flight.destination.iataCode}" selected="selected">
+                            ${flight.destination.iataCode}
+                        </option>
+                    </select>
                 </div>
             </div>
+
             <%--Select Aircraft Field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="aircraft">
@@ -104,7 +110,14 @@
                 </div>
             </div>
 
-            <%--Select Pilots Fields--%>
+            <%--Crew assigntment header--%>
+            <div class=" row">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <h4><fmt:message key="edit-flight.crew"/></h4>
+                </div>
+            </div>
+
+            <%--Select Pilots Field--%>
             <c:set var="position" value="Pilot" scope="page"/>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pilots">
@@ -127,10 +140,74 @@
                 </div>
             </div>
 
-            <script type="text/javascript">
-                $(".js-multiple").select2();
-            </script>
+            <%--Select Navigation Officer Field--%>
+            <c:set var="position" value="Navigating Officer" scope="page"/>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="navi">
+                    <fmt:message key="edit-flight.navi"/>:
+                </label>
+                <div class="input-group col-sm-4">
+                    <select class="form-control js-multiple" id="navi"
+                            multiple="multiple" name="crew">
+                        <c:forEach var="employee" items="${employees}">
+                            <c:if test="${employee.role.title == position}">
+                                <option
+                                        <c:if test="${flight.crew.contains(employee)}">
+                                            selected="selected"
+                                        </c:if>
+                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
+                                </option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
 
+            <%--Select Flight Attendants Field--%>
+            <c:set var="position" value="Flight Attendant" scope="page"/>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="attendant">
+                    <fmt:message key="edit-flight.attendant"/>:
+                </label>
+                <div class="input-group col-sm-4">
+                    <select class="form-control js-multiple" id="attendant"
+                            multiple="multiple" name="crew">
+                        <c:forEach var="employee" items="${employees}">
+                            <c:if test="${employee.role.title == position}">
+                                <option
+                                        <c:if test="${flight.crew.contains(employee)}">
+                                            selected="selected"
+                                        </c:if>
+                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
+                                </option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
+            <%--Select Radioman Field--%>
+            <c:set var="position" value="Radioman" scope="page"/>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="radioman">
+                    <fmt:message key="edit-flight.radioman"/>:
+                </label>
+                <div class="input-group col-sm-4">
+                    <select class="form-control js-multiple" id="radioman"
+                            multiple="multiple" name="crew">
+                        <c:forEach var="employee" items="${employees}">
+                            <c:if test="${employee.role.title == position}">
+                                <option
+                                        <c:if test="${flight.crew.contains(employee)}">
+                                            selected="selected"
+                                        </c:if>
+                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
+                                </option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
 
             <%--Save Button--%>
             <div class="form-group">
