@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * DispatcherServlet class is a controller.
+ * DispatcherServlet is a Front controller.
  * There is only servlet on the project.
  *
  * @author Ruslan Lazin
  * @see HttpServlet#HttpServlet()
  */
-@WebServlet("/")
+@WebServlet
 public class DispatcherServlet extends HttpServlet {
     private static final String ERROR_MESSAGE_ATTRIBUTE = "message";
     private static final String ERROR_PAGE = "error";
@@ -69,7 +69,6 @@ public class DispatcherServlet extends HttpServlet {
         if (command == null) {
             logger.info("Incorrect request path " + request.getRequestURI() + request.getMethod());
             request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, "Requested path doesn't exist");
-            // TODO: 25.12.2016 add error message
             forward(ERROR_PAGE, request, response);
             return;
         }
@@ -79,7 +78,8 @@ public class DispatcherServlet extends HttpServlet {
             logger.debug("command: " + command + " viewName: " + viewName);
         } catch (Exception e) {
             logger.error("An exception occurred during command " + command + " executing", e);
-            // TODO: 25.12.2016 add error message
+            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, "Internal server error has occurred. " +
+                    "See server log for detail");
             forward(ERROR_PAGE, request, response);
             return;
         }
@@ -90,13 +90,15 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-
     private void redirect(String target, HttpServletRequest request, HttpServletResponse response) {
         target = target.split(REDIRECT_DELIMITER)[1];
         try {
             response.sendRedirect(request.getContextPath() + target);
         } catch (IOException e) {
             logger.error("An error occurred during redirecting to " + target, e);
+            request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, "Internal server error has occurred. " +
+                    "See server log for detail");
+            forward(ERROR_PAGE, request, response);
         }
     }
 

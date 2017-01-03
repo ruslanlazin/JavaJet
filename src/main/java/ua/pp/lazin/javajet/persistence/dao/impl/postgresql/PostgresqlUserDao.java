@@ -49,7 +49,7 @@ public class PostgresqlUserDao implements UserDao {
     };
 
     private static final String CREATE_SQL = "INSERT INTO users (first_name, second_name,\n" +
-            "                  username, password, email, role_id) VALUES (?, ?, ?, ?, ?, ?);";
+            " username, password, email, role_id) VALUES (?, ?, ?, ?, ?, ?);";
 
     @Override
     public Long create(User user) {
