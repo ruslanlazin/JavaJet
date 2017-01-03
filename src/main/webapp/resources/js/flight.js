@@ -4,25 +4,43 @@
 $(document).ready(function () {
 
     // Cache
-    var $departureTime = moment($('#departureTime').val());
-    var $language = $('#language').val();
+    var departureTime = moment($('#departureTime').val());
+    var language = $('#language').val();
+    var disableState;
+    var maxDate;
+    var minDate;
+    if (departureTime < moment()) {
+        minDate = departureTime;
+        maxDate = departureTime;
+        disableState = true;
+    } else {
+        minDate = moment();
+        maxDate = moment().add(90, 'days');
+        disableState = false;
+    }
 
     // Calendar config section
     $(function () {
         $('#datetimepicker').datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
-            defaultDate: $departureTime,
-            minDate: moment(),
-            maxDate: moment().add(90, 'days'),
-            locale: $language
+            defaultDate: departureTime,
+            minDate: minDate,
+            maxDate: maxDate,
+            locale: language
         });
     });
 
+    //Button bocking
+    $('#edit-btn').prop('disabled', disableState);
+
     // Select2 plugin config for multiSelect
-    $(".js-multiple").select2();
+    $(".js-select").select2({
+        disabled: disableState
+    });
 
     //Select2 config for airport autoComplete
     $(".airport-select").select2({
+        disabled: disableState,
         ajax: {
             url: "http://autocomplete.travelpayouts.com/jravia",
             dataType: 'json',
@@ -30,7 +48,8 @@ $(document).ready(function () {
             data: function (params) {
                 return {
                     q: params.term, // search term
-                    locale: $language,
+                    locale: language,
+                    with_countries: false,
                     page: params.page
                 };
             },

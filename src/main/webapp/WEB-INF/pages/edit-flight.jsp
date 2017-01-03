@@ -45,7 +45,7 @@
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
-                    <fmt:message key="add-flight.success"/>
+                    <fmt:message key="edit-flight.success"/>
                 </div>
             </c:if>
         </div>
@@ -102,7 +102,7 @@
                     <fmt:message key="shared.aircraft"/>:
                 </label>
                 <div class="input-group col-sm-4">
-                    <select class="form-control" id="aircraft" name="aircraft">
+                    <select class="form-control js-select" id="aircraft" name="aircraft">
                         <c:forEach var="aircraft" items="${aircrafts}">
                             <option <c:if test="${aircraft.id == flight.aircraft.id}">
                                 selected="selected"
@@ -123,100 +123,29 @@
 
             <%--Select Pilots Field--%>
             <c:set var="position" value="Pilot" scope="page"/>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pilots">
-                    <fmt:message key="edit-flight.pilots"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control js-multiple" id="pilots"
-                            multiple="multiple" name="crew">
-                        <c:forEach var="employee" items="${employees}">
-                            <c:if test="${employee.role.title == position}">
-                                <option
-                                        <c:if test="${flight.crew.contains(employee)}">
-                                            selected="selected"
-                                        </c:if>
-                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
-                                </option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
+            <fmt:message key="edit-flight.pilots" var="label" scope="page"/>
+            <%@include file="select.template.jsp" %>
 
             <%--Select Navigation Officer Field--%>
             <c:set var="position" value="Navigating Officer" scope="page"/>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="navi">
-                    <fmt:message key="edit-flight.navi"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control js-multiple" id="navi"
-                            multiple="multiple" name="crew">
-                        <c:forEach var="employee" items="${employees}">
-                            <c:if test="${employee.role.title == position}">
-                                <option
-                                        <c:if test="${flight.crew.contains(employee)}">
-                                            selected="selected"
-                                        </c:if>
-                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
-                                </option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
+            <fmt:message key="edit-flight.navi" var="label" scope="page"/>
+            <%@include file="select.template.jsp" %>
 
             <%--Select Flight Attendants Field--%>
             <c:set var="position" value="Flight Attendant" scope="page"/>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="attendant">
-                    <fmt:message key="edit-flight.attendant"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control js-multiple" id="attendant"
-                            multiple="multiple" name="crew">
-                        <c:forEach var="employee" items="${employees}">
-                            <c:if test="${employee.role.title == position}">
-                                <option
-                                        <c:if test="${flight.crew.contains(employee)}">
-                                            selected="selected"
-                                        </c:if>
-                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
-                                </option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
+            <fmt:message key="edit-flight.attendant" var="label" scope="page"/>
+            <%@include file="select.template.jsp" %>
 
             <%--Select Radioman Field--%>
             <c:set var="position" value="Radioman" scope="page"/>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="radioman">
-                    <fmt:message key="edit-flight.radioman"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control js-multiple" id="radioman"
-                            multiple="multiple" name="crew">
-                        <c:forEach var="employee" items="${employees}">
-                            <c:if test="${employee.role.title == position}">
-                                <option
-                                        <c:if test="${flight.crew.contains(employee)}">
-                                            selected="selected"
-                                        </c:if>
-                                        value="${employee.id}">${employee.firstName} ${employee.secondName}
-                                </option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
+            <fmt:message key="edit-flight.radioman" var="label" scope="page"/>
+            <%@include file="select.template.jsp" %>
+
 
             <%--Save Button--%>
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-4">
-                    <button type="submit" class="btn btn-default btn-info">
+                    <button type="submit" class="btn btn-default btn-info" id="edit-btn">
                         <fmt:message key="shared.button.save"/>
                     </button>
                 </div>

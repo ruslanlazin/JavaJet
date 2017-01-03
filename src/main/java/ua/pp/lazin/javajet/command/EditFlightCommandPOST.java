@@ -8,16 +8,14 @@ import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
 import ua.pp.lazin.javajet.service.UserService;
+import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.Map;
 
 /**
  * @author Ruslan Lazin
@@ -36,15 +34,27 @@ public class EditFlightCommandPOST implements Command {
     private static final String FROM_PARAMETER = "from";
     private static final String TO_PARAMETER = "to";
     private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
-    private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
-    private static final String UTC = "UTC";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
+        Map<String, String[]> map = request.getParameterMap();
+        for (Map.Entry<String, String[]> stringEntry : map.entrySet()) {
+            System.out.println("key"+ stringEntry.getKey());
+
+            String[]ar = stringEntry.getValue();
+            for (String s : ar) {
+                System.out.println(s);
+            }
+        }
+
+
+
+
+
         Flight flight = new Flight();
         flight.setId(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)));
-        flight.setDepartureTime(parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
+        flight.setDepartureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
         flight.setDeparture(airportService.findByCode(request.getParameter(FROM_PARAMETER)));
         flight.setDestination(airportService.findByCode(request.getParameter(TO_PARAMETER)));
 
@@ -71,19 +81,5 @@ public class EditFlightCommandPOST implements Command {
         request.setAttribute(SUCCESS_ATTRIBUTE, true);
 
         return "edit-flight";
-    }
-
-    private Date parseUTC(String dateAsISO8601String) {
-
-        final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-        dateFormat.setTimeZone(TimeZone.getTimeZone(UTC));
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateAsISO8601String);
-        } catch (ParseException e) {
-            logger.error("An exception occurred during parsing: " + dateAsISO8601String, e);
-            // TODO: 28.12.2016 change
-        }
-        return date;
     }
 }

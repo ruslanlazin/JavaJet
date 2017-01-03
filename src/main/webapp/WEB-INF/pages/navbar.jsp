@@ -6,7 +6,7 @@
 <link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">
 
 <c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       value="${not empty param.language ? param.language : not empty language ? language : 'en'}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="i18n.messages"/>
@@ -24,7 +24,9 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <form class="form-inline float-xs-right">
-                    <input type="hidden" name="flightId" value="${flight.id}"/>
+                    <c:if test="${not empty flight}">
+                        <input type="hidden" name="flightId" value="${flight.id}"/>
+                    </c:if>
                     <select id="lang" name="language" onchange="submit()">
                         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
                         <option value="fr" ${language == 'fr' ? 'selected' : ''}>Français</option>
