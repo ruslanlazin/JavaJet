@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * DispatcherServlet class is a controller. Use MVC pattern.
+ * DispatcherServlet class is a controller.
  * There is only servlet on the project.
  *
  * @author Ruslan Lazin
+ * @see HttpServlet#HttpServlet()
  */
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
@@ -25,17 +26,8 @@ public class DispatcherServlet extends HttpServlet {
     private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
     private static final String REDIRECT_PREFIX = "redirect:";
     private static final String REDIRECT_DELIMITER = ":";
+    private static final Logger logger = Logger.getLogger(DispatcherServlet.class);
 
-
-    /**
-     * logger use Log4j library. @see (http://logging.apache.org/log4j/)
-     */
-    private static final Logger logger =
-            Logger.getLogger(DispatcherServlet.class);
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public DispatcherServlet() {
         super();
     }
@@ -64,8 +56,7 @@ public class DispatcherServlet extends HttpServlet {
 
 
     /**
-     * performTask execute command from request.
-     * And pass work to Command classes.
+     * performTask execute command  based on request path.
      *
      * @param request  from user.
      * @param response by server.

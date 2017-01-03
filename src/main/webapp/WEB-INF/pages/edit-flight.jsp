@@ -20,7 +20,7 @@
 
 <body>
 <div class="container-fluid">
-    <%--Navbar. Also contains shared Locale Init Section and taglib Declarations--%>
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="navbar.jsp" %>
 
     <!-- Values passed to javascript -->
