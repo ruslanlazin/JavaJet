@@ -4,7 +4,7 @@
 $(document).ready(function () {
 
     // Cache
-    var $departureTime = $('#departureTime').val();
+    var $departureTime = moment($('#departureTime').val());
     var $language = $('#language').val();
 
     // Calendar config section

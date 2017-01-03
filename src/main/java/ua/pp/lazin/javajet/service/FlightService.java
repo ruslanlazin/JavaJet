@@ -46,4 +46,10 @@ public class FlightService {
         flight.setCrew(crew);
         return flight;
     }
+
+    public void updateFlightAndCrew(Flight flight){
+        flightDao.update(flight);
+        flightDao.updateCrew(flight);
+
+    }
 }

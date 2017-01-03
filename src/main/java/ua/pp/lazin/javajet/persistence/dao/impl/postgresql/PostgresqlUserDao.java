@@ -58,6 +58,13 @@ public class PostgresqlUserDao implements UserDao {
     }
 
     @Override
+    public User findByID(Long id) {
+        return jdbcTemplate.findEntity(rowMapper,
+                "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id where u.user_id = ?", id);
+
+    }
+
+    @Override
     public User findByUsername(String username) {
         return jdbcTemplate.findEntity(rowMapper,
                 "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id where u.username = ?", username);

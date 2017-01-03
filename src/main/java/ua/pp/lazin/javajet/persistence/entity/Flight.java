@@ -118,4 +118,18 @@ public class Flight {
         result = 31 * result + (departureTime != null ? departureTime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", departureTime=" + departureTime +
+                ", departureTimezone='" + departureTimezone + '\'' +
+                ", aircraft=" + aircraft +
+                ", departure=" + departure +
+                ", destination=" + destination +
+                ", crew=" + crew +
+                ", lastModified=" + lastModified +
+                '}';
+    }
 }

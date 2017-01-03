@@ -11,6 +11,8 @@ import java.util.List;
 public interface UserDao {
     Long create(User user);
 
+    User findByID(Long id);
+
     User findByUsername(String username);
 
     User findByEmail(String email);
@@ -23,4 +25,5 @@ public interface UserDao {
 
     int delete(User user);
 }
+
 

@@ -4,6 +4,7 @@ import ua.pp.lazin.javajet.persistence.dao.FlightDao;
 import ua.pp.lazin.javajet.persistence.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.entity.Airport;
 import ua.pp.lazin.javajet.persistence.entity.Flight;
+import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 
@@ -56,7 +57,7 @@ public class PostgresqlFlightDao implements FlightDao {
     public List<Flight> findAll() {
         return jdbcTemplate.findEntities(rowMapper,
                 "SELECT * FROM flight f JOIN aircraft a ON " +
-                "f.aircraft_id=a.aircraft_id ORDER BY departure_time");
+                        "f.aircraft_id=a.aircraft_id ORDER BY departure_time");
     }
 
     @Override
@@ -66,7 +67,14 @@ public class PostgresqlFlightDao implements FlightDao {
 
     @Override
     public int update(Flight flight) {
-        return 0;
+        return jdbcTemplate.update("UPDATE flight SET " +
+                        "departure_time = ?, departure = ?, destination = ?, aircraft_id = ? " +
+                        "WHERE flight_id = ?",
+                flight.getDepartureTime(),
+                flight.getDeparture().getIataCode(),
+                flight.getDestination().getIataCode(),
+                flight.getAircraft().getId(),
+                flight.getId());
     }
 
     @Override
@@ -76,7 +84,17 @@ public class PostgresqlFlightDao implements FlightDao {
 
     @Override
     public Flight findById(Long flightId) {
-        return jdbcTemplate.findEntity(rowMapper,"SELECT * FROM flight f JOIN aircraft a ON " +
+        return jdbcTemplate.findEntity(rowMapper, "SELECT * FROM flight f JOIN aircraft a ON " +
                 "f.aircraft_id=a.aircraft_id WHERE f.flight_id = ?", flightId);
+    }
+
+    @Override
+    public void updateCrew(Flight flight) {
+        jdbcTemplate.update("DELETE FROM flight_users WHERE flight_id = ?", flight.getId());
+
+
+        for (User user : flight.getCrew()) {
+            jdbcTemplate.insert("INSERT INTO flight_users (flight_id, user_id) VALUES (?, ?)", flight.getId(), user.getId());
+        }
     }
 }

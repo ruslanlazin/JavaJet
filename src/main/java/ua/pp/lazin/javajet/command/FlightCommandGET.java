@@ -28,8 +28,6 @@ public class FlightCommandGET implements Command {
 
         request.setAttribute("flight", flightService.findByIdWithCrew(id));
 
-        List<User> crew = flightService.findByIdWithCrew(id).getCrew();
-
         List<User> employees = userService.findAll();
 
 

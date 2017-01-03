@@ -24,7 +24,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <form class="form-inline float-xs-right">
-                    <select id="language" name="language" onchange="submit()">
+                    <input type="hidden" name="flightId" value="${flight.id}"/>
+                    <select id="lang" name="language" onchange="submit()">
                         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
                         <option value="fr" ${language == 'fr' ? 'selected' : ''}>Français</option>
                         <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>

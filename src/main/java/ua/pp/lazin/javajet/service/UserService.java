@@ -47,4 +47,8 @@ public class UserService {
     public boolean isEmailAvailable(String email) {
         return userDao.findByEmail(email) == null;
     }
+
+    public User findById(Long id) {
+        return userDao.findByID(id);
+    }
 }

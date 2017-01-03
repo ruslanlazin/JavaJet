@@ -24,7 +24,8 @@
     <%@include file="navbar.jsp" %>
 
     <!-- Values passed to javascript -->
-    <input type="hidden" id="departureTime" value="${flight.departureTime}"/>
+    <input type="hidden" id="departureTime" value="<fmt:formatDate
+    pattern="yyyy-MM-dd'T'HH:mm" timeZone="UTC" value="${flight.departureTime}"/>"/>
     <input type="hidden" id="language" value="${language}"/>
 
     <%--Page Content--%>
@@ -48,7 +49,10 @@
                 </div>
             </c:if>
         </div>
+
+        <%--Flight form--%>
         <form class="form-horizontal" method="POST">
+            <input type="hidden" name="flightId" value="${flight.id}"/>
 
             <%--Input Time Field--%>
             <div class="form-group">

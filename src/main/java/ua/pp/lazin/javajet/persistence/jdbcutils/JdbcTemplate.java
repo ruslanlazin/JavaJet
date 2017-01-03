@@ -47,7 +47,11 @@ public class JdbcTemplate<T> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
+                if (params[i] instanceof java.util.Date) {
+                    preparedStatement.setObject(i + 1, params[i], Types.TIMESTAMP);
+                } else {
+                    preparedStatement.setObject(i + 1, params[i]);
+                }
             }
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -20,4 +20,6 @@ public interface FlightDao {
     int delete(Flight flight);
 
     Flight findById(Long flightId);
+
+    void updateCrew(Flight flight);
 }
