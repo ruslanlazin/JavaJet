@@ -1,7 +1,6 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * @author Ruslan Lazin
@@ -9,9 +8,11 @@ import java.util.Collection;
 @Entity
 public class Airport {
     private String iataCode;
-    private String nameEng;
-    private String cityEng;
-    private String countryEng;
+    private String name;
+    private String city;
+    private String country;
+    private Double longitude;
+    private Double latitude;
 
 
     @Id
@@ -26,32 +27,48 @@ public class Airport {
 
     @Basic
     @Column(name = "name_eng")
-    public String getNameEng() {
-        return nameEng;
+    public String getName() {
+        return name;
     }
 
-    public void setNameEng(String nameEng) {
-        this.nameEng = nameEng;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
     @Column(name = "city_eng")
-    public String getCityEng() {
-        return cityEng;
+    public String getCity() {
+        return city;
     }
 
-    public void setCityEng(String cityEng) {
-        this.cityEng = cityEng;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Basic
     @Column(name = "country_eng")
-    public String getCountryEng() {
-        return countryEng;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryEng(String countryEng) {
-        this.countryEng = countryEng;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     @Override
@@ -62,9 +79,9 @@ public class Airport {
         Airport airport = (Airport) o;
 
         if (iataCode != null ? !iataCode.equals(airport.iataCode) : airport.iataCode != null) return false;
-        if (nameEng != null ? !nameEng.equals(airport.nameEng) : airport.nameEng != null) return false;
-        if (cityEng != null ? !cityEng.equals(airport.cityEng) : airport.cityEng != null) return false;
-        if (countryEng != null ? !countryEng.equals(airport.countryEng) : airport.countryEng != null) return false;
+        if (name != null ? !name.equals(airport.name) : airport.name != null) return false;
+        if (city != null ? !city.equals(airport.city) : airport.city != null) return false;
+        if (country != null ? !country.equals(airport.country) : airport.country != null) return false;
 
         return true;
     }
@@ -73,9 +90,9 @@ public class Airport {
     public int hashCode() {
         int result = 0;
         result = 31 * result + (iataCode != null ? iataCode.hashCode() : 0);
-        result = 31 * result + (nameEng != null ? nameEng.hashCode() : 0);
-        result = 31 * result + (cityEng != null ? cityEng.hashCode() : 0);
-        result = 31 * result + (countryEng != null ? countryEng.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
     }
 }

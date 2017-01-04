@@ -12,10 +12,8 @@ import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * @author Ruslan Lazin
@@ -63,7 +61,7 @@ public class EditFlightCommandPOST implements Command {
         flight.setAircraft(aircraft);
         // TODO: 29.12.2016 validate
 
-        List<User> crew = new ArrayList<>();
+        Set<User> crew = new HashSet<>();
         String[] crewIdsAsStrings = request.getParameterValues("crew");
         if (crewIdsAsStrings != null) {
             for (String userIdAsString : crewIdsAsStrings) {

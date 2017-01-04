@@ -9,6 +9,7 @@ import ua.pp.lazin.javajet.persistence.factory.DaoFactory;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
@@ -42,7 +43,7 @@ public class FlightService {
 
     public Flight findByIdWithCrew(Long flightId) {
         Flight flight = flightDao.findById(flightId);
-        List<User> crew = userDao.findUsersByFlight(flight);
+        Set<User> crew = userDao.findUsersByFlight(flight);
         flight.setCrew(crew);
         return flight;
     }

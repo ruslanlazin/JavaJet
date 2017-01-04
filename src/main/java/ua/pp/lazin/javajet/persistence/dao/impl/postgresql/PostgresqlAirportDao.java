@@ -2,8 +2,6 @@ package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.entity.Airport;
-import ua.pp.lazin.javajet.persistence.entity.Role;
-import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 
@@ -22,9 +20,11 @@ public class PostgresqlAirportDao implements AirportDao {
         public Airport mapRow(ResultSet rs, int rowNum) throws SQLException {
             Airport airport = new Airport();
             airport.setIataCode(rs.getString("iata_code"));
-            airport.setNameEng(rs.getString("name_eng"));
-            airport.setCityEng(rs.getString("city_eng"));
-            airport.setCountryEng(rs.getString("country_eng"));
+            airport.setName(rs.getString("name_eng"));
+            airport.setCity(rs.getString("city_eng"));
+            airport.setCountry(rs.getString("country_eng"));
+            airport.setLatitude(rs.getDouble("latitude"));
+            airport.setLongitude(rs.getDouble("longitude"));
             return airport;
         }
     };

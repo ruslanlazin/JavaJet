@@ -9,7 +9,9 @@ import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
@@ -23,8 +25,7 @@ public class PostgresqlUserDao implements UserDao {
 
     private static final String READ_BY_USERNAME_SQL = "SELECT * FROM `user` WHERE username = ?";
 
-    private static final String UPDATE_SQL = "UPDATE `user` SET `username`=?, `firstName`=?," +
-            " `lastName`=?, `password`=?, `discount`=? WHERE `id`=?";
+    private static final String UPDATE_SQL = "";
 
     private static final String DELETE_SQL = "DELETE FROM `user` WHERE id=?";
 
@@ -71,9 +72,11 @@ public class PostgresqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findUsersByFlight(Flight flight) {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id JOIN flight_users f ON u.user_id = f.user_id " +
+    public Set<User> findUsersByFlight(Flight flight) {
+
+        List<User> crew =  jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN role r ON u.role_id = r.role_id JOIN flight_users f ON u.user_id = f.user_id " +
                 "WHERE f.flight_id = ?", flight.getId());
+        return new HashSet<>(crew);
     }
 
     @Override

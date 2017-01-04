@@ -17,7 +17,7 @@ public class Flight {
     private Aircraft aircraft;
     private Airport departure;
     private Airport destination;
-    private List<User> crew;
+    private Set<User> crew;
     private Date lastModified;
 
 
@@ -82,11 +82,11 @@ public class Flight {
     }
 
     @OneToMany(mappedBy = "flight_id")
-    public List<User> getCrew() {
+    public Set<User> getCrew() {
         return crew;
     }
 
-    public void setCrew(List<User> crew) {
+    public void setCrew(Set<User> crew) {
         this.crew = crew;
     }
 

@@ -4,6 +4,7 @@ import ua.pp.lazin.javajet.persistence.entity.Flight;
 import ua.pp.lazin.javajet.persistence.entity.User;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
@@ -17,7 +18,7 @@ public interface UserDao {
 
     User findByEmail(String email);
 
-    List<User> findUsersByFlight(Flight flight);
+    Set<User> findUsersByFlight(Flight flight);
 
     List<User> findAll();
 
