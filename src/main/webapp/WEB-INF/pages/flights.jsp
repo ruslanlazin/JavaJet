@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="lt" uri="http://lazin.pp.ua/localtime" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,7 +40,7 @@
                         <td>${flight.id}</td>
                         <td><fmt:formatDate value="${flight.departureTime}"
                                             pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
-                        <td><fmt:formatDate value="${flight.departureTime}" pattern="HH:mm"
+                        <td><lt:localTime value="${flight.departureTime}" pattern="HH:mm"
                                             timeZone="${flight.departureTimezone}"/></td>
                         <td>${flight.departure.iataCode}</td>
                         <td>${flight.destination.iataCode}</td>

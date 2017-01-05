@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>lt</short-name>
+    <uri>http://lazin.pp.ua/localtime</uri>
+
+
+    <tag>
+        <description>
+            Format java.util.Date with TimeZone. If TimeZone attribute
+            contains null or incorrect TimezoneId displays "N/A"
+        </description>
+        <name>localTime</name>
+        <tag-class>ua.pp.lazin.javajet.tag.LocalTimeTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <description>
+                Date and/or time to be formatted.
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                The time zone. A String value is interpreted as
+                a time zone ID. This may be one of the time zone
+                IDs supported by the Java platform (such as
+                "America/Los_Angeles") or a custom time zone
+                ID (such as "GMT-8"). See java.util.TimeZone for
+                more information on supported time zone
+                formats.
+            </description>
+            <name>timeZone</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                Custom formatting style for dates and times.
+            </description>
+            <name>pattern</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                Locale for formatting Date and/or time.
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>
+
+
+
+
