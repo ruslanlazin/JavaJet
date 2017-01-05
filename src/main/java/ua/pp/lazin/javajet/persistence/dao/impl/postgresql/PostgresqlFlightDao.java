@@ -68,12 +68,13 @@ public class PostgresqlFlightDao implements FlightDao {
     @Override
     public int update(Flight flight) {
         return jdbcTemplate.update("UPDATE flight SET " +
-                        "departure_time = ?, departure = ?, destination = ?, aircraft_id = ? " +
-                        "WHERE flight_id = ?",
+                        "departure_time = ?, departure = ?, destination = ?, aircraft_id = ?, " +
+                        "departure_timezone = ? WHERE flight_id = ?",
                 flight.getDepartureTime(),
                 flight.getDeparture().getIataCode(),
                 flight.getDestination().getIataCode(),
                 flight.getAircraft().getId(),
+                flight.getDepartureTimezone(),
                 flight.getId());
     }
 

@@ -20,7 +20,7 @@
     <%@include file="navbar.jsp" %>
 
     <div class="row">
-        <div class="col-lg-8 col-lg-offset-1">
+        <div class="col-sm-10 col-sm-offset-1">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-1 col-lg-offset-7">
+        <div class="col-sm-1 col-sm-offset-9">
             <a href="<c:url value="/add-flight"/>"
                class="btn btn-default btn-info active" role="button">
                 <fmt:message key="flights.button.add-flight"/>
