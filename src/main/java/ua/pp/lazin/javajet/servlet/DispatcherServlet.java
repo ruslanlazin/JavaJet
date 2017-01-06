@@ -13,10 +13,10 @@ import java.io.IOException;
 
 /**
  * DispatcherServlet is a Front controller.
- * There is only servlet on the project.
+ * It's only servlet on the project.
  *
  * @author Ruslan Lazin
- * @see HttpServlet#HttpServlet()
+ * @see HttpServlet#HttpServlet() HttpServlet#HttpServlet()
  */
 @WebServlet
 public class DispatcherServlet extends HttpServlet {
@@ -28,6 +28,9 @@ public class DispatcherServlet extends HttpServlet {
     private static final String REDIRECT_DELIMITER = ":";
     private static final Logger logger = Logger.getLogger(DispatcherServlet.class);
 
+    /**
+     * Instantiates a new Dispatcher servlet.
+     */
     public DispatcherServlet() {
         super();
     }

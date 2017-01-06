@@ -47,33 +47,33 @@ public class EditFlightCommandPOST implements Command {
         }
 
 
-
-
-
-        Flight flight = new Flight();
-        flight.setId(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)));
-        flight.setDepartureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
-        flight.setDeparture(airportService.findByCode(request.getParameter(FROM_PARAMETER)));
-        flight.setDestination(airportService.findByCode(request.getParameter(TO_PARAMETER)));
-
-        Aircraft aircraft = new Aircraft();
-        aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
-        flight.setAircraft(aircraft);
-        // TODO: 29.12.2016 validate
-
-        Set<User> crew = new HashSet<>();
-        String[] crewIdsAsStrings = request.getParameterValues("crew");
-        if (crewIdsAsStrings != null) {
-            for (String userIdAsString : crewIdsAsStrings) {
-                crew.add(userService.findById(Long.valueOf(userIdAsString)));
-            }
-        }
-        flight.setCrew(crew);
-        System.out.println(flight);
-
-        flightService.updateFlightAndCrew(flight);
-
-        request.setAttribute("flight", flight);
+//
+//
+//
+//        Flight flight = new Flight();
+//        flight.setId(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)));
+//        flight.setDepartureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
+//        flight.setDeparture(airportService.findByCode(request.getParameter(FROM_PARAMETER)));
+//        flight.setDestination(airportService.findByCode(request.getParameter(TO_PARAMETER)));
+//
+//        Aircraft aircraft = new Aircraft();
+//        aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
+//        flight.setAircraft(aircraft);
+//        // TODO: 29.12.2016 validate
+//
+//        Set<User> crew = new HashSet<>();
+//        String[] crewIdsAsStrings = request.getParameterValues("crew");
+//        if (crewIdsAsStrings != null) {
+//            for (String userIdAsString : crewIdsAsStrings) {
+//                crew.add(userService.findById(Long.valueOf(userIdAsString)));
+//            }
+//        }
+//        flight.setCrew(crew);
+//        System.out.println(flight);
+//
+//        flightService.updateFlightAndCrew(flight);
+//
+//        request.setAttribute("flight", flight);
         request.setAttribute("employees", userService.findAll());
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
         request.setAttribute(SUCCESS_ATTRIBUTE, true);

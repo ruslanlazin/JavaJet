@@ -22,27 +22,30 @@ public class PostgresqlFlightDao implements FlightDao {
 
         @Override
         public Flight mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Flight flight = new Flight();
-            flight.setId(rs.getLong("flight_id"));
-            flight.setDepartureTime(rs.getTimestamp("departure_time"));
-            flight.setDepartureTimezone(rs.getString("departure_timezone"));
 
             Aircraft aircraft = new Aircraft();
             aircraft.setId(rs.getLong("aircraft_id"));
             aircraft.setModel(rs.getString("model"));
             aircraft.setRegNumber(rs.getString("reg_number"));
-            flight.setAircraft(aircraft);
-
             Airport airportFrom = new Airport();
             airportFrom.setIataCode(rs.getString("departure"));
-            flight.setDeparture(airportFrom);
             Airport airportTo = new Airport();
             airportTo.setIataCode(rs.getString("destination"));
-            flight.setDestination(airportTo);
 
-            return flight;
+            return Flight.newBuilder()
+                    .aircraft(aircraft)
+                    .departure(airportFrom)
+                    .destination(airportTo)
+                    .departureTime(rs.getTimestamp("departure_time"))
+                    .departureTimezone(rs.getString("departure_timezone"))
+                    .id(rs.getLong("flight_id"))
+                    .lastModified(rs.getDate("last_modified"))
+                    .build();
         }
     };
+
+
+
     private static final String CREATE_SQL = "INSERT INTO flight (departure_time, departure_timezone, " +
             "aircraft_id, departure, destination, last_modified) VALUES (?, ?, ?, ?, ?, ?);";
 

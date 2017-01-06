@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * The type Flight.
+ *
  * @author Ruslan Lazin
  */
-@Entity
 public class Flight {
     private Long id;
     private Date departureTime;
@@ -20,83 +21,172 @@ public class Flight {
     private Set<User> crew;
     private Date lastModified;
 
+    private Flight(Builder builder) {
+        setId(builder.id);
+        setDepartureTime(builder.departureTime);
+        setDepartureTimezone(builder.departureTimezone);
+        setAircraft(builder.aircraft);
+        setDeparture(builder.departure);
+        setDestination(builder.destination);
+        setCrew(builder.crew);
+        setLastModified(builder.lastModified);
+    }
 
-    @Id
-    @Column(name = "flight_id")
+    /**
+     * New builder builder.
+     *
+     * @return the builder
+     */
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param flightId the flight id
+     */
     public void setId(Long flightId) {
         this.id = flightId;
     }
 
-    @Basic
-    @Column(name = "departure_time")
+    /**
+     * Gets departure time.
+     *
+     * @return the departure time
+     */
     public Date getDepartureTime() {
         return departureTime;
     }
 
+    /**
+     * Sets departure time.
+     *
+     * @param departureTime the departure time
+     */
     public void setDepartureTime(Date departureTime) {
         this.departureTime = departureTime;
     }
 
-    @Basic
-    @Column(name = "departure_timezone")
+    /**
+     * Gets departure timezone.
+     *
+     * @return the departure timezone
+     */
     public String getDepartureTimezone() {
         return departureTimezone;
     }
 
+    /**
+     * Sets departure timezone.
+     *
+     * @param departureTimezone the departure timezone
+     */
     public void setDepartureTimezone(String departureTimezone) {
         this.departureTimezone = departureTimezone;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id", nullable = false)
+    /**
+     * Gets aircraft.
+     *
+     * @return the aircraft
+     */
     public Aircraft getAircraft() {
         return aircraft;
     }
 
+    /**
+     * Sets aircraft.
+     *
+     * @param aircraft the aircraft
+     */
     public void setAircraft(Aircraft aircraft) {
         this.aircraft = aircraft;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "departure", referencedColumnName = "airport_id", nullable = false)
+    /**
+     * Gets departure.
+     *
+     * @return the departure
+     */
     public Airport getDeparture() {
         return departure;
     }
 
+    /**
+     * Sets departure.
+     *
+     * @param airportByFrom the airport by from
+     */
     public void setDeparture(Airport airportByFrom) {
         this.departure = airportByFrom;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "destination", referencedColumnName = "airport_id", nullable = false)
-    public Airport getDestination() {
+    /**
+     * Gets destination.
+     *
+     * @return the destination
+     */
+     public Airport getDestination() {
         return destination;
     }
 
+    /**
+     * Sets destination.
+     *
+     * @param airportByTo the airport by to
+     */
     public void setDestination(Airport airportByTo) {
         this.destination = airportByTo;
     }
 
-    @OneToMany(mappedBy = "flight_id")
+    /**
+     * Gets crew.
+     *
+     * @return the crew
+     */
     public Set<User> getCrew() {
         return crew;
     }
 
+    /**
+     * Sets crew.
+     *
+     * @param crew the crew
+     */
     public void setCrew(Set<User> crew) {
         this.crew = crew;
     }
 
+    /**
+     * Gets last modified.
+     *
+     * @return the last modified
+     */
     public Date getLastModified() {
         return lastModified;
     }
 
+    /**
+     * Sets last modified.
+     *
+     * @param lastModified the last modified
+     */
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -131,5 +221,119 @@ public class Flight {
                 ", crew=" + crew +
                 ", lastModified=" + lastModified +
                 '}';
+    }
+
+    /**
+     * {@code Flight} builder static inner class.
+     */
+    public static final class Builder {
+        private Date departureTime;
+        private String departureTimezone;
+        private Aircraft aircraft;
+        private Airport departure;
+        private Airport destination;
+        private Set<User> crew;
+        private Date lastModified;
+        private Long id;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code departureTime} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param departureTime the {@code departureTime} to set
+         * @return a reference to this Builder
+         */
+        public Builder departureTime(Date departureTime) {
+            this.departureTime = departureTime;
+            return this;
+        }
+
+        /**
+         * Sets the {@code departureTimezone} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param departureTimezone the {@code departureTimezone} to set
+         * @return a reference to this Builder
+         */
+        public Builder departureTimezone(String departureTimezone) {
+            this.departureTimezone = departureTimezone;
+            return this;
+        }
+
+        /**
+         * Sets the {@code aircraft} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param aircraft the {@code aircraft} to set
+         * @return a reference to this Builder
+         */
+        public Builder aircraft(Aircraft aircraft) {
+            this.aircraft = aircraft;
+            return this;
+        }
+
+        /**
+         * Sets the {@code departure} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param departure the {@code departure} to set
+         * @return a reference to this Builder
+         */
+        public Builder departure(Airport departure) {
+            this.departure = departure;
+            return this;
+        }
+
+        /**
+         * Sets the {@code destination} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param destination the {@code destination} to set
+         * @return a reference to this Builder
+         */
+        public Builder destination(Airport destination) {
+            this.destination = destination;
+            return this;
+        }
+
+        /**
+         * Sets the {@code crew} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param crew the {@code crew} to set
+         * @return a reference to this Builder
+         */
+        public Builder crew(Set<User> crew) {
+            this.crew = crew;
+            return this;
+        }
+
+        /**
+         * Sets the {@code lastModified} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param lastModified the {@code lastModified} to set
+         * @return a reference to this Builder
+         */
+        public Builder lastModified(Date lastModified) {
+            this.lastModified = lastModified;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Flight} built from the parameters previously set.
+         *
+         * @return a {@code Flight} built with parameters of this {@code Flight.Builder}
+         */
+        public Flight build() {
+            return new Flight(this);
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param id the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
     }
 }

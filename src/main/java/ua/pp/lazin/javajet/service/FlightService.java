@@ -61,9 +61,8 @@ public class FlightService {
         PendingResult.Callback<TimeZone> timeZoneCallback = new PendingResult.Callback<TimeZone>() {
             @Override
             public void onResult(TimeZone result) {
-                logger.debug("TimeZone for Flight " + flight.getId() + "Airport" +
-                        flight.getDeparture().getName() + " resolved. " +
-                        "It's " + result.getID() + " Calling saving to db method");
+                logger.debug("TimeZone for Flight " + flight.getId() + ", Airport " +
+                        flight.getDeparture().getName() + " resolved. It's " + result.getID() + " Calling saving to db method");
                 // TODO: 04.01.2017 tx start
                 Flight freshFlight = flightDao.findById(flight.getId());
                 freshFlight.setDepartureTimezone(result.getID());

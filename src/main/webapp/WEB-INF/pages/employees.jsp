@@ -53,21 +53,6 @@
             </a>
         </div>
     </div>
-
-    <a href="<c:url value="/flights"/>">flights</a> <br>
-    <a href="<c:url value="/employees"/>">employees</a><br>
-    <a href="<c:url value="/aircrafts"/>">aircrafts</a><br>
-    <br>
-
-    <a href="<c:url value="/flight"/>">flight</a><br>
-    <a href="<c:url value="/employee"/>">employee</a><br>
-    <a href="<c:url value="/aircraft"/>">aircraft</a><br>
-    <br>
-
-    <a href="<c:url value="/add-flight"/>">add-flight</a><br>
-    <a href="<c:url value="/add-employee"/>">add-employee</a><br>
-    <a href="<c:url value="/add-aircraft"/>">add-aircraft</a><br>
-
 </div>
 
 <%--Footer--%>

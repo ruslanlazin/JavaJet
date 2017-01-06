@@ -34,14 +34,15 @@ public class AddFlightCommandPOST implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        Flight flight = new Flight();
-        flight.setDepartureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
-        flight.setDeparture(airportService.findByCode(request.getParameter(FROM_PARAMETER)));
-        flight.setDestination(airportService.findByCode(request.getParameter(TO_PARAMETER)));
-
         Aircraft aircraft = new Aircraft();
         aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
-        flight.setAircraft(aircraft);
+
+        Flight flight = Flight.newBuilder()
+                .departure(airportService.findByCode(request.getParameter(FROM_PARAMETER)))
+                .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
+                .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
+                .aircraft(aircraft)
+                .build();
 
         flightService.create(flight); // TODO: 29.12.2016 validate
 
