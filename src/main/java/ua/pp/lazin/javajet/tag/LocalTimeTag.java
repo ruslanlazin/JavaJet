@@ -45,7 +45,7 @@ public class LocalTimeTag extends TagSupport {
     public int doEndTag() throws JspException {
 
         if (this.value == null) {
-            return 6;
+            return EVAL_PAGE;
         }
         String formattedOutput;
 
@@ -66,7 +66,7 @@ public class LocalTimeTag extends TagSupport {
             logger.error("An exception occurred during " + formattedOutput + " printing", e);
             throw new JspTagException(e.toString(), e);
         }
-        return 6;
+        return EVAL_PAGE;
     }
 
     private DateFormat buildDateFormat(TimeZone tz, Locale locale) {
@@ -130,32 +130,16 @@ public class LocalTimeTag extends TagSupport {
         this.init();
     }
 
-    public Date getValue() {
-        return value;
-    }
-
     public void setValue(Date value) {
         this.value = value;
-    }
-
-    public String getPattern() {
-        return pattern;
     }
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
     }
 
-    public Object getTimeZone() {
-        return timeZone;
-    }
-
     public void setTimeZone(Object timeZone) {
         this.timeZone = timeZone;
-    }
-
-    public Object getLocale() {
-        return locale;
     }
 
     public void setLocale(Object locale) {

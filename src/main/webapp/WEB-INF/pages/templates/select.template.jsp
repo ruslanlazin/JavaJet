@@ -12,7 +12,7 @@ Template for select Emploees for some position
         <select class="form-control js-select" id="${position}"
                 multiple="multiple" name="crew">
             <c:forEach var="employee" items="${employees}">
-                <c:if test="${employee.role.title == position}">
+                <c:if test="${employee.position.title == position}">
                     <option
                             <c:if test="${flight.crew.contains(employee)}">
                                 selected="selected"

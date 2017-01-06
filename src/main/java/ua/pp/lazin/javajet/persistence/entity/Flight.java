@@ -19,7 +19,7 @@ public class Flight {
     private Airport departure;
     private Airport destination;
     private Set<User> crew;
-    private Date lastModified;
+    private Integer version;
 
     private Flight(Builder builder) {
         setId(builder.id);
@@ -29,7 +29,7 @@ public class Flight {
         setDeparture(builder.departure);
         setDestination(builder.destination);
         setCrew(builder.crew);
-        setLastModified(builder.lastModified);
+        version = builder.version;
     }
 
     /**
@@ -137,7 +137,7 @@ public class Flight {
      *
      * @return the destination
      */
-     public Airport getDestination() {
+    public Airport getDestination() {
         return destination;
     }
 
@@ -169,24 +169,22 @@ public class Flight {
     }
 
     /**
-     * Gets last modified.
+     * Gets version.
      *
-     * @return the last modified
+     * @return the version
      */
-    public Date getLastModified() {
-        return lastModified;
+    public Integer getVersion() {
+        return version;
     }
 
     /**
-     * Sets last modified.
+     * Sets version.
      *
-     * @param lastModified the last modified
+     * @param version the version
      */
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -219,7 +217,7 @@ public class Flight {
                 ", departure=" + departure +
                 ", destination=" + destination +
                 ", crew=" + crew +
-                ", lastModified=" + lastModified +
+                ", version=" + version +
                 '}';
     }
 
@@ -233,6 +231,7 @@ public class Flight {
         private Airport departure;
         private Airport destination;
         private Set<User> crew;
+        private Integer version;
         private Date lastModified;
         private Long id;
 
@@ -302,6 +301,17 @@ public class Flight {
          */
         public Builder crew(Set<User> crew) {
             this.crew = crew;
+            return this;
+        }
+
+        /**
+         * Sets the {@code version} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param version the {@code version} to set
+         * @return a reference to this Builder
+         */
+        public Builder version(Integer version) {
+            this.version = version;
             return this;
         }
 

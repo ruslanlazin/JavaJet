@@ -19,16 +19,25 @@ import java.util.TimeZone;
 public class testCon {
     public static void main(String[] args) throws Exception {
 
-        System.out.println(new Date(116,11,11).getTime()/1000);
-        System.out.println(new Date(116,11,11));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("zzz");
-        Date now = new Date();
-
-        for (String id : TimeZone.getAvailableIDs()) {
-            sdf.setTimeZone(TimeZone.getTimeZone(id));
-            System.out.println(id + " = " + sdf.format(now));
+byte b = 100;
+        for (int i = 0; i < 500; i++) {
+            System.out.println(b);
+            b++;
         }
+
+
+
+
+//        System.out.println(new Date(116,11,11).getTime()/1000);
+//        System.out.println(new Date(116,11,11));
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("zzz");
+//        Date now = new Date();
+//
+//        for (String id : TimeZone.getAvailableIDs()) {
+//            sdf.setTimeZone(TimeZone.getTimeZone(id));
+//            System.out.println(id + " = " + sdf.format(now));
+//        }
 
 
 //        String Surl = "https://maps.googleapis.com/maps/api/timezone/json?";

@@ -62,8 +62,10 @@ public class FlightService {
             @Override
             public void onResult(TimeZone result) {
                 logger.debug("TimeZone for Flight " + flight.getId() + ", Airport " +
-                        flight.getDeparture().getName() + " resolved. It's " + result.getID() + " Calling saving to db method");
+                        flight.getDeparture().getName() + " resolved. It's " +
+                        result.getID() + " Calling saving to db method");
                 // TODO: 04.01.2017 tx start
+                System.out.println(Thread.currentThread().getId());
                 Flight freshFlight = flightDao.findById(flight.getId());
                 freshFlight.setDepartureTimezone(result.getID());
                 flightDao.update(freshFlight);

@@ -66,9 +66,9 @@ public class AuthFilter implements Filter {
 //        user.setUsername("b");
 //        user.setPassword("b");
 //        user.setEmail("b@b.ua");
-//        Role role = new Role();
+//        Position role = new Position();
 //        role.setId(1L);
-//        user.setRole(role);
+//        user.setPosition(role);
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
         if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request)

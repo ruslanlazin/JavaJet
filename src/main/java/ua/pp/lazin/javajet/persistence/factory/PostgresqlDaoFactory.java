@@ -27,8 +27,8 @@ class PostgresqlDaoFactory implements DaoFactory {
     }
 
     @Override
-    public RoleDao getRoleDao() {
-        return new PostgresqlRoleDao();
+    public PositionDao getRoleDao() {
+        return new PostgresqlPositionDao();
     }
 
     @Override

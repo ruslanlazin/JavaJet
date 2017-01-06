@@ -39,7 +39,7 @@ public class PostgresqlFlightDao implements FlightDao {
                     .departureTime(rs.getTimestamp("departure_time"))
                     .departureTimezone(rs.getString("departure_timezone"))
                     .id(rs.getLong("flight_id"))
-                    .lastModified(rs.getDate("last_modified"))
+                    .version(rs.getInt("version"))
                     .build();
         }
     };

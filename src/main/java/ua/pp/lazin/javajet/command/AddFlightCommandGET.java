@@ -1,13 +1,7 @@
 package ua.pp.lazin.javajet.command;
 
-import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
-import ua.pp.lazin.javajet.persistence.dao.RoleDao;
 import ua.pp.lazin.javajet.persistence.entity.Aircraft;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
-import ua.pp.lazin.javajet.persistence.entity.Role;
-import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.service.AircraftService;
-import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
 
 import javax.servlet.http.HttpServletRequest;

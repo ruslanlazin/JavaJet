@@ -6,7 +6,7 @@
         <class>ua.pp.lazin.javajet.persistence.entity.Airport</class>
         <class>ua.pp.lazin.javajet.persistence.entity.Flight</class>
         <class>ua.pp.lazin.javajet.persistence.entity.FlightUsers</class>
-        <class>ua.pp.lazin.javajet.persistence.entity.Role</class>
+        <class>ua.pp.lazin.javajet.persistence.entity.Position</class>
         <class>ua.pp.lazin.javajet.persistence.entity.User</class>
         <class>ua.pp.lazin.javajet.persistence.entity.User</class>
         <class>ua.pp.lazin.javajet.persistence.entity.User</class>
