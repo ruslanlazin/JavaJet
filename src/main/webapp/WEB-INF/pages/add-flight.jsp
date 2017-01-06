@@ -11,14 +11,16 @@
     <link href="<c:url value="/resources/css/bootstrap-datetimepicker.min.css" />" rel="stylesheet"/>
     <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js/js/jquery.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/bootstrap.min.js/js/bootstrap.min.js" />"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/bootstrap-datetimepicker.min.js/js/bootstrap-datetimepicker.min.js" />"></script>
+    <script type="text/javascript"
+            src="<c:url value="/resources/js/lib/bootstrap.min.js/js/bootstrap.min.js" />"></script>
+    <script type="text/javascript"
+            src="<c:url value="/resources/js/lib/bootstrap-datetimepicker.min.js/js/bootstrap-datetimepicker.min.js" />"></script>
 </head>
 
 <body>
 <div class="container-fluid">
     <%--Navbar. Also contains shared Locale Init Section and taglib Declarations--%>
-    <%@include file="navbar.jsp" %>
+    <%@include file="templates/navbar.jsp" %>
     <%--Page Content--%>
     <div class="container">
         <%--Back Button--%>
@@ -110,5 +112,7 @@
         </form>
     </div>
 </div>
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
 </html>

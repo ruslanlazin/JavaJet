@@ -11,14 +11,16 @@
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
     <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
     <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
-
+    <style>body {
+        background-image: url("<c:url value="/resources/images/javajet-tr.png"/>")
+    }</style>
 
 </head>
 
 <body>
 <div class="container-fluid">
     <%--<c:import url="navbar.jsp"/>--%>
-    <%@include file="navbar.jsp" %>
+    <%@include file="templates/navbar.jsp" %>
 
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
@@ -87,6 +89,8 @@
 
 </div>
 
-
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
+
 </html>

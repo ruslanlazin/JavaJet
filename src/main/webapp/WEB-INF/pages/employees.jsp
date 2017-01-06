@@ -17,7 +17,7 @@
 <body>
 <div class="container-fluid">
     <%--<c:import url="navbar.jsp"/>--%>
-    <%@include file="navbar.jsp" %>
+    <%@include file="templates/navbar.jsp" %>
 
     <div class="row">
         <div class="col-lg-8 col-lg-offset-1">
@@ -70,6 +70,8 @@
 
 </div>
 
-
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
+
 </html>

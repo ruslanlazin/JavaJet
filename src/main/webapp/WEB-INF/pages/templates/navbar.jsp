@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<link href="<c:url value="/resources/css/navbar.css" />" rel="stylesheet"/>
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
 <link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">
 
 <c:set var="language"
@@ -14,7 +14,9 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<c:url value="/" />">JavaJet AirLines</a>
+            <a class="navbar-brand" href="<c:url value="/" />">
+                <img class="img-responsive" src="<c:url value="/resources/images/logo-xs.png"/>">
+            </a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="<c:url value="/flights"/>"><fmt:message key="shared.flights"/></a></li>
@@ -41,6 +43,8 @@
         </ul>
     </div>
 </nav>
+
+
 
   
 

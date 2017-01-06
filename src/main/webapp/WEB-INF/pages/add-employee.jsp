@@ -17,7 +17,7 @@
 <body>
 <%--<c:import url="navbar.jsp"/>--%>
 <div class="container-fluid">
-    <%@include file="navbar.jsp" %>
+    <%@include file="templates/navbar.jsp" %>
 
     <div class="container">
         <div class="row">
@@ -132,5 +132,7 @@
         <a href="<c:url value="/add-aircraft"/>">add-aircraft</a><br>
     </div>
 </div>
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
 </html>

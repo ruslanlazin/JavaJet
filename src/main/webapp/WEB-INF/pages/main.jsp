@@ -16,7 +16,7 @@
 
 <body>
 <%--<c:import url="navbar.jsp"/>--%>
-<%@include file="navbar.jsp" %>
+<%@include file="templates/navbar.jsp" %>
 
 
 
@@ -36,6 +36,7 @@
 
 
 
-
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
 </html>

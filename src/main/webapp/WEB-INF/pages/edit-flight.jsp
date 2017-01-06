@@ -21,7 +21,7 @@
 <body>
 <div class="container-fluid">
     <%--Navbar. Also contains shared Locale Init Section--%>
-    <%@include file="navbar.jsp" %>
+    <%@include file="templates/navbar.jsp" %>
 
     <!-- Values passed to javascript -->
     <input type="hidden" id="departureTime" value="<fmt:formatDate
@@ -124,22 +124,22 @@
             <%--Select Pilots Field--%>
             <c:set var="position" value="Pilot" scope="page"/>
             <fmt:message key="edit-flight.pilots" var="label" scope="page"/>
-            <%@include file="select.template.jsp" %>
+            <%@include file="templates/select.template.jsp" %>
 
             <%--Select Navigation Officer Field--%>
             <c:set var="position" value="Navigating Officer" scope="page"/>
             <fmt:message key="edit-flight.navi" var="label" scope="page"/>
-            <%@include file="select.template.jsp" %>
+            <%@include file="templates/select.template.jsp" %>
 
             <%--Select Flight Attendants Field--%>
             <c:set var="position" value="Flight Attendant" scope="page"/>
             <fmt:message key="edit-flight.attendant" var="label" scope="page"/>
-            <%@include file="select.template.jsp" %>
+            <%@include file="templates/select.template.jsp" %>
 
             <%--Select Radioman Field--%>
             <c:set var="position" value="Radioman" scope="page"/>
             <fmt:message key="edit-flight.radioman" var="label" scope="page"/>
-            <%@include file="select.template.jsp" %>
+            <%@include file="templates/select.template.jsp" %>
 
 
             <%--Save Button--%>
@@ -153,5 +153,7 @@
         </form>
     </div>
 </div>
+<%--Footer--%>
+<%@include file="templates/footer.html" %>
 </body>
 </html>
