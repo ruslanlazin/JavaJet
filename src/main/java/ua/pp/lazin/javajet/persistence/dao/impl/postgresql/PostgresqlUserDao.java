@@ -30,7 +30,6 @@ public class PostgresqlUserDao implements UserDao {
             Position position = new Position();
             position.setId(rs.getLong("position_id"));
             position.setTitle(rs.getString("title"));
-
             return User.newBuilder()
                     .id(rs.getLong("user_id"))
                     .position(position)
@@ -78,24 +77,24 @@ public class PostgresqlUserDao implements UserDao {
     }
 
 
-
     @Override
     public User findByID(Long id) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, r.title FROM users u JOIN position r ON u.position_id = r.position_id where u.user_id = ?", id);
+                "SELECT u.*, p.title FROM users u JOIN position p ON u.position_id = p.position_id where u.user_id = ?", id);
 
     }
 
     @Override
     public User findByUsername(String username) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, r.title FROM users u JOIN position r ON u.position_id = r.position_id where u.username = ?", username);
+                "SELECT u.*, p.title FROM users u JOIN position p ON u.position_id = p.position_id where u.username = ?", username);
     }
 
     @Override
     public Set<User> findUsersByFlight(Flight flight) {
 
-        List<User> crew = jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN position r ON u.position_id = r.position_id JOIN flight_users f ON u.user_id = f.user_id " +
+        List<User> crew = jdbcTemplate.findEntities(rowMapper,
+                "SELECT u.*, p.title FROM users u JOIN position p ON u.position_id = p.position_id JOIN flight_users f ON u.user_id = f.user_id " +
                 "WHERE f.flight_id = ?", flight.getId());
         return new HashSet<>(crew);
     }
@@ -103,12 +102,13 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public User findByEmail(String email) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, r.title FROM users u JOIN position r ON u.position_id = r.position_id where u.email = ?", email);
+                "SELECT u.*, p.title FROM users u JOIN position p ON u.position_id = p.position_id where u.email = ?", email);
     }
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT u.*, r.title FROM users u JOIN position r ON u.position_id = r.position_id ORDER BY u.second_name");
+        return jdbcTemplate.findEntities(rowMapper,
+                "SELECT u.*, p.title FROM users u JOIN position p ON u.position_id = p.position_id ORDER BY u.second_name");
     }
 
     @Override

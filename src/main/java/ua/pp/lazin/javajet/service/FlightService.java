@@ -51,10 +51,8 @@ public class FlightService {
         return flight;
     }
 
-    public void updateFlightAndCrew(Flight flight) {
-        flightDao.update(flight);
-        flightDao.updateCrew(flight);
-        // TODO: 04.01.2017 add tx
+    public Boolean updateFlightAndCrew(Flight flight) {
+        return flightDao.updateWithCrew(flight);
     }
 
     private void resolveTimezoneWhenWrite(Flight flight) {

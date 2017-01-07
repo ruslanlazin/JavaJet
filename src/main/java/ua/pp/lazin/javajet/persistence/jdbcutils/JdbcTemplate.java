@@ -3,7 +3,11 @@ package ua.pp.lazin.javajet.persistence.jdbcutils;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.exception.DataAccessException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +18,12 @@ import java.util.List;
 public class JdbcTemplate<T> {
     private final static Logger logger = Logger.getLogger(JdbcTemplate.class);
 
-    public Long insert(Connection connection, String insertQuery, Object... params) {
-
-        try (PreparedStatement preparedStatement
-                     = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+    public Long insert(Connection connection, String insertQuery, Object... params) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Executing SQL INSERT [" + insertQuery + "]");
+        }
+        try (PreparedStatement preparedStatement = connection
+                .prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
@@ -30,43 +36,41 @@ public class JdbcTemplate<T> {
             }
             return null;
         } catch (SQLException e) {
-            logger.error("Cannot execute insert query " + insertQuery, e);
+            logger.error("Cannot execute INSERT query " + insertQuery, e);
             throw new DataAccessException(e);
         }
     }
 
 
-        public int update(String updateQuery, Object... params) {
-        Connection connection = ConnectionManager.getConnection();
-
+    public int update(Connection connection, String updateQuery, Object... params) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Executing SQL UPDATE [" + updateQuery + "]");
+        }
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
             for (int i = 0; i < params.length; i++) {
-                if (params[i] instanceof java.util.Date) {
-                    preparedStatement.setObject(i + 1, params[i], Types.TIMESTAMP);
-                } else {
-                    preparedStatement.setObject(i + 1, params[i]);
-                }
+                preparedStatement.setObject(i + 1, params[i]);
             }
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Cannot execute update query " + updateQuery, e);
-        } finally {
-            closeConnection(connection);
+            logger.error("Cannot execute UPDATE query " + updateQuery, e);
+            throw new DataAccessException(e);
         }
-        return 0;
     }
 
 
-    public List<T> findEntities(RowMapper<T> rowMapper, String query, Object... params) {
+    public List<T> findEntities(RowMapper<T> rowMapper, String query, Object... params) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Executing SQL SELECT [" + query + "]");
+        }
         Connection connection = ConnectionManager.getConnection();
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             for (int i = 0; i < params.length; i++) {
-                stmt.setObject(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
 
             List<T> entities = new ArrayList<>();
             int i = 0;
@@ -75,34 +79,59 @@ public class JdbcTemplate<T> {
             }
             return entities;
         } catch (SQLException e) {
-            logger.error("Cannot execute query " + query, e);
-
+            logger.error("Cannot execute SELECT query " + query, e);
+            throw new DataAccessException(e);
         } finally {
             closeConnection(connection);
         }
-        return null;
-
     }
 
-    public T findEntity(RowMapper<T> rowMapper, String query, Object... params) {
+    public T findEntity(RowMapper<T> rowMapper, String query, Object... params) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Executing SQL SELECT [" + query + "]");
+        }
         Connection connection = ConnectionManager.getConnection();
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             for (int i = 0; i < params.length; i++) {
-                stmt.setObject(i + 1, params[i]);
+                preparedStatement.setObject(i + 1, params[i]);
             }
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
                 return rowMapper.mapRow(rs, 0);
             }
+            return null;
         } catch (SQLException e) {
-            logger.error("Cannot execute query " + query, e);
+            logger.error("Cannot execute SELECT query " + query, e);
+            throw new DataAccessException(e);
         } finally {
             closeConnection(connection);
         }
-        return null;
+    }
+
+
+    public int[] batchUpdate(Connection txConnection, String batchQuery, List<Object[]> batchArgs) throws DataAccessException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Executing SQL BATCH UPDATE [" + batchQuery + "] with a batch size of " + batchArgs.size());
+        }
+        Connection connection = ConnectionManager.getConnection();
+
+        try (PreparedStatement stmt = connection.prepareStatement(batchQuery)) {
+
+            for (Object[] rowParams : batchArgs) {
+                for (int i = 0; i < rowParams.length; i++) {
+                    stmt.setObject(i + 1, rowParams[i]);
+                }
+                stmt.addBatch();
+            }
+            return stmt.executeBatch();
+
+        } catch (SQLException e) {
+            logger.error("Cannot execute BATCH UPDATE query " + batchQuery, e);
+            throw new DataAccessException(e);
+        }
     }
 
 

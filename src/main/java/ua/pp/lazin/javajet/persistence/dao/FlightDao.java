@@ -4,9 +4,6 @@ import ua.pp.lazin.javajet.persistence.entity.Flight;
 
 import java.util.List;
 
-/**
- * @author Ruslan Lazin
- */
 public interface FlightDao {
     Long create(Flight flight);
 
@@ -20,5 +17,5 @@ public interface FlightDao {
 
     Flight findById(Long flightId);
 
-    Boolean updateCrew(Flight flight);
+    Boolean updateWithCrew(Flight flight);
 }

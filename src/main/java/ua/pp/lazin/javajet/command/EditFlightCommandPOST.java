@@ -26,6 +26,7 @@ public class EditFlightCommandPOST implements Command {
 
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String SUCCESS_ATTRIBUTE = "success";
+    private static final String CONCURRENT_MODIFICATION_ATTRIBUTE = "concurrent";
     private static final String FLIGHT_ID_PARAMETER = "flightId";
     private static final String AIRCRAFT_PARAMETER = "aircraft";
     private static final String FROM_PARAMETER = "from";
@@ -36,7 +37,7 @@ public class EditFlightCommandPOST implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-
+// TODO: 07.01.2017 remove
         Map<String, String[]> map = request.getParameterMap();
         for (Map.Entry<String, String[]> stringEntry : map.entrySet()) {
             System.out.println("key" + stringEntry.getKey());
@@ -70,12 +71,17 @@ public class EditFlightCommandPOST implements Command {
         // TODO: 29.12.2016 validate
 
 
-        flightService.updateFlightAndCrew(flight);
+        Boolean updateSuccessful = flightService.updateFlightAndCrew(flight);
+        if (updateSuccessful) {
+            request.setAttribute(SUCCESS_ATTRIBUTE, true);
+        } else {
+            request.setAttribute(CONCURRENT_MODIFICATION_ATTRIBUTE, true);
+            logger.info("2 users tried to edit Flight  "+ flight.getId()+ "simultaneously");
+        }
 
-        request.setAttribute("flight", flight);
+        request.setAttribute("flight", flightService.findByIdWithCrew(flight.getId()));
         request.setAttribute("employees", userService.findAll());
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
-        request.setAttribute(SUCCESS_ATTRIBUTE, true);
 
         return "edit-flight";
     }

@@ -11,7 +11,8 @@ import java.sql.SQLException;
  */
 public class TransactionTemplate {
     private static final Logger logger = Logger.getLogger(TransactionTemplate.class);
-    private static TransactionTemplate INSTANCE = new TransactionTemplate();
+    private static final int TX_ISOLATION_LEVEL = Connection.TRANSACTION_READ_COMMITTED;
+    private static final TransactionTemplate INSTANCE = new TransactionTemplate();
 
     /**
      * Construct a new TransactionTemplate for usage.
@@ -25,23 +26,25 @@ public class TransactionTemplate {
 
 
     public <T> T execute(TransactionCallback<T> action) {
-        Connection connection = ConnectionManager.getConnection();
+        Connection txConnection = ConnectionManager.getConnection();
 
         T result = null;
         try {
-            connection.setAutoCommit(false);
-            result = action.doInTransaction(connection);
-            connection.commit();
+            txConnection.setAutoCommit(false);
+            txConnection.setTransactionIsolation(TX_ISOLATION_LEVEL);
+            result = action.doInTransaction(txConnection);
+            txConnection.commit();
+            txConnection.setAutoCommit(true);
         } catch (SQLException e) {
             // Transactional code threw application exception -> rollback
-            rollbackOnException(connection, e);
+            rollbackOnException(txConnection, e);
             throw new DataAccessException(e);
         } catch (DataAccessException e) {
             // Transactional code threw application exception -> rollback
-            rollbackOnException(connection, e);
+            rollbackOnException(txConnection, e);
             throw e;
         } finally {
-            closeConnection(connection);
+            closeConnection(txConnection);
         }
         return result;
     }
@@ -50,24 +53,24 @@ public class TransactionTemplate {
     /**
      * Perform a rollback, handling rollback exceptions properly.
      *
-     * @param connection object representing the connection in setAutoCommit(false) state
-     * @param ex         the thrown application exception or error
+     * @param txConnection object representing the connection in setAutoCommit(false) state
+     * @param ex           the thrown application exception or error
      * @throws DataAccessException in case of a rollback error
      */
-    private void rollbackOnException(Connection connection, Throwable ex) {
+    private void rollbackOnException(Connection txConnection, Throwable ex) {
         logger.debug("Initiating transaction rollback on application exception", ex);
         try {
-            connection.rollback();
+            txConnection.rollback();
         } catch (SQLException e) {
             logger.error("Application exception overridden by rollback exception", e);
             throw new DataAccessException(e);
         }
     }
 
-    private void closeConnection(Connection connection) {
+    private void closeConnection(Connection txConnection) {
         try {
-            if (connection != null) {
-                connection.close();
+            if (txConnection != null) {
+                txConnection.close();
             }
         } catch (SQLException e) {
             logger.error("Cannot close jdbc connection", e);
