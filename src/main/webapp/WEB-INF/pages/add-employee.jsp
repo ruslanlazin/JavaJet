@@ -93,16 +93,16 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2" for="role">
+                <label class="control-label col-sm-2" for="position">
                     <fmt:message key="shared.position"/>:
                 </label>
                 <div class="col-sm-4">
-                    <select class="form-control" id="role" name="role">
-                        <c:forEach var="role" items="${roles}">
-                            <option  <c:if test="${role.id == employee.role.id}">
+                    <select class="form-control" id="position" name="position">
+                        <c:forEach var="position" items="${positions}">
+                            <option  <c:if test="${position.id == employee.position.id}">
                                 selected="selected"
                             </c:if>
-                            >${role.title}</option>
+                            >${position.title}</option>
                         </c:forEach>
                     </select>
                 </div>

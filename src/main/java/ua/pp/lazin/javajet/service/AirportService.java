@@ -15,9 +15,9 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class AirportService {
-    private final static Logger logger = Logger.getLogger(AirportService.class);
-    private final static AirportDao airportDao = DaoFactoryCreator.getFactory().getAirportDao();
-    private static AirportService INSTANCE = new AirportService();
+    private static final  Logger logger = Logger.getLogger(AirportService.class);
+    private static final  AirportDao airportDao = DaoFactoryCreator.getFactory().getAirportDao();
+    private static final AirportService INSTANCE = new AirportService();
 
     private AirportService() {
     }

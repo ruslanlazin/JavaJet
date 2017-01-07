@@ -1,6 +1,7 @@
 package ua.pp.lazin.javajet.persistence.jdbcutils;
 
 import org.apache.log4j.Logger;
+import ua.pp.lazin.javajet.exception.DataAccessException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,18 +14,13 @@ import java.util.List;
 public class JdbcTemplate<T> {
     private final static Logger logger = Logger.getLogger(JdbcTemplate.class);
 
-    public Long insert(String insertQuery, Object... params) {
-        Connection connection = ConnectionManager.getConnection();
+    public Long insert(Connection connection, String insertQuery, Object... params) {
 
         try (PreparedStatement preparedStatement
                      = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             for (int i = 0; i < params.length; i++) {
-                if (params[i] instanceof java.util.Date) {
-                    preparedStatement.setObject(i + 1, params[i], Types.TIMESTAMP);
-                } else {
-                    preparedStatement.setObject(i + 1, params[i]);
-                }
+                preparedStatement.setObject(i + 1, params[i]);
             }
             preparedStatement.executeUpdate();
 
@@ -35,13 +31,12 @@ public class JdbcTemplate<T> {
             return null;
         } catch (SQLException e) {
             logger.error("Cannot execute insert query " + insertQuery, e);
-        } finally {
-            closeConnection(connection);
+            throw new DataAccessException(e);
         }
-        return null;
     }
 
-    public int update(String updateQuery, Object... params) {
+
+        public int update(String updateQuery, Object... params) {
         Connection connection = ConnectionManager.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -120,5 +115,4 @@ public class JdbcTemplate<T> {
             logger.error("Cannot close jdbc connection", e);
         }
     }
-
 }

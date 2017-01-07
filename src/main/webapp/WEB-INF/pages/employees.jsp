@@ -37,7 +37,7 @@
                         <td>${flight.id}</td>
                         <td>${flight.firstName}</td>
                         <td>${flight.secondName}</td>
-                        <td>${flight.role.title}</td>
+                        <td>${flight.position.title}</td>
                         <td>${flight.email}</td>
                     </tr>
                 </c:forEach>

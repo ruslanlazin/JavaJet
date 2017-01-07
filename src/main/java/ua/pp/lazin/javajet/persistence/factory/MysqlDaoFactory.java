@@ -26,7 +26,7 @@ public class MysqlDaoFactory implements DaoFactory {
     }
 
     @Override
-    public PositionDao getRoleDao() {
+    public PositionDao getPositionDao() {
         return null;
     }
 

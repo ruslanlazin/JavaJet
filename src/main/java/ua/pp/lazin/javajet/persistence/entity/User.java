@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String email;
     private Boolean airCrew;
-    private Boolean works;
+    private Boolean working;
     private Set<Flight> flights;
     private Integer version;
 
@@ -28,7 +28,7 @@ public class User {
         setPassword(builder.password);
         setEmail(builder.email);
         setAirCrew(builder.airCrew);
-        setWorks(builder.works);
+        setWorking(builder.working);
         setFlights(builder.flights);
         setVersion(builder.version);
     }
@@ -102,12 +102,12 @@ public class User {
         this.airCrew = isAirCrew;
     }
 
-        public Boolean isWorks() {
-        return works;
+        public Boolean isWorking() {
+        return working;
     }
 
-    public void setWorks(Boolean isWork) {
-        this.works = isWork;
+    public void setWorking(Boolean isWorking) {
+        this.working = isWorking;
     }
 
     public Integer getVersion() {
@@ -179,7 +179,7 @@ public class User {
         private String password;
         private String email;
         private Boolean airCrew;
-        private Boolean works;
+        private Boolean working;
         private Set<Flight> flights;
         private Integer version;
 
@@ -275,13 +275,13 @@ public class User {
         }
 
         /**
-         * Sets the {@code works} and returns a reference to this Builder so that the methods can be chained together.
+         * Sets the {@code working} and returns a reference to this Builder so that the methods can be chained together.
          *
-         * @param works the {@code works} to set
+         * @param working the {@code working} to set
          * @return a reference to this Builder
          */
-        public Builder works(Boolean works) {
-            this.works = works;
+        public Builder working(Boolean working) {
+            this.working = working;
             return this;
         }
 

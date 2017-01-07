@@ -13,9 +13,9 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class AircraftService {
-    private final static Logger logger = Logger.getLogger(AircraftService.class);
-    private final static AircraftDao aircraftDao = DaoFactoryCreator.getFactory().getAircraftDao();
-    private static AircraftService INSTANCE = new AircraftService();
+    private static final Logger logger = Logger.getLogger(AircraftService.class);
+    private static final AircraftDao aircraftDao = DaoFactoryCreator.getFactory().getAircraftDao();
+    private static final AircraftService INSTANCE = new AircraftService();
 
     private AircraftService() {
     }
@@ -27,6 +27,4 @@ public class AircraftService {
     public List<Aircraft> findAll() {
         return aircraftDao.findAll();
     }
-
-
 }

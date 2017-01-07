@@ -12,7 +12,6 @@ import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -32,48 +31,48 @@ public class EditFlightCommandPOST implements Command {
     private static final String FROM_PARAMETER = "from";
     private static final String TO_PARAMETER = "to";
     private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
+    private static final String VERSION_PARAMETER = "version";
+    private static final String CREW_PARAMETER = "crew";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         Map<String, String[]> map = request.getParameterMap();
         for (Map.Entry<String, String[]> stringEntry : map.entrySet()) {
-            System.out.println("key"+ stringEntry.getKey());
+            System.out.println("key" + stringEntry.getKey());
 
-            String[]ar = stringEntry.getValue();
+            String[] ar = stringEntry.getValue();
             for (String s : ar) {
                 System.out.println(s);
             }
         }
 
+        Aircraft aircraft = new Aircraft();
+        aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
+        Set<User> crew = new HashSet<>();
+        String[] crewIdsAsStrings = request.getParameterValues(CREW_PARAMETER);
+        if (crewIdsAsStrings != null) {
+            for (String userIdAsString : crewIdsAsStrings) {
+                crew.add(userService.findById(Long.valueOf(userIdAsString)));
+            }
+        }
+        Flight flight = Flight.newBuilder()
+                .id(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)))
+                .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
+                .departure(airportService.findByCode(request.getParameter(FROM_PARAMETER)))
+                .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
+                .aircraft(aircraft)
+                .crew(crew)
+                .version(Integer.valueOf(request.getParameter(VERSION_PARAMETER)))
+                .build();
 
-//
-//
-//
-//        Flight flight = new Flight();
-//        flight.setId(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)));
-//        flight.setDepartureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)));
-//        flight.setDeparture(airportService.findByCode(request.getParameter(FROM_PARAMETER)));
-//        flight.setDestination(airportService.findByCode(request.getParameter(TO_PARAMETER)));
-//
-//        Aircraft aircraft = new Aircraft();
-//        aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
-//        flight.setAircraft(aircraft);
-//        // TODO: 29.12.2016 validate
-//
-//        Set<User> crew = new HashSet<>();
-//        String[] crewIdsAsStrings = request.getParameterValues("crew");
-//        if (crewIdsAsStrings != null) {
-//            for (String userIdAsString : crewIdsAsStrings) {
-//                crew.add(userService.findById(Long.valueOf(userIdAsString)));
-//            }
-//        }
-//        flight.setCrew(crew);
-//        System.out.println(flight);
-//
-//        flightService.updateFlightAndCrew(flight);
-//
-//        request.setAttribute("flight", flight);
+
+        // TODO: 29.12.2016 validate
+
+
+        flightService.updateFlightAndCrew(flight);
+
+        request.setAttribute("flight", flight);
         request.setAttribute("employees", userService.findAll());
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
         request.setAttribute(SUCCESS_ATTRIBUTE, true);

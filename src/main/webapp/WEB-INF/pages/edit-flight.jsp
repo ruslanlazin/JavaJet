@@ -52,7 +52,8 @@
 
         <%--Flight form--%>
         <form class="form-horizontal" method="POST">
-            <input type="hidden" name="flightId" value="${flight.id}"/>
+            <%--<input type="hidden" name="flightId" value="${flight.id}"/>--%>
+            <input type="hidden" name="version" value="${flight.version}"/>
 
             <%--Input Time Field--%>
             <div class="form-group">

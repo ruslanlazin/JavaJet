@@ -225,6 +225,7 @@ public class Flight {
      * {@code Flight} builder static inner class.
      */
     public static final class Builder {
+        private Long id;
         private Date departureTime;
         private String departureTimezone;
         private Aircraft aircraft;
@@ -232,8 +233,6 @@ public class Flight {
         private Airport destination;
         private Set<User> crew;
         private Integer version;
-        private Date lastModified;
-        private Long id;
 
         private Builder() {
         }
@@ -312,17 +311,6 @@ public class Flight {
          */
         public Builder version(Integer version) {
             this.version = version;
-            return this;
-        }
-
-        /**
-         * Sets the {@code lastModified} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param lastModified the {@code lastModified} to set
-         * @return a reference to this Builder
-         */
-        public Builder lastModified(Date lastModified) {
-            this.lastModified = lastModified;
             return this;
         }
 

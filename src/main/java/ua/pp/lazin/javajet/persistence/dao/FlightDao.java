@@ -1,7 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao;
 
 import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface FlightDao {
 
     Flight findById(Long flightId);
 
-    void updateCrew(Flight flight);
+    Boolean updateCrew(Flight flight);
 }

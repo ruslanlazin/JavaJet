@@ -17,7 +17,7 @@ public interface DaoFactory {
 
     FlightDao getFlightDao();
 
-    PositionDao getRoleDao();
+    PositionDao getPositionDao();
 
     UserDao getUserDao();
 

@@ -42,6 +42,7 @@ public class AddFlightCommandPOST implements Command {
                 .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
                 .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
                 .aircraft(aircraft)
+                .version(0) // TODO: 06.01.2017 ?
                 .build();
 
         flightService.create(flight); // TODO: 29.12.2016 validate

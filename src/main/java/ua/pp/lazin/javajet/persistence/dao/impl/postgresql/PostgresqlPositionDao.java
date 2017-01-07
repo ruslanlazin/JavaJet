@@ -31,12 +31,12 @@ public class PostgresqlPositionDao implements PositionDao {
 
     @Override
     public Position findByTitle(String title) {
-        return jdbcTemplate.findEntity(rowMapper, "SELECT * FROM role WHERE role.title=?", title);
+        return jdbcTemplate.findEntity(rowMapper, "SELECT * FROM position p WHERE p.title = ?", title);
     }
 
     @Override
     public List<Position> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT * FROM role ORDER BY title");
+        return jdbcTemplate.findEntities(rowMapper, "SELECT * FROM position ORDER BY title");
     }
 
     @Override
