@@ -17,6 +17,7 @@ public class User {
     private Boolean airCrew;
     private Boolean working;
     private Set<Flight> flights;
+    private Set<Role> roles;
     private Integer version;
 
     private User(Builder builder) {
@@ -30,6 +31,7 @@ public class User {
         setAirCrew(builder.airCrew);
         setWorking(builder.working);
         setFlights(builder.flights);
+        setRoles(builder.roles);
         setVersion(builder.version);
     }
 
@@ -102,7 +104,7 @@ public class User {
         this.airCrew = isAirCrew;
     }
 
-        public Boolean isWorking() {
+    public Boolean isWorking() {
         return working;
     }
 
@@ -126,6 +128,21 @@ public class User {
         this.flights = flights;
     }
 
+    public Boolean getAirCrew() {
+        return airCrew;
+    }
+
+    public Boolean getWorking() {
+        return working;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -181,6 +198,7 @@ public class User {
         private Boolean airCrew;
         private Boolean working;
         private Set<Flight> flights;
+        private Set<Role> roles;
         private Integer version;
 
         private Builder() {
@@ -293,6 +311,17 @@ public class User {
          */
         public Builder flights(Set<Flight> flights) {
             this.flights = flights;
+            return this;
+        }
+
+        /**
+         * Sets the {@code roles} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param roles the {@code roles} to set
+         * @return a reference to this Builder
+         */
+        public Builder roles(Set<Role> roles) {
+            this.roles = roles;
             return this;
         }
 

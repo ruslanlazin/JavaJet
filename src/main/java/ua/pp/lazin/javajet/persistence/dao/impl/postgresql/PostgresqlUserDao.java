@@ -112,7 +112,6 @@ public class PostgresqlUserDao implements UserDao {
 
     @Override
     public Set<User> findUsersByFlight(Flight flight) {
-
         List<User> crew = jdbcTemplate.findEntities(rowMapper,
                 "SELECT u.*, p.title FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +

@@ -21,6 +21,6 @@ public class AddFlightCommandGET implements Command {
 
         List<Aircraft> aircrafts = aircraftService.findAll();
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircrafts);
-        return "add-flight";
+        return "edit-flight";
     }
 }
