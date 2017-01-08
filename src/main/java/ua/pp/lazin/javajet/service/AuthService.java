@@ -8,6 +8,7 @@ import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Ruslan Lazin
@@ -25,24 +26,24 @@ public class AuthService {
         return INSTANCE;
     }
 
-    public boolean isAuthenticated(HttpServletRequest request) {
-        return request.getSession().getAttribute(USER_ATTRIBUTE) != null;
+    public boolean isAuthenticated(HttpSession session) {
+        return session.getAttribute(USER_ATTRIBUTE) != null;
     }
 
-    public boolean login(HttpServletRequest request, String login, String password) {
+    public boolean login(HttpSession session, String login, String password) {
         User user = userDao.findByUsername(login);
         if (user == null) {
             return false;
         }
         if (PasswordEncoder.check(password, user.getPassword())) {
-            request.getSession().setAttribute(USER_ATTRIBUTE, user);
+            session.setAttribute(USER_ATTRIBUTE, user);
             return true;
         }
         return false;
     }
 
-    public void logout(HttpServletRequest request) {
-        request.getSession().setAttribute(USER_ATTRIBUTE, null);
+    public void logout(HttpSession session) {
+        session.removeAttribute(USER_ATTRIBUTE);
     }
 
     public void register(User user) {

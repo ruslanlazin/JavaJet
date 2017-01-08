@@ -71,11 +71,8 @@ public class PostgresqlFlightDao implements FlightDao {
                     .id(rs.getLong("aircraft_id"))
                     .model(rs.getString("model"))
                     .regNumber(rs.getString("reg_number")).build();
-            Airport airportFrom = new Airport();
-            airportFrom.setIataCode(rs.getString("departure"));
-            Airport airportTo = new Airport();
-            airportTo.setIataCode(rs.getString("destination"));
-
+            Airport airportFrom = Airport.newBuilder().iataCode(rs.getString("departure")).build();
+            Airport airportTo = Airport.newBuilder().iataCode(rs.getString("destination")).build();
             return Flight.newBuilder()
                     .aircraft(aircraft)
                     .departure(airportFrom)

@@ -18,14 +18,15 @@ public class PostgresqlAirportDao implements AirportDao {
 
         @Override
         public Airport mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Airport airport = new Airport();
-            airport.setIataCode(rs.getString("iata_code"));
-            airport.setName(rs.getString("name_eng"));
-            airport.setCity(rs.getString("city_eng"));
-            airport.setCountry(rs.getString("country_eng"));
-            airport.setLatitude(rs.getDouble("latitude"));
-            airport.setLongitude(rs.getDouble("longitude"));
-            return airport;
+
+            return Airport.newBuilder()
+                    .iataCode(rs.getString("iata_code"))
+                    .name(rs.getString("name_eng"))
+                    .city(rs.getString("city_eng"))
+                    .country(rs.getString("country_eng"))
+                    .latitude(rs.getDouble("latitude"))
+                    .longitude(rs.getDouble("longitude"))
+                    .build();
         }
     };
 

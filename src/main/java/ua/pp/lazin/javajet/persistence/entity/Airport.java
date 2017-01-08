@@ -1,11 +1,10 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
 
 /**
  * @author Ruslan Lazin
  */
-@Entity
+
 public class Airport {
     private String iataCode;
     private String name;
@@ -14,9 +13,19 @@ public class Airport {
     private Double longitude;
     private Double latitude;
 
+    private Airport(Builder builder) {
+        setIataCode(builder.iataCode);
+        setName(builder.name);
+        setCity(builder.city);
+        setCountry(builder.country);
+        setLongitude(builder.longitude);
+        setLatitude(builder.latitude);
+    }
 
-    @Id
-    @Column(name = "iata_code")
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public String getIataCode() {
         return iataCode;
     }
@@ -25,8 +34,6 @@ public class Airport {
         this.iataCode = iataCode;
     }
 
-    @Basic
-    @Column(name = "name_eng")
     public String getName() {
         return name;
     }
@@ -35,8 +42,6 @@ public class Airport {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "city_eng")
     public String getCity() {
         return city;
     }
@@ -45,8 +50,6 @@ public class Airport {
         this.city = city;
     }
 
-    @Basic
-    @Column(name = "country_eng")
     public String getCountry() {
         return country;
     }
@@ -94,5 +97,95 @@ public class Airport {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * {@code Airport} builder static inner class.
+     */
+    public static final class Builder {
+        private String iataCode;
+        private String name;
+        private String city;
+        private String country;
+        private Double longitude;
+        private Double latitude;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code iataCode} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param iataCode the {@code iataCode} to set
+         * @return a reference to this Builder
+         */
+        public Builder iataCode(String iataCode) {
+            this.iataCode = iataCode;
+            return this;
+        }
+
+        /**
+         * Sets the {@code name} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param name the {@code name} to set
+         * @return a reference to this Builder
+         */
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets the {@code city} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param city the {@code city} to set
+         * @return a reference to this Builder
+         */
+        public Builder city(String city) {
+            this.city = city;
+            return this;
+        }
+
+        /**
+         * Sets the {@code country} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param country the {@code country} to set
+         * @return a reference to this Builder
+         */
+        public Builder country(String country) {
+            this.country = country;
+            return this;
+        }
+
+        /**
+         * Sets the {@code longitude} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param longitude the {@code longitude} to set
+         * @return a reference to this Builder
+         */
+        public Builder longitude(Double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        /**
+         * Sets the {@code latitude} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param latitude the {@code latitude} to set
+         * @return a reference to this Builder
+         */
+        public Builder latitude(Double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Airport} built from the parameters previously set.
+         *
+         * @return a {@code Airport} built with parameters of this {@code Airport.Builder}
+         */
+        public Airport build() {
+            return new Airport(this);
+        }
     }
 }

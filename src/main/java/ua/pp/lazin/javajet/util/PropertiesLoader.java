@@ -26,6 +26,8 @@ public class PropertiesLoader {
         mappingPOST = loadPropertiesFromFile("POSTMapping.properties");
     }
 
+    private PropertiesLoader() {
+    }
 
     public static Properties getDBProperties() {
         return dbProperties;

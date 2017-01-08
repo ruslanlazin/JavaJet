@@ -23,7 +23,7 @@ public class LoginCommandPOST implements Command {
         String username = request.getParameter(USERNAME_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
 
-        if (authService.login(request, username, password)) {
+        if (authService.login(request.getSession(), username, password)) {
             logger.info(username + " successfully authorized ");
             return "redirect:/";
         }

@@ -7,6 +7,7 @@ import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -25,11 +26,11 @@ public class UserService {
         return INSTANCE;
     }
 
-    public User getCurrentUser(HttpServletRequest request) {
-        return (User) request.getSession().getAttribute(USER_ATTRIBUTE);
+    public User getCurrentUser(HttpSession session) {
+        return (User) session.getAttribute(USER_ATTRIBUTE);
     }
 
-    public User create(User user) {
+    public User create(User user) {   // TODO: 08.01.2017 is I need id assignment
         user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
         Long id = userDao.create(user);
         user.setId(id);
@@ -50,5 +51,9 @@ public class UserService {
 
     public User findById(Long id) {
         return userDao.findByID(id);
+    }
+
+    public List<User> findAllWorkingAirCrewMembers() {
+        return userDao.findAllWorkingAirCrewMembers();
     }
 }

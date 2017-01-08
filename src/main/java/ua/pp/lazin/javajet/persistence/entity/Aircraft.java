@@ -1,7 +1,5 @@
 package ua.pp.lazin.javajet.persistence.entity;
 
-import javax.persistence.*;
-
 /**
  * @author Ruslan Lazin
  */

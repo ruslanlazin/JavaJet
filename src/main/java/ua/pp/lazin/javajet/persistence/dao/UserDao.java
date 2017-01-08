@@ -12,6 +12,10 @@ import java.util.Set;
 public interface UserDao {
     Long create(User user);
 
+    int update(User user);
+
+    int delete(User user);
+
     User findByID(Long id);
 
     User findByUsername(String username);
@@ -22,9 +26,7 @@ public interface UserDao {
 
     List<User> findAll();
 
-    int update(User user);
-
-    int delete(User user);
+    List<User> findAllWorkingAirCrewMembers();
 }
 
 

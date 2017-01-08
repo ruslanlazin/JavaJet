@@ -9,19 +9,13 @@ public class Position {
     private Long id;
     private String title;
 
-    /**
-     * Instantiates a new Position.
-     */
-    public Position() {
+    private Position(Builder builder) {
+        setId(builder.id);
+        setTitle(builder.title);
     }
 
-    /**
-     * Instantiates a new Position.
-     *
-     * @param title the title
-     */
-    public Position(String title) {
-        this.title = title;
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     /**
@@ -86,5 +80,47 @@ public class Position {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 '}';
+    }
+
+    /**
+     * {@code Position} builder static inner class.
+     */
+    public static final class Builder {
+        private Long id;
+        private String title;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code id} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param id the {@code id} to set
+         * @return a reference to this Builder
+         */
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets the {@code title} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param title the {@code title} to set
+         * @return a reference to this Builder
+         */
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Position} built from the parameters previously set.
+         *
+         * @return a {@code Position} built with parameters of this {@code Position.Builder}
+         */
+        public Position build() {
+            return new Position(this);
+        }
     }
 }

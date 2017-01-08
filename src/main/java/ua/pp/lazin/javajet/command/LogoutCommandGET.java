@@ -6,6 +6,7 @@ import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Ruslan Lazin
@@ -18,8 +19,9 @@ public class LogoutCommandGET implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        logger.info(userService.getCurrentUser(request).getUsername() + " is logging out");
-        authService.logout(request);
+        HttpSession session = request.getSession();
+        logger.info(userService.getCurrentUser(session).getUsername() + " is logging out");
+        authService.logout(session);
         return "login";
     }
 }

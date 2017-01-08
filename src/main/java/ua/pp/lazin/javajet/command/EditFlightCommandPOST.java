@@ -25,6 +25,8 @@ public class EditFlightCommandPOST implements Command {
     private static final UserService userService = UserService.getINSTANCE();
 
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
+    private static final String FLIGHT_ATTRIBUTE = "flight";
+    private static final String EMPLOYEES_ATTRIBUTE = "employees";
     private static final String SUCCESS_ATTRIBUTE = "success";
     private static final String CONCURRENT_MODIFICATION_ATTRIBUTE = "concurrent";
     private static final String FLIGHT_ID_PARAMETER = "flightId";
@@ -77,11 +79,11 @@ public class EditFlightCommandPOST implements Command {
             request.setAttribute(SUCCESS_ATTRIBUTE, true);
         } else {
             request.setAttribute(CONCURRENT_MODIFICATION_ATTRIBUTE, true);
-            logger.info("2 users tried to edit Flight  "+ flight.getId()+ "simultaneously");
+            logger.info("Two or more users tried to edit Flight "+ flight.getId()+ " simultaneously");
         }
 
-        request.setAttribute("flight", flightService.findByIdWithCrew(flight.getId()));
-        request.setAttribute("employees", userService.findAll());
+        request.setAttribute(FLIGHT_ATTRIBUTE, flightService.findByIdWithCrew(flight.getId()));
+        request.setAttribute(EMPLOYEES_ATTRIBUTE, userService.findAllWorkingAirCrewMembers());
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
 
         return "edit-flight";

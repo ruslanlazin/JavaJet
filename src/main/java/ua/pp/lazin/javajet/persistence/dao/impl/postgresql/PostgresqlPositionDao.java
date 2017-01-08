@@ -17,10 +17,10 @@ public class PostgresqlPositionDao implements PositionDao {
     private static final RowMapper<Position> rowMapper = new RowMapper<Position>() {
         @Override
         public Position mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Position position = new Position();
-            position.setId(rs.getLong("position_id"));
-            position.setTitle(rs.getString("title"));
-            return position;
+            return Position.newBuilder()
+                    .id(rs.getLong("position_id"))
+                    .title(rs.getString("title"))
+                    .build();
         }
     };
 
@@ -31,12 +31,16 @@ public class PostgresqlPositionDao implements PositionDao {
 
     @Override
     public Position findByTitle(String title) {
-        return jdbcTemplate.findEntity(rowMapper, "SELECT * FROM position p WHERE p.title = ?", title);
+        return jdbcTemplate.findEntity(rowMapper,
+                "SELECT * FROM position p " +
+                        "WHERE p.title = ?", title);
     }
 
     @Override
     public List<Position> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT * FROM position ORDER BY title");
+        return jdbcTemplate.findEntities(rowMapper,
+                "SELECT * FROM position " +
+                        "ORDER BY title");
     }
 
     @Override

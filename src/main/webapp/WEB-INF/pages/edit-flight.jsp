@@ -42,10 +42,21 @@
                 <h4><fmt:message key="edit-flight.header"/> ${flight.id}</h4>
             </div>
         </div>
+
+            <%--Success message--%>
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
                     <fmt:message key="edit-flight.success"/>
+                </div>
+            </c:if>
+        </div>
+
+            <%--Concurrent modification message--%>
+        <div class="row">
+            <c:if test="${concurrent}">
+                <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
+                    <fmt:message key="edit-flight.concurrent"/>
                 </div>
             </c:if>
         </div>

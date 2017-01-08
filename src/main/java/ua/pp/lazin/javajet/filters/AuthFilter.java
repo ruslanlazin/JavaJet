@@ -24,10 +24,8 @@ public class AuthFilter implements Filter {
     private final static String LOGIN_URI = "/login";
     private final static String RESOURCES_URI_PREFIX = "/resources/";
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -35,55 +33,22 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-//        String url = request.getServletPath();
-//        System.err.println(url + ".sevletPath");
-//        System.err.println(request.getContextPath() + ".contextpath");
-//        System.err.println(request.getRequestURI() + ".requestUri");
-//        System.err.println(request.getPathInfo() + ".pathiifo");
-//
-//        System.out.println(new Date().getTime());
-
-//        boolean allowedRequest = false;
-//
-//            allowedRequest = true;
-//
-//
-//        if (!allowedRequest) {
-//            HttpSession session = request.getSession(false);
-//            if (null == session) {
-//                response.sendRedirect("redundant.jsp");
-//            }
-//        }
-
-
-//        UserDao userDao = new PostgresqlUserDao();
-//
-//        User user = new User();
-//        user.setUserId(null);
-//        user.setFirstName("bill");
-//        user.setSecondName("bobikov");
-//        user.setUsername("b");
-//        user.setPassword("b");
-//        user.setEmail("b@b.ua");
-//        Position role = new Position();
-//        role.setId(1L);
-//        user.setPosition(role);
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request)
+        if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request.getSession())
                 || path.equals(LOGIN_URI)) {
             if (logger.isDebugEnabled()) {
                 User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
-                logger.debug("Request from user: " + user + " to: " + path);
+                logger.debug("Request from user: " + user + " to: " + path + " - accepted");
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            logger.debug("Redirect to: " + LOGIN_URI);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Redirect to: " + LOGIN_URI);
+            }
             response.sendRedirect(request.getContextPath() + LOGIN_URI);
         }
     }
-
 
     @Override
     public void destroy() {
