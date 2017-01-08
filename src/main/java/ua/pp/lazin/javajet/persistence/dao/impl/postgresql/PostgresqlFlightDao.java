@@ -67,10 +67,10 @@ public class PostgresqlFlightDao implements FlightDao {
         @Override
         public Flight mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            Aircraft aircraft = new Aircraft();
-            aircraft.setId(rs.getLong("aircraft_id"));
-            aircraft.setModel(rs.getString("model"));
-            aircraft.setRegNumber(rs.getString("reg_number"));
+            Aircraft aircraft = Aircraft.newBuilder()
+                    .id(rs.getLong("aircraft_id"))
+                    .model(rs.getString("model"))
+                    .regNumber(rs.getString("reg_number")).build();
             Airport airportFrom = new Airport();
             airportFrom.setIataCode(rs.getString("departure"));
             Airport airportTo = new Airport();

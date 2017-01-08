@@ -52,7 +52,11 @@ public class FlightService {
     }
 
     public Boolean updateFlightAndCrew(Flight flight) {
-        return flightDao.updateWithCrew(flight);
+        Boolean result = flightDao.updateWithCrew(flight);
+        if (flight.getDepartureTimezone() == null) {  // TODO: 08.01.2017 think
+            resolveTimezoneWhenWrite(flight);
+        }
+        return result;
     }
 
     private void resolveTimezoneWhenWrite(Flight flight) {

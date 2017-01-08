@@ -21,8 +21,6 @@ public class FlightCommandGET implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         Long id = Long.valueOf(request.getParameter("flightId"));
-        System.out.println(flightService.findByIdWithCrew(id));
-
         request.getSession().setAttribute("flight", flightService.findByIdWithCrew(id));
         request.setAttribute("employees", userService.findAll());
         request.setAttribute("aircrafts", aircraftService.findAll());

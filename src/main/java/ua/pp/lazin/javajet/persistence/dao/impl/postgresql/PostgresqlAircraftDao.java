@@ -21,11 +21,10 @@ public class PostgresqlAircraftDao implements AircraftDao {
         @Override
         public Aircraft mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            Aircraft aircraft = new Aircraft();
-            aircraft.setId(rs.getLong("aircraft_id"));
-            aircraft.setModel(rs.getString("model"));
-            aircraft.setRegNumber(rs.getString("reg_number"));
-            return aircraft;
+            return Aircraft.newBuilder()
+                    .id(rs.getLong("aircraft_id"))
+                    .model(rs.getString("model"))
+                    .regNumber(rs.getString("reg_number")).build();
         }
     };
 

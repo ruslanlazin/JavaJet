@@ -48,13 +48,14 @@ public class EditFlightCommandPOST implements Command {
             }
         }
 
-        Aircraft aircraft = new Aircraft();
-        aircraft.setId(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER)));
+        Aircraft aircraft = Aircraft.newBuilder()
+                .id(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER))).build();
         Set<User> crew = new HashSet<>();
         String[] crewIdsAsStrings = request.getParameterValues(CREW_PARAMETER);
         if (crewIdsAsStrings != null) {
             for (String userIdAsString : crewIdsAsStrings) {
-                crew.add(userService.findById(Long.valueOf(userIdAsString)));
+//                crew.add(userService.findById(Long.valueOf(userIdAsString)));
+                crew.add(User.newBuilder().id(Long.valueOf(userIdAsString)).build());
             }
         }
         Flight flight = Flight.newBuilder()
