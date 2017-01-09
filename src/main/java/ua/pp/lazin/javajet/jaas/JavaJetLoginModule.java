@@ -17,23 +17,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-
 public class JavaJetLoginModule implements LoginModule {
-
-    private CallbackHandler handler;
-    private Subject subject;
-    private UserPrincipal userPrincipal;
-    private List<String> userGroups;
 
     private static final Logger logger = Logger.getLogger(JavaJetLoginModule.class);
     private static final AuthService authService = AuthService.getINSTANCE();
-
-    // User credentials
-    private String username = null;
-    private String password = null;
+    private CallbackHandler handler;
+    private Subject subject;
+    private String username;
+    private List<String> userRoles;
 
     private boolean isAuthenticated = false;
     private boolean commitSucceeded = false;
+
 
     public JavaJetLoginModule() {
         super();
@@ -43,8 +38,6 @@ public class JavaJetLoginModule implements LoginModule {
     public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
 
         this.handler = callbackHandler;
-
-        // Subject reference holds the principals
         this.subject = subject;
     }
 
@@ -66,66 +59,71 @@ public class JavaJetLoginModule implements LoginModule {
             //Handle the callback and receive the sent information
             handler.handle(callbacks);
             username = ((NameCallback) callbacks[0]).getName();
-            password = String.valueOf(((PasswordCallback) callbacks[1]).getPassword());
+            String password = String.valueOf(((PasswordCallback) callbacks[1]).getPassword());
 
             // Debug the username / password
-            if (logger.isDebugEnabled()) {
-                logger.debug("Username: " + username);
-                logger.debug("Password: " + password);
-            }
+            logger.debug("Username: " + username);
+            logger.debug("Password: " + password);
 
             // Empty strings not allowed
-            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            if (username == null || username.isEmpty() || password.isEmpty()) {
+                logger.info("Empty login or password have been passed to LoginModule");
                 throw new LoginException("login or password had null values");
             }
 
-            // Validate against our database if there is user with
+            // Validate  if there is user with these username and password
             User user = authService.login(username, password);
-            if (user != null) {
-
-                // Assign the user roles
-                userGroups = this.getRoles(user);
-                isAuthenticated = true;
-                return true;
+            if (user == null) {
+                throw new LoginException("Authentication failed");
             }
-            throw new LoginException("Authentication failed");
+            // Assign the user roles to temporary field and save authentication result
+            userRoles = this.getRoles(user);
+            isAuthenticated = true;
+            return true;
 
         } catch (IOException | UnsupportedCallbackException e) {
+            logger.info("An exception occurred during authentication" + e.getMessage());
             throw new LoginException(e.getMessage());
         }
-
     }
 
+    /**
+     * Commit results of <tt>login()</tt>, and clear temporary values.
+     *
+     * @return true if commit was successful
+     */
     @Override
-    public boolean commit() throws LoginException {
+    public boolean commit() {
 
         if (!isAuthenticated) {
+            cleanTemporaryValues();
             return false;
         } else {
-
-            userPrincipal = new UserPrincipal(username);
+            UserPrincipal userPrincipal = new UserPrincipal(username);
             subject.getPrincipals().add(userPrincipal);
 
-            if (userGroups != null && userGroups.size() > 0) {
-                for (String groupName : userGroups) {
+            if (userRoles != null && userRoles.size() > 0) {
+                for (String groupName : userRoles) {
                     subject.getPrincipals().add(new RolePrincipal(groupName));
                 }
             }
+            cleanTemporaryValues();
             commitSucceeded = true;
-
             return true;
         }
     }
 
+    /**
+     * Abort authentication and clean temporary values.
+     *
+     */
     @Override
     public boolean abort() throws LoginException {
         if (!isAuthenticated) {
             return false;
-        } else if (isAuthenticated && !commitSucceeded) {
+        } else if (!commitSucceeded) {
             isAuthenticated = false;
-            username = null;
-            password = null;
-            userPrincipal = null;
+            cleanTemporaryValues();
         } else {
             logout();
         }
@@ -140,19 +138,24 @@ public class JavaJetLoginModule implements LoginModule {
     @Override
     public boolean logout() throws LoginException {
         isAuthenticated = false;
-        isAuthenticated = commitSucceeded;
+        commitSucceeded = false;
         subject.getPrincipals().clear();
         return true;
     }
 
+    private void cleanTemporaryValues() {
+        username = null;
+        userRoles = null;
+    }
+
     private List<String> getRoles(User user) {
 
-        List<String> roleList = new ArrayList<>();
-        roleList.add("ROLE_AUTHENTICATED");
+        List<String> roleTitles = new ArrayList<>();
+        roleTitles.add("ROLE_AUTHENTICATED");
         Set<Role> roles = user.getRoles();
         if (roles != null) {
-            roleList.addAll(roles.stream().map(Role::getTitle).collect(Collectors.toList()));
+            roleTitles.addAll(roles.stream().map(Role::getTitle).collect(Collectors.toList()));
         }
-        return roleList;
+        return roleTitles;
     }
 }

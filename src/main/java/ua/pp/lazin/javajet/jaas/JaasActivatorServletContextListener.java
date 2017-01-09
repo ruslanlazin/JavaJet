@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebListener;
 import java.util.HashMap;
 
 /**
- * The Jaas activator if's a servlet context listener
+ * The Jaas activator it's a servlet context listener
  * that adds named LoginModule to javax.security.auth.login.Configuration
  *
  * @link META-INF/context.xml
