@@ -52,7 +52,7 @@ public class PostgresqlRoleDao implements RoleDao {
     @Override
     public Set<Role> findRolesOfUser(User user) {
         List<Role> roles = jdbcTemplate.findEntities(rowMapper,
-                "SELECT * FROM roles r" +
+                "SELECT * FROM role r " +
                         "JOIN users_roles u ON r.role_id = u.role_id " +
                         "WHERE u.user_id = ?", user.getId());
         return new HashSet<Role>(roles);

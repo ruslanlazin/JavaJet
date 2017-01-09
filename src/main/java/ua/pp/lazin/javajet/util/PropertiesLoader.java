@@ -14,6 +14,7 @@ public class PropertiesLoader {
     private static final Properties dbProperties;
     private static final Properties mappingGET;
     private static final Properties mappingPOST;
+    private static final Properties securityProperties;
 
     static {
         // Load Database properties
@@ -24,6 +25,9 @@ public class PropertiesLoader {
 
         // Load  application's POST paths
         mappingPOST = loadPropertiesFromFile("POSTMapping.properties");
+
+        // Load  application's security properties
+        securityProperties = loadPropertiesFromFile("POSTMapping.properties");
     }
 
     private PropertiesLoader() {
@@ -39,6 +43,10 @@ public class PropertiesLoader {
 
     public static Properties getMappingPOST() {
         return mappingPOST;
+    }
+
+    public static Properties getSecurityProperties() {
+        return securityProperties;
     }
 
 

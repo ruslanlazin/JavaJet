@@ -34,4 +34,9 @@ public class MysqlDaoFactory implements DaoFactory {
     public UserDao getUserDao() {
         return null;
     }
+
+    @Override
+    public RoleDao getRoleDao() {
+        return null;
+    }
 }

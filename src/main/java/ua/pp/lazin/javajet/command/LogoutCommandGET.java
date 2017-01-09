@@ -22,7 +22,7 @@ public class LogoutCommandGET implements Command {
         HttpSession session = request.getSession();
         logger.info(userService.getCurrentUser(session).getUsername() + " is logging out");
         authService.logout(session);
-        return "login";
+        return "redirect:login";
     }
 }
 

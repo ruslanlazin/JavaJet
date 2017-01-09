@@ -52,6 +52,14 @@ public class Role {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
+
     /**
      * {@code Role} builder static inner class.
      */

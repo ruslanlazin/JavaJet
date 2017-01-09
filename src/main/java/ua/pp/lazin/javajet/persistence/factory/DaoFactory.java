@@ -1,10 +1,7 @@
 package ua.pp.lazin.javajet.persistence.factory;
 
-import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
-import ua.pp.lazin.javajet.persistence.dao.AirportDao;
-import ua.pp.lazin.javajet.persistence.dao.FlightDao;
-import ua.pp.lazin.javajet.persistence.dao.PositionDao;
-import ua.pp.lazin.javajet.persistence.dao.UserDao;
+import ua.pp.lazin.javajet.persistence.dao.*;
+import ua.pp.lazin.javajet.persistence.entity.Role;
 
 
 /**
@@ -21,5 +18,5 @@ public interface DaoFactory {
 
     UserDao getUserDao();
 
-
+    RoleDao getRoleDao();
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * @author Ruslan Lazin
  */
-@WebFilter(urlPatterns = "/*")
+@WebFilter(filterName = "EncodingFilter")
 public class EncodingFilter implements javax.servlet.Filter {
     private static final String ENCODING_PARAM = "encoding";
     private String encoding = "UTF-8";

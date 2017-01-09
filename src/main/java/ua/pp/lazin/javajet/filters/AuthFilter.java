@@ -21,7 +21,7 @@ import java.util.Date;
  * @author Ruslan Lazin
  */
 
-@WebFilter("/*")
+@WebFilter(filterName = "AuthFilter")
 public class AuthFilter implements Filter {
     private final static Logger logger = Logger.getLogger(AuthFilter.class);
     private final static AuthService authService = AuthService.getINSTANCE();
@@ -45,6 +45,12 @@ public class AuthFilter implements Filter {
             if (logger.isDebugEnabled()) {
                 User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
                 logger.debug("Request from user: " + user + " to: " + path + " - accepted");
+
+                if (user != null) {
+                    System.out.println(user.getRoles());
+                }
+
+
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
