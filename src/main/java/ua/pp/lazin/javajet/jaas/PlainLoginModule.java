@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.filters.JAAS;
+package ua.pp.lazin.javajet.jaas;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;

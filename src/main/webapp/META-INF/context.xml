@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context>
-      <Resource name="jdbc/postgresql" auth="Container"
+    <Resource name="jdbc/postgresql" auth="Container"
               type="javax.sql.DataSource"
               maxIdle="30"
               username="postgres"
               password="asdfghjkl"
               driverClassName="org.postgresql.Driver"
-              url="jdbc:postgresql://192.168.3.99/javajet"/>
+              url="jdbc:postgresql://192.168.3.99/javajet">
+    </Resource>
 
-      <Realm className="org.apache.catalina.realm.JAASRealm" appName="ServiceLoginModule"
-             userClassNames="ua.pp.lazin.javajet.filters.JAAS.UserPrincipal"
-             roleClassNames="ua.pp.lazin.javajet.filters.JAAS.RolePrincipal">
-      </Realm>
+    <Realm className="org.apache.catalina.realm.JAASRealm" appName="JavaJetLoginModule"
+           userClassNames="ua.pp.lazin.javajet.jaas.UserPrincipal"
+           roleClassNames="ua.pp.lazin.javajet.jaas.RolePrincipal">
+    </Realm>
 </Context>

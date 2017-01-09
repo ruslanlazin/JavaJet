@@ -3,6 +3,7 @@ package ua.pp.lazin.javajet.command;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.service.AuthService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +26,12 @@ public class LoginCommandPOST implements Command {
 
         if (authService.login(request.getSession(), username, password)) {
             logger.info(username + " successfully authorized ");
+            try {
+                request.login(username,password);
+            } catch (ServletException e) {
+                System.out.println("pipipi");
+                e.printStackTrace();
+            }
             return "redirect:/";
         }
         request.setAttribute(WRONGLOGIN_ATTRIBUTE, true);
