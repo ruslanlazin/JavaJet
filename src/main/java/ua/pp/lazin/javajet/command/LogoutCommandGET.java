@@ -21,11 +21,11 @@ public class LogoutCommandGET implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
-        logger.info(userService.getCurrentUser(session).getUsername() + " is logging out");
+//        logger.info(userService.getCurrentUser(session).getUsername() + " is logging out");
         try {
             request.logout();
         } catch (ServletException e) {
-            e.printStackTrace();
+            logger.error("logout fails", e);
         }
         authService.logout(session);
         return "redirect:login";

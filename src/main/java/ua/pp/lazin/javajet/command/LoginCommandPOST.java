@@ -24,19 +24,19 @@ public class LoginCommandPOST implements Command {
         String username = request.getParameter(USERNAME_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
 
-        if (authService.login(request.getSession(), username, password)) {
+//        if (authService.login(request.getSession(), username, password)) {
+//
+        try {
+            request.login(username, password);
             logger.info(username + " successfully authorized ");
-            try {
-                request.login(username,password);
-            } catch (ServletException e) {
-                System.out.println("pipipi");
-                e.printStackTrace();
-            }
             return "redirect:/";
+
+        } catch (ServletException e) {
+            logger.info(username + " unsuccessfully tried to authorize");
+            request.setAttribute(WRONGLOGIN_ATTRIBUTE, true);
+            return "login";
         }
-        request.setAttribute(WRONGLOGIN_ATTRIBUTE, true);
-        logger.info(username + " unsuccessfully tried to authorize");
-        return "login";
     }
 }
+
 

@@ -44,6 +44,11 @@
     </div>
 </nav>
 
+<h1>
+    <%out.print(request.getUserPrincipal());
+    %>
+    </h1>
+
 
 
   

@@ -29,7 +29,7 @@
 				</span>
             </font>
 
-            <form id="login-form" class="login-form" method="post">
+            <form id="login-form" class="login-form" method="post" action="<c:url value="/login"/>">
                 <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
                 <input id="login" type="text" name="login" autocomplete="off"
                        placeholder="<fmt:message key="shared.username"/>"/>
