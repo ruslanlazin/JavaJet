@@ -1,6 +1,7 @@
 <%@ page session="true" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://lazin.pp.ua/access" %>
 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
 <link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">
@@ -46,11 +47,12 @@
 
 <h1>
     <%out.print(request.getUserPrincipal());
+
+        out.print(request.isUserInRole("ROLE_ADMIN"));
     %>
     </h1>
 
-
-
-  
+<sec:authorize role="ROLE_ADMIN">kjkjk
+    </sec:authorize>
 
 
