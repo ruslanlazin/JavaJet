@@ -17,18 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-/**
- * @author sixthpoint
- */
+
 public class JavaJetLoginModule implements LoginModule {
 
     private CallbackHandler handler;
     private Subject subject;
     private UserPrincipal userPrincipal;
-    private RolePrincipal rolePrincipal;
     private List<String> userGroups;
-    private Map options;
-    private Map sharedState;
 
     private static final Logger logger = Logger.getLogger(JavaJetLoginModule.class);
     private static final AuthService authService = AuthService.getINSTANCE();
@@ -40,41 +35,23 @@ public class JavaJetLoginModule implements LoginModule {
     private boolean isAuthenticated = false;
     private boolean commitSucceeded = false;
 
-    /**
-     * Constructor
-     */
     public JavaJetLoginModule() {
         super();
     }
 
-    /**
-     * Initializer
-     *
-     * @param subject
-     * @param callbackHandler
-     * @param sharedState
-     * @param options
-     */
     @Override
     public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
 
-        // Store the handler
         this.handler = callbackHandler;
 
         // Subject reference holds the principals
         this.subject = subject;
-
-        this.options = options;
-        this.sharedState = sharedState;
     }
 
-    /**
-     * @return @throws LoginException
-     */
     @Override
     public boolean login() throws LoginException {
 
-        // If no handler is specified throw a error
+        // If no handler is specified throw a exception
         if (handler == null) {
             throw new LoginException("Error: no CallbackHandler available to receive authentication information from the user");
         }
@@ -97,9 +74,9 @@ public class JavaJetLoginModule implements LoginModule {
                 logger.debug("Password: " + password);
             }
 
-            // We should never allow empty strings to be passed
+            // Empty strings not allowed
             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-                throw new LoginException("Data specified had null values");
+                throw new LoginException("login or password had null values");
             }
 
             // Validate against our database if there is user with
@@ -109,7 +86,6 @@ public class JavaJetLoginModule implements LoginModule {
                 // Assign the user roles
                 userGroups = this.getRoles(user);
                 isAuthenticated = true;
-
                 return true;
             }
             throw new LoginException("Authentication failed");
@@ -120,11 +96,6 @@ public class JavaJetLoginModule implements LoginModule {
 
     }
 
-    /**
-     * Adds the username / roles to the principal
-     *
-     * @return @throws LoginException
-     */
     @Override
     public boolean commit() throws LoginException {
 
@@ -137,8 +108,7 @@ public class JavaJetLoginModule implements LoginModule {
 
             if (userGroups != null && userGroups.size() > 0) {
                 for (String groupName : userGroups) {
-                    rolePrincipal = new RolePrincipal(groupName);
-                    subject.getPrincipals().add(rolePrincipal);
+                    subject.getPrincipals().add(new RolePrincipal(groupName));
                 }
             }
             commitSucceeded = true;
@@ -147,11 +117,6 @@ public class JavaJetLoginModule implements LoginModule {
         }
     }
 
-    /**
-     * Terminates the logged in session on error
-     *
-     * @return @throws LoginException
-     */
     @Override
     public boolean abort() throws LoginException {
         if (!isAuthenticated) {
@@ -168,9 +133,9 @@ public class JavaJetLoginModule implements LoginModule {
     }
 
     /**
-     * Logs the user out
+     * Clears subject from principal and credentials.
      *
-     * @return @throws LoginException
+     * @see javax.security.auth.spi.LoginModule#logout()
      */
     @Override
     public boolean logout() throws LoginException {
@@ -180,11 +145,6 @@ public class JavaJetLoginModule implements LoginModule {
         return true;
     }
 
-    /**
-     * Returns list of roles assigned to authenticated user.
-     *
-     * @return List<String> of Users roles
-     */
     private List<String> getRoles(User user) {
 
         List<String> roleList = new ArrayList<>();
@@ -195,5 +155,4 @@ public class JavaJetLoginModule implements LoginModule {
         }
         return roleList;
     }
-
 }

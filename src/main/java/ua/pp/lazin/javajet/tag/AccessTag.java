@@ -1,22 +1,11 @@
 package ua.pp.lazin.javajet.tag;
 
-import org.apache.log4j.Logger;
-import sun.util.calendar.ZoneInfo;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
- * Tag displays body context only if <tt>request.isUserInRole()</tt>
+ * Tag displays body context only if <tt>request.isUserInRole(role)</tt>
  * for attribute "role" evaluates to true
  *
  * @author Ruslan Lazin
@@ -59,11 +48,11 @@ public class AccessTag extends TagSupport {
      */
     private boolean condition() {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-        return request.isUserInRole(role);
+        return request.isUserInRole(this.role);
     }
 
-
     public void release() {
+        super.release();
         this.init();
     }
 

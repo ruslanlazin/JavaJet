@@ -38,21 +38,12 @@
                 </form>
             </li>
             <li><a href="/settings">Settings</a></li>
-            <c:if test="${not empty user}">
+            <sec:authorize role="ROLE_AUTHENTICATED">
                 <li><a href="<c:url value="/logout"/>"><fmt:message key="navbar.link.logout"/></a></li>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
 </nav>
 
-<h1>
-    <%out.print(request.getUserPrincipal());
-
-        out.print(request.isUserInRole("ROLE_ADMIN"));
-    %>
-    </h1>
-
-<sec:authorize role="ROLE_ADMIN">kjkjk
-    </sec:authorize>
 
 

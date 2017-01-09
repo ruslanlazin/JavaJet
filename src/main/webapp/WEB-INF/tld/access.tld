@@ -14,7 +14,7 @@
         </description>
         <name>authorize</name>
         <tag-class>ua.pp.lazin.javajet.tag.AccessTag</tag-class>
-        <body-content>tagdependent</body-content>
+        <body-content>JSP</body-content>
 
         <attribute>
             <description>
