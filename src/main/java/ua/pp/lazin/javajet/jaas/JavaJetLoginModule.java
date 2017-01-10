@@ -93,10 +93,10 @@ public class JavaJetLoginModule implements LoginModule {
      * @return true if commit was successful
      */
     @Override
-    public boolean commit() {
+    public boolean commit() throws LoginException{
 
         if (!isAuthenticated) {
-            cleanTemporaryValues();
+            cleanTemporaryVariables();
             return false;
         } else {
             UserPrincipal userPrincipal = new UserPrincipal(username);
@@ -107,7 +107,7 @@ public class JavaJetLoginModule implements LoginModule {
                     subject.getPrincipals().add(new RolePrincipal(groupName));
                 }
             }
-            cleanTemporaryValues();
+            cleanTemporaryVariables();
             commitSucceeded = true;
             return true;
         }
@@ -123,7 +123,7 @@ public class JavaJetLoginModule implements LoginModule {
             return false;
         } else if (!commitSucceeded) {
             isAuthenticated = false;
-            cleanTemporaryValues();
+            cleanTemporaryVariables();
         } else {
             logout();
         }
@@ -143,7 +143,7 @@ public class JavaJetLoginModule implements LoginModule {
         return true;
     }
 
-    private void cleanTemporaryValues() {
+    private void cleanTemporaryVariables() {
         username = null;
         userRoles = null;
     }

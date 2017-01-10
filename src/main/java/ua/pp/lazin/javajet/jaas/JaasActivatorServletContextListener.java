@@ -10,10 +10,11 @@ import java.util.HashMap;
 /**
  * The Jaas activator it's a servlet context listener
  * that adds named LoginModule to javax.security.auth.login.Configuration
+ * see also META-INF/context.xml
  *
- * @link META-INF/context.xml
  * @see javax.servlet.ServletContextListener
  * @see javax.security.auth.login.Configuration
+ * @see javax.security.auth.spi.LoginModule
  *
  * @author Ruslan Lazin
  */

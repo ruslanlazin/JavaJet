@@ -19,11 +19,13 @@
                 <img class="img-responsive" src="<c:url value="/resources/images/logo-xs.png"/>">
             </a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="<c:url value="/flights"/>"><fmt:message key="shared.flights"/></a></li>
-            <li><a href="<c:url value="/employees"/>"><fmt:message key="shared.employees"/></a></li>
-            <li><a href="<c:url value="/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
-        </ul>
+        <sec:authorize role="ROLE_AUTHENTICATED">
+            <ul class="nav navbar-nav">
+                <li><a href="<c:url value="/flights"/>"><fmt:message key="shared.flights"/></a></li>
+                <li><a href="<c:url value="/employees"/>"><fmt:message key="shared.employees"/></a></li>
+                <li><a href="<c:url value="/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
+            </ul>
+        </sec:authorize>
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <form class="form-inline float-xs-right">
@@ -37,7 +39,9 @@
                     </select>
                 </form>
             </li>
-            <li><a href="/settings">Settings</a></li>
+            <sec:authorize role="ROLE_ADMIN">
+                <li><a href="/settings">Settings</a></li>
+            </sec:authorize>
             <sec:authorize role="ROLE_AUTHENTICATED">
                 <li><a href="<c:url value="/logout"/>"><fmt:message key="navbar.link.logout"/></a></li>
             </sec:authorize>
