@@ -9,7 +9,7 @@ $(document).ready(function () {
     var disableState;
     var maxDate;
     var minDate;
-    if (departureTime < moment()) {
+    if (departureTime < moment().remove(12, 'hours')) {
         minDate = departureTime;
         maxDate = departureTime;
         disableState = true;

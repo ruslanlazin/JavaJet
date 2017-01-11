@@ -22,11 +22,8 @@ public class EditFlightCommandPOST implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final AirportService airportService = AirportService.getINSTANCE();
-    private static final UserService userService = UserService.getINSTANCE();
-
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String FLIGHT_ATTRIBUTE = "flight";
-    private static final String EMPLOYEES_ATTRIBUTE = "employees";
     private static final String SUCCESS_ATTRIBUTE = "success";
     private static final String CONCURRENT_MODIFICATION_ATTRIBUTE = "concurrent";
     private static final String FLIGHT_ID_PARAMETER = "flightId";
@@ -35,22 +32,9 @@ public class EditFlightCommandPOST implements Command {
     private static final String TO_PARAMETER = "to";
     private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
     private static final String VERSION_PARAMETER = "version";
-    private static final String CREW_PARAMETER = "crew";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-
-
-// TODO: 07.01.2017 remove
-        Map<String, String[]> map = request.getParameterMap();
-        for (Map.Entry<String, String[]> stringEntry : map.entrySet()) {
-            System.out.println("key" + stringEntry.getKey());
-
-            String[] ar = stringEntry.getValue();
-            for (String s : ar) {
-                System.out.println(s);
-            }
-        }
 
         Aircraft aircraft = Aircraft.newBuilder()
                 .id(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER))).build();
@@ -61,12 +45,12 @@ public class EditFlightCommandPOST implements Command {
                 .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
                 .aircraft(aircraft)
                 .build();
+
         // TODO: 29.12.2016 validate
         String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
         if (flightIdAsString == null) {
             flight = flightService.create(flight);
             request.setAttribute(SUCCESS_ATTRIBUTE, true);
-
         } else {
             Long flightId = Long.valueOf(flightIdAsString);
             flight.setId(flightId);

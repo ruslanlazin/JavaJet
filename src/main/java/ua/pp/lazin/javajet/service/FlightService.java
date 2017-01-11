@@ -68,22 +68,19 @@ public class FlightService {
     }
 
     public boolean updateFlightAndCrew(Flight flight) {
-        boolean result = flightDao.updateWithCrew(flight);
-        if (flight.getDepartureTimezone() == null) {  // TODO: 08.01.2017 think
-            resolveTimezoneWhenWrite(flight);
-        }
-        return result;
+        return flightDao.updateWithCrew(flight);
     }
 
     public boolean updateFlight(Flight flight) {
-        int numberUpdatedRows = flightDao.update(flight);
-        if (flight.getDepartureTimezone() == null) {  // TODO: 08.01.2017 think
+        int updatedRowsNumber = flightDao.update(flight);
+        if (flight.getDepartureTimezone() == null) {     // TODO: 08.01.2017 think
             resolveTimezoneWhenWrite(flight);
         }
-        return numberUpdatedRows == 1;
+        return updatedRowsNumber == 1;
 
     }
 
+    // TODO: 11.01.2017 move
     private void resolveTimezoneWhenWrite(Flight flight) {
         PendingResult.Callback<TimeZone> timeZoneCallback = new PendingResult.Callback<TimeZone>() {
             @Override

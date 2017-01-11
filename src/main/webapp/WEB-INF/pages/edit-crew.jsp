@@ -36,10 +36,16 @@
             <a href="<c:url value="/schedule"/>"><fmt:message key="shared.button.back"/></a>
         </div>
 
-        <%--Header--%>
+        <%--Flight info Header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
                 <h4><fmt:message key="edit-flight.header"/> ${flight.id}</h4>
+            </div>
+        </div>
+        <%--Crew assigntment header--%>
+        <div class=" row">
+            <div class="col-sm-offset-2 col-sm-4">
+                <h5><fmt:message key="shared.crew-assignment"/></h5>
             </div>
         </div>
 
@@ -66,65 +72,8 @@
             <input type="hidden" name="flightId" value="${flight.id}"/>
             <input type="hidden" name="version" value="${flight.version}"/>
 
-            <%--Input Time Field--%>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="time">
-                    <fmt:message key="shared.time"/>:
-                </label>
-                <div class="input-group date col-sm-4" id="datetimepicker">
-                    <input type='text' class="form-control" id="time"
-                           name="departureTime" onkeydown="return false" required>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-
-            <%--Input From Field--%>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="from">
-                    <fmt:message key="shared.from"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control airport-select" id="from" name="from" required>
-                        <option value="${flight.departure.iataCode}" selected="selected">
-                            ${flight.departure.iataCode}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <%--Input To Field--%>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="to">
-                    <fmt:message key="shared.to"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control airport-select" id="to" name="to" required>
-                        <option value="${flight.destination.iataCode}" selected="selected">
-                            ${flight.destination.iataCode}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <%--Select Aircraft Field--%>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="aircraft">
-                    <fmt:message key="shared.aircraft"/>:
-                </label>
-                <div class="input-group col-sm-4">
-                    <select class="form-control js-select" id="aircraft" name="aircraft">
-                        <c:forEach var="aircraft" items="${aircrafts}">
-                            <option <c:if test="${aircraft.id == flight.aircraft.id}">
-                                selected="selected"
-                            </c:if>
-                                    value="${aircraft.id}">${aircraft.regNumber} (${aircraft.model})
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
+            <%--Crew table--%>
+            <%@include file="templates/crew.edit.template.jsp" %>
 
             <%--Save Button--%>
             <div class="form-group">
@@ -136,15 +85,8 @@
             </div>
         </form>
 
-        <%--Crew assigntment header--%>
-        <div class=" row">
-            <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="shared.crew-assignment"/></h4>
-            </div>
-        </div>
-
-        <%--Crew table--%>
-        <%@include file="templates/crew.view.template.jsp" %>
+        <%--Flight info section--%>
+        <%@include file="templates/flight.view.template.jsp" %>
 
     </div>
 </div>

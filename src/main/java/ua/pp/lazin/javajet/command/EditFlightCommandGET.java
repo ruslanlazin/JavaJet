@@ -13,17 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 public class EditFlightCommandGET implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
-    private static final UserService userService = UserService.getINSTANCE();
+    private static final String FLIGHT_ID_PARAMETER = "flightId";
+    private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
+    private static final String FLIGHT_ATTRIBUTE = "flight";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String flightIdAsString = request.getParameter("flightId");
+        String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
         if (flightIdAsString != null) {
             Long id = Long.valueOf(flightIdAsString);
-            request.setAttribute("flight", flightService.findByIdWithCrew(id));
+            request.setAttribute(FLIGHT_ATTRIBUTE, flightService.findByIdWithCrew(id));
         }
-        request.setAttribute("aircrafts", aircraftService.findAll());
+        request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
 
         return "edit-flight";
     }

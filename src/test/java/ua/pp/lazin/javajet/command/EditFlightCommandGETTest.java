@@ -14,9 +14,9 @@ import static org.mockito.Mockito.*;
   */
 
 @RunWith(MockitoJUnitRunner.class)
-public class AddFlightCommandGETTest {
+public class EditFlightCommandGETTest {
     @InjectMocks
-    private AddFlightCommandGET underTest;
+    private EditFlightCommandGET underTest;
 
     @Before
     public void setUp() throws Exception {

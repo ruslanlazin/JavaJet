@@ -108,14 +108,14 @@
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
-            <form-login-page>/login</form-login-page>
-            <!--<form-error-page>/login</form-error-page>-->
+            <form-login-page>/WEB-INF/pages/login.jsp</form-login-page>
+            <form-error-page>/WEB-INF/pages/login.jsp</form-error-page>
         </form-login-config>
     </login-config>
 
     <error-page>
-        <location>/WEB-INF/pages/403.jsp</location>
         <error-code>403</error-code>
+        <location>/WEB-INF/pages/403.jsp</location>
     </error-page>
 
 
