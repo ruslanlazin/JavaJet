@@ -67,12 +67,21 @@ public class FlightService {
         return flight;
     }
 
-    public Boolean updateFlightAndCrew(Flight flight) {
-        Boolean result = flightDao.updateWithCrew(flight);
+    public boolean updateFlightAndCrew(Flight flight) {
+        boolean result = flightDao.updateWithCrew(flight);
         if (flight.getDepartureTimezone() == null) {  // TODO: 08.01.2017 think
             resolveTimezoneWhenWrite(flight);
         }
         return result;
+    }
+
+    public boolean updateFlight(Flight flight) {
+        int numberUpdatedRows = flightDao.update(flight);
+        if (flight.getDepartureTimezone() == null) {  // TODO: 08.01.2017 think
+            resolveTimezoneWhenWrite(flight);
+        }
+        return numberUpdatedRows == 1;
+
     }
 
     private void resolveTimezoneWhenWrite(Flight flight) {

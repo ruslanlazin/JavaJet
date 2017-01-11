@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ruslan Lazin
  */
-public class FlightsCommandGET implements Command {
+public class ScheduleCommandGET implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
 private static final int HOURS_TO_MINUS = 12;
 
@@ -20,7 +20,7 @@ private static final int HOURS_TO_MINUS = 12;
                 request.setAttribute("flights", flightService
                 .findAllLaterThen(DateParser.getNowMinusHours(HOURS_TO_MINUS)));
 
-        return "flights";
+        return "schedule";
     }
 }
 

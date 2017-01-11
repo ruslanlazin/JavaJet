@@ -21,7 +21,7 @@
         </div>
         <sec:authorize role="ROLE_AUTHENTICATED">
             <ul class="nav navbar-nav">
-                <li><a href="<c:url value="/flights"/>"><fmt:message key="shared.flights"/></a></li>
+                <li><a href="<c:url value="/schedule"/>"><fmt:message key="shared.flights"/></a></li>
                 <li><a href="<c:url value="/employees"/>"><fmt:message key="shared.employees"/></a></li>
                 <li><a href="<c:url value="/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
             </ul>

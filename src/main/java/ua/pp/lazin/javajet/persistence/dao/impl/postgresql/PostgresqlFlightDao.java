@@ -170,10 +170,12 @@ public class PostgresqlFlightDao implements FlightDao {
                 jdbcTemplate.update(connection, DELETE_LINKS, flight.getId());
 
                 List<Object[]> rows = new ArrayList<>();
-                for (User user : flight.getCrew()) {
-                    rows.add(new Object[]{flight.getId(), user.getId()});
+                if (flight.getCrew() != null) {
+                    for (User user : flight.getCrew()) {
+                        rows.add(new Object[]{flight.getId(), user.getId()});
+                    }
+                    jdbcTemplate.batchUpdate(connection, INSERT_LINK, rows);
                 }
-                jdbcTemplate.batchUpdate(connection, INSERT_LINK, rows);
                 return true;
             }
         });

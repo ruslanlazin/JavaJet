@@ -12,13 +12,15 @@ import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Ruslan Lazin
  */
-public class EditFlightCommandPOST implements Command {
-    private static final Logger logger = Logger.getLogger(EditFlightCommandPOST.class);
+public class EditCrewCommandPOST implements Command {
+    private static final Logger logger = Logger.getLogger(EditCrewCommandPOST.class);
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final AirportService airportService = AirportService.getINSTANCE();
@@ -52,36 +54,26 @@ public class EditFlightCommandPOST implements Command {
             }
         }
 
-        Aircraft aircraft = Aircraft.newBuilder()
-                .id(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER))).build();
+        Flight flight = flightService.findById(Long.valueOf(request.getParameter(FLIGHT_ID_PARAMETER)));
 
-        Flight flight = Flight.newBuilder()
-                .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
-                .departure(airportService.findByCode(request.getParameter(FROM_PARAMETER)))
-                .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
-                .aircraft(aircraft)
-                .build();
-        // TODO: 29.12.2016 validate
-        String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
-        if (flightIdAsString == null) {
-            flight = flightService.create(flight);
-            request.setAttribute(SUCCESS_ATTRIBUTE, true);
-
-        } else {
-            Long flightId = Long.valueOf(flightIdAsString);
-            flight.setId(flightId);
-            flight.setVersion(Integer.valueOf(request.getParameter(VERSION_PARAMETER)));
-
-            Boolean isUpdateSuccessful = flightService.updateFlight(flight);
-            if (isUpdateSuccessful) {
-                request.setAttribute(SUCCESS_ATTRIBUTE, true);
-            } else {
-                request.setAttribute(CONCURRENT_MODIFICATION_ATTRIBUTE, true);
-                logger.info("Two or more users tried to edit Flight " + flight.getId() + " simultaneously");
+        Set<User> crew = new HashSet<>();
+        String[] crewIdsAsStrings = request.getParameterValues(CREW_PARAMETER);
+        if (crewIdsAsStrings != null) {
+            for (String userIdAsString : crewIdsAsStrings) {
+                crew.add(User.newBuilder().id(Long.valueOf(userIdAsString)).build());
             }
         }
+        flight.setCrew(crew);
 
+        Boolean updateSuccessful = flightService.updateFlightAndCrew(flight);
+        if (updateSuccessful) {
+            request.setAttribute(SUCCESS_ATTRIBUTE, true);
+        } else {
+            request.setAttribute(CONCURRENT_MODIFICATION_ATTRIBUTE, true);
+            logger.info("Two or more users tried to edit Flight " + flight.getId() + " simultaneously");
+        }
         request.setAttribute(FLIGHT_ATTRIBUTE, flightService.findByIdWithCrew(flight.getId()));
+        request.setAttribute(EMPLOYEES_ATTRIBUTE, userService.findAllWorkingAirCrewMembers());
         request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
 
         return "edit-flight";

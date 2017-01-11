@@ -22,7 +22,21 @@
 <div class="container-fluid">
     <%--<c:import url="navbar.jsp"/>--%>
     <%@include file="templates/navbar.jsp" %>
-
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-3">
+            <h4>
+                <fmt:message key="flights.header"/>
+            </h4>
+        </div>
+        <sec:authorize role="ROLE_ADMIN">
+            <div class="col-sm-1 col-sm-offset-10">
+                <a href="<c:url value="/archive"/>"
+                   class="btn btn-link " role="button">
+                    <fmt:message key="flights.button.archive"/>
+                </a>
+            </div>
+        </sec:authorize>
+    </div>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             <table class="table table-hover">
@@ -85,14 +99,15 @@
     </div>
     <sec:authorize role="ROLE_ADMIN">
         <div class="row">
-            <div class="col-sm-1 col-sm-offset-9">
-                <a href="<c:url value="/assignment/flight"/>"
+            <div class="col-sm-1 col-sm-offset-10">
+                <a href="<c:url value="/edit/flight"/>"
                    class="btn btn-default btn-info active" role="button">
                     <fmt:message key="flights.button.add-flight"/>
                 </a>
             </div>
         </div>
     </sec:authorize>
+    <br>
 </div>
 <%--Footer--%>
 <%@include file="templates/footer.html" %>

@@ -29,15 +29,24 @@
 
         <%--Back Button--%>
         <div class="row">
-            <a href="<c:url value="/flights"/>"><fmt:message key="shared.button.back"/></a>
+            <a href="<c:url value="/schedule"/>"><fmt:message key="shared.button.back"/></a>
         </div>
 
         <%--Header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="flight.header"/> ${flight.id}</h4>
+                <h4><fmt:message key="flight.header"/> ${flight.id}
+                    <sec:authorize role="ROLE_ADMIN">
+                        <form action="<c:url value="/edit/flight"/>">
+                            <input type="hidden" name="flightId" value="${flight.id}">
+                            <input type="submit" class="btn btn-xs  btn-link"
+                                   value="<fmt:message key="flights.button.edit"/>">
+                        </form>
+                    </sec:authorize>
+                </h4>
             </div>
         </div>
+
 
         <%--Flight table--%>
         <table class="table table-striped">
@@ -126,35 +135,47 @@
         </table>
 
 
-        <%--Crew assigntment header--%>
+        <%--Crew table header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="edit-flight.crew"/></h4>
+                <h4><fmt:message key="edit-flight.crew"/>
+                    <sec:authorize role="ROLE_DISPATCHER">
+                        <form action="<c:url value="/edit/crew"/>">
+                            <input type="hidden" name="flightId" value="${flight.id}">
+                            <input type="submit" class="btn btn-xs  btn-link"
+                                   value="<fmt:message key="flights.button.edit"/>">
+                        </form>
+                    </sec:authorize>
+                </h4>
             </div>
         </div>
 
         <%--Crew table--%>
-        <table class="table table-striped col-sm-4">
-            <%--Select Pilots Field--%>
-            <c:set var="position" value="Pilot" scope="page"/>
-            <fmt:message key="edit-flight.pilots" var="label" scope="page"/>
-            <%@include file="templates/employee.view.template.jsp" %>
+        <div class="table-responsive">
+            <table class="table table-striped col-sm-4">
+                <tbody>
+                <%--View Pilots Field--%>
+                <c:set var="position" value="Pilot" scope="page"/>
+                <fmt:message key="edit-flight.pilots" var="label" scope="page"/>
+                <%@include file="templates/employee.view.template.jsp" %>
 
-            <%--Select Navigation Officer Field--%>
-            <c:set var="position" value="Navigating Officer" scope="page"/>
-            <fmt:message key="edit-flight.navi" var="label" scope="page"/>
-            <%@include file="templates/employee.view.template.jsp" %>
+                <%--View Navigation Officer Field--%>
+                <c:set var="position" value="Navigating Officer" scope="page"/>
+                <fmt:message key="edit-flight.navi" var="label" scope="page"/>
+                <%@include file="templates/employee.view.template.jsp" %>
 
-            <%--Select Flight Attendants Field--%>
-            <c:set var="position" value="Flight Attendant" scope="page"/>
-            <fmt:message key="edit-flight.attendant" var="label" scope="page"/>
-            <%@include file="templates/employee.view.template.jsp" %>
+                <%--View Flight Attendants Field--%>
+                <c:set var="position" value="Flight Attendant" scope="page"/>
+                <fmt:message key="edit-flight.attendant" var="label" scope="page"/>
+                <%@include file="templates/employee.view.template.jsp" %>
 
-            <%--Select Radioman Field--%>
-            <c:set var="position" value="Radioman" scope="page"/>
-            <fmt:message key="edit-flight.radioman" var="label" scope="page"/>
-            <%@include file="templates/employee.view.template.jsp" %>
-        </table>
+                <%--View  Radioman Field--%>
+                <c:set var="position" value="Radioman" scope="page"/>
+                <fmt:message key="edit-flight.radioman" var="label" scope="page"/>
+                <%@include file="templates/employee.view.template.jsp" %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <%--Footer--%>
