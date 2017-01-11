@@ -4,26 +4,23 @@
 $(document).ready(function () {
 
     // Cache
-    var departureTime = moment($('#departureTime').val());
-    var language = $('#language').val();
-    var disableState;
-    var maxDate;
-    var minDate;
-    if (departureTime < moment().remove(12, 'hours')) {
-        minDate = departureTime;
-        maxDate = departureTime;
-        disableState = true;
+    var departureTime = ($('#departureTime').val());
+    var defaultDate;
+    if (departureTime === '') {
+        defaultDate = moment();
     } else {
-        minDate = moment();
-        maxDate = moment().add(90, 'days');
-        disableState = false;
+        defaultDate = moment(departureTime);
     }
+    var language = $('#language').val();
+    var minDate = moment().subtract(12, 'hours');
+    var maxDate = moment().add(90, 'days');
+    var disableState = false;
 
     // Calendar config section
     $(function () {
         $('#datetimepicker').datetimepicker({
             format: 'DD/MM/YYYY HH:mm',
-            defaultDate: departureTime,
+            defaultDate: defaultDate,
             minDate: minDate,
             maxDate: maxDate,
             locale: language

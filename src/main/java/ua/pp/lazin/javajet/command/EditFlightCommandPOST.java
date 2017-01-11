@@ -48,7 +48,7 @@ public class EditFlightCommandPOST implements Command {
 
         // TODO: 29.12.2016 validate
         String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
-        if (flightIdAsString == null) {
+        if (flightIdAsString == null || flightIdAsString.isEmpty()) {
             flight = flightService.create(flight);
             request.setAttribute(SUCCESS_ATTRIBUTE, true);
         } else {
