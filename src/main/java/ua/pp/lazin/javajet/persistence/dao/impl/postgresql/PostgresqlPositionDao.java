@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.PositionDao;
-import ua.pp.lazin.javajet.persistence.entity.Position;
+import ua.pp.lazin.javajet.entity.Position;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 

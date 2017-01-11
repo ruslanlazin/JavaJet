@@ -3,12 +3,10 @@ package ua.pp.lazin.javajet.service;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.RoleDao;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
-import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.PostgresqlUserDao;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.PasswordEncoder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**

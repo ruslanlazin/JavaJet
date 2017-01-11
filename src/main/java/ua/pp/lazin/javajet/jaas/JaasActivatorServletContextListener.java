@@ -1,5 +1,7 @@
 package ua.pp.lazin.javajet.jaas;
 
+import org.apache.log4j.Logger;
+
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import javax.servlet.ServletContextEvent;
@@ -12,18 +14,20 @@ import java.util.HashMap;
  * that adds named LoginModule to javax.security.auth.login.Configuration
  * see also META-INF/context.xml
  *
+ * @author Ruslan Lazin
  * @see javax.servlet.ServletContextListener
  * @see javax.security.auth.login.Configuration
  * @see javax.security.auth.spi.LoginModule
- *
- * @author Ruslan Lazin
  */
 @WebListener
 public class JaasActivatorServletContextListener implements ServletContextListener {
     private static final String LOGIN_MODULE_NAME = "JavaJetLoginModule";
+    private static final Logger logger = Logger.getLogger(JaasActivatorServletContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
+
+        logger.debug("Configuring JAAS " + LOGIN_MODULE_NAME + "...");
         Configuration loginConfiguration = new Configuration() {
             @Override
             public AppConfigurationEntry[] getAppConfigurationEntry(String name) {

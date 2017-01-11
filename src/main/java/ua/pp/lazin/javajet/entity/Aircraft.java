@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.persistence.entity;
+package ua.pp.lazin.javajet.entity;
 
 /**
  * @author Ruslan Lazin

@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
+import ua.pp.lazin.javajet.entity.Airport;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 

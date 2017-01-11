@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.filters;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.AuthService;
 
 import javax.servlet.Filter;
@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 
 /**

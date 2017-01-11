@@ -1,10 +1,10 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
-import ua.pp.lazin.javajet.persistence.entity.Aircraft;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
-import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Aircraft;
+import ua.pp.lazin.javajet.entity.Airport;
+import ua.pp.lazin.javajet.entity.Flight;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionCallback;
@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,9 +41,15 @@ public class PostgresqlFlightDao implements FlightDao {
                     "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
                     "WHERE f.flight_id = ?";
 
-    private static final String FIND_ALL =
+    private static final String FIND_ALL_ORDER_BY_DTIME_ASC =
             "SELECT * FROM flight f " +
                     "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
+                    "ORDER BY departure_time";
+
+    private static final String FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC =
+            "SELECT * FROM flight f " +
+                    "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
+                    "WHERE departure_time >= ? " +
                     "ORDER BY departure_time";
 
     private static final String UPDATE =
@@ -108,13 +115,14 @@ public class PostgresqlFlightDao implements FlightDao {
     }
 
     @Override
-    public List<Flight> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, FIND_ALL);
+    public List<Flight> findAllOrderByDepartureTimeAsc() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_ORDER_BY_DTIME_ASC);
     }
 
     @Override
-    public List<Flight> findAllExpected() {
-        return null;
+    public List<Flight> findAllLaterThen(Date date) {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC,
+                new Timestamp(date.getTime()));
     }
 
     @Override

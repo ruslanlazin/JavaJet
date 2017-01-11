@@ -1,9 +1,9 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
-import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.Position;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Flight;
+import ua.pp.lazin.javajet.entity.Position;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionCallback;

@@ -24,12 +24,10 @@ public class LoginCommandPOST implements Command {
         String username = request.getParameter(USERNAME_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
 
-//        if (authService.login(request.getSession(), username, password)) {
-//
         try {
             request.login(username, password);
             logger.info(username + " successfully authorized ");
-            return "redirect:/";
+            return "redirect:main";
 
         } catch (ServletException e) {
             logger.info(username + " unsuccessfully tried to authorize");

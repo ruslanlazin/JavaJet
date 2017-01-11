@@ -1,14 +1,15 @@
-package ua.pp.lazin.javajet.persistence.entity;
+package ua.pp.lazin.javajet.entity;
 
 /**
+ * The Position entity represents User's position in the company.
+ *
  * @author Ruslan Lazin
  */
-
-public class Role {
+public class Position {
     private Long id;
     private String title;
 
-    private Role(Builder builder) {
+    private Position(Builder builder) {
         setId(builder.id);
         setTitle(builder.title);
     }
@@ -17,18 +18,38 @@ public class Role {
         return new Builder();
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param roleId the role id
+     */
     public void setId(Long roleId) {
         this.id = roleId;
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -38,11 +59,12 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Role role = (Role) o;
+        Position position = (Position) o;
 
-        if (id != null ? !id.equals(role.id) : role.id != null) return false;
-        return title != null ? title.equals(role.title) : role.title == null;
+        if (id != null ? !id.equals(position.id) : position.id != null) return false;
+        if (title != null ? !title.equals(position.title) : position.title != null) return false;
 
+        return true;
     }
 
     @Override
@@ -54,14 +76,14 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Position{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 '}';
     }
 
     /**
-     * {@code Role} builder static inner class.
+     * {@code Position} builder static inner class.
      */
     public static final class Builder {
         private Long id;
@@ -93,12 +115,12 @@ public class Role {
         }
 
         /**
-         * Returns a {@code Role} built from the parameters previously set.
+         * Returns a {@code Position} built from the parameters previously set.
          *
-         * @return a {@code Role} built with parameters of this {@code Role.Builder}
+         * @return a {@code Position} built with parameters of this {@code Position.Builder}
          */
-        public Role build() {
-            return new Role(this);
+        public Position build() {
+            return new Position(this);
         }
     }
 }

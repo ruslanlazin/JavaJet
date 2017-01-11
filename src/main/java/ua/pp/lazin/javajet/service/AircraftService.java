@@ -2,9 +2,7 @@ package ua.pp.lazin.javajet.service;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
-import ua.pp.lazin.javajet.persistence.dao.AirportDao;
-import ua.pp.lazin.javajet.persistence.entity.Aircraft;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
+import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
 import java.util.List;

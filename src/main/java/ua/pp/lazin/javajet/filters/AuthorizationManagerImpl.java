@@ -1,9 +1,8 @@
 package ua.pp.lazin.javajet.filters;
 
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.util.PropertiesLoader;
 
-import java.io.FileInputStream;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;

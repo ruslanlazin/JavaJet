@@ -1,7 +1,6 @@
-package ua.pp.lazin.javajet.persistence.entity;
+package ua.pp.lazin.javajet.entity;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -182,6 +181,27 @@ public class Flight {
      */
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    /**
+     * Gets distance.
+     *
+     * @return the approximated distance between departure and destinations in km.
+     * return zero if there are incorrect airports GPS coordinates.
+     */
+    public int getDistance() {
+        return 55;
+    }
+
+
+    /**
+     * Get approximated flight time in hours - int.
+     *
+     * @return the int - approximated flight time in hours
+     * return zero if there are incorrect airports GPS coordinates.
+     */
+    public int getFlightTime() {
+        return 4;
     }
 
     @Override

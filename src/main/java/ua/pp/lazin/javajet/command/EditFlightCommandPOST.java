@@ -1,9 +1,9 @@
 package ua.pp.lazin.javajet.command;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.entity.Aircraft;
-import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Aircraft;
+import ua.pp.lazin.javajet.entity.Flight;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;

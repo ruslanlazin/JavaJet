@@ -1,8 +1,8 @@
 package ua.pp.lazin.javajet.command;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.entity.Aircraft;
-import ua.pp.lazin.javajet.persistence.entity.Flight;
+import ua.pp.lazin.javajet.entity.Aircraft;
+import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
@@ -10,10 +10,6 @@ import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * @author Ruslan Lazin

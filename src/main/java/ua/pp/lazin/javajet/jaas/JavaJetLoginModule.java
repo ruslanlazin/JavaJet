@@ -1,8 +1,8 @@
 package ua.pp.lazin.javajet.jaas;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.entity.Role;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Role;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.AuthService;
 
 import javax.security.auth.Subject;

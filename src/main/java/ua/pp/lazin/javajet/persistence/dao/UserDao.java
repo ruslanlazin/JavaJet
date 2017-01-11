@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao;
 
-import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Flight;
+import ua.pp.lazin.javajet.entity.User;
 
 import java.util.List;
 import java.util.Set;

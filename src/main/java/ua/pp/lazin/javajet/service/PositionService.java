@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.service;
 
 import ua.pp.lazin.javajet.persistence.dao.PositionDao;
-import ua.pp.lazin.javajet.persistence.entity.Position;
+import ua.pp.lazin.javajet.entity.Position;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 
 import java.util.List;

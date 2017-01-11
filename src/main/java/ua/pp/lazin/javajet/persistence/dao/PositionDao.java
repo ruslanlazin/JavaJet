@@ -1,6 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao;
 
-import ua.pp.lazin.javajet.persistence.entity.Position;
+import ua.pp.lazin.javajet.entity.Position;
 
 import java.util.List;
 

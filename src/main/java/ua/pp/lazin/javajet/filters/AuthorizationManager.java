@@ -1,6 +1,6 @@
 package ua.pp.lazin.javajet.filters;
 
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.User;
 
 /**
  * Manages authorization to the system.

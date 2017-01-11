@@ -42,9 +42,10 @@
                 Pages for all company's employees.
                 Just authentication required to access
             </description>
+            <url-pattern>/main</url-pattern>
             <url-pattern>/flights</url-pattern>
             <url-pattern>/employees</url-pattern>
-            <url-pattern>/edit-flight</url-pattern>
+            <url-pattern>/flight</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ROLE_AUTHENTICATED</role-name>

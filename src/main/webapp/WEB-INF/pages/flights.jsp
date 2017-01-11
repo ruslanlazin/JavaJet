@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="lt" uri="http://lazin.pp.ua/localtime" %>
+<%@ taglib prefix="sec" uri="http://lazin.pp.ua/access" %>
 
 <!DOCTYPE html>
 <html>
@@ -49,29 +50,49 @@
                         <td>${flight.aircraft.model}</td>
                         <td>${flight.aircraft.regNumber}</td>
 
+                        <sec:authorize role="ROLE_ADMIN">
+                            <td>
+                                <form action="<c:url value="/edit/flight"/>">
+                                    <input type="hidden" name="flightId" value="${flight.id}">
+                                    <input type="submit" class="btn btn-xs  btn-default"
+                                           value="<fmt:message key="flights.button.edit"/>">
+                                </form>
+                            </td>
+                        </sec:authorize>
+
+                        <sec:authorize role="ROLE_DISPATCHER">
+                            <td>
+                                <form action="<c:url value="/edit/crew"/>">
+                                    <input type="hidden" name="flightId" value="${flight.id}">
+                                    <input type="submit" class="btn btn-xs  btn-default"
+                                           value="<fmt:message key="flights.button.crew"/>">
+                                </form>
+                            </td>
+                        </sec:authorize>
+
                         <td>
                             <form action="<c:url value="/flight"/>">
                                 <input type="hidden" name="flightId" value="${flight.id}">
                                 <input type="submit" class="btn btn-xs  btn-default"
-                                       value="<fmt:message key="flights.button.edit"/>">
+                                       value="<fmt:message key="flights.button.view"/>">
                             </form>
                         </td>
-
-
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-1 col-sm-offset-9">
-            <a href="<c:url value="/add-flight"/>"
-               class="btn btn-default btn-info active" role="button">
-                <fmt:message key="flights.button.add-flight"/>
-            </a>
+    <sec:authorize role="ROLE_ADMIN">
+        <div class="row">
+            <div class="col-sm-1 col-sm-offset-9">
+                <a href="<c:url value="/assignment/flight"/>"
+                   class="btn btn-default btn-info active" role="button">
+                    <fmt:message key="flights.button.add-flight"/>
+                </a>
+            </div>
         </div>
-    </div>
+    </sec:authorize>
 </div>
 <%--Footer--%>
 <%@include file="templates/footer.html" %>

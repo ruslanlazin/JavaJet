@@ -1,6 +1,6 @@
 package ua.pp.lazin.javajet.command;
 
-import ua.pp.lazin.javajet.persistence.entity.Aircraft;
+import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.FlightService;
 

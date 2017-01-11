@@ -1,6 +1,6 @@
 package ua.pp.lazin.javajet.command;
 
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;

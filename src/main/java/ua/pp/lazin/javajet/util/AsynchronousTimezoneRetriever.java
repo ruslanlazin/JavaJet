@@ -5,9 +5,8 @@ import com.google.maps.PendingResult;
 import com.google.maps.TimeZoneApi;
 import com.google.maps.model.LatLng;
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
+import ua.pp.lazin.javajet.entity.Airport;
 
-import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 

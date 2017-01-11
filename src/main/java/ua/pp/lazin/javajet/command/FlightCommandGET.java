@@ -1,13 +1,11 @@
 package ua.pp.lazin.javajet.command;
 
-import ua.pp.lazin.javajet.persistence.entity.User;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.FlightService;
 import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author Ruslan Lazin
@@ -21,11 +19,11 @@ public class FlightCommandGET implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         Long id = Long.valueOf(request.getParameter("flightId"));
-        request.getSession().setAttribute("flight", flightService.findByIdWithCrew(id));
-        request.setAttribute("employees", userService.findAll());
+        request.setAttribute("flight", flightService.findByIdWithCrewAirports(id));
+        request.setAttribute("employees", flightService.findByIdWithCrew(id).getCrew());
         request.setAttribute("aircrafts", aircraftService.findAll());
 
-        return "edit-flight";
+        return "f2";
     }
 }
 

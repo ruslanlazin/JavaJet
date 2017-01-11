@@ -2,13 +2,9 @@ package ua.pp.lazin.javajet.service;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
-import ua.pp.lazin.javajet.persistence.dao.UserDao;
-import ua.pp.lazin.javajet.persistence.entity.Airport;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Airport;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
-import ua.pp.lazin.javajet.util.PasswordEncoder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

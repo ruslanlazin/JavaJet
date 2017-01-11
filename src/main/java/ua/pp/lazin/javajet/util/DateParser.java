@@ -6,28 +6,51 @@ import ua.pp.lazin.javajet.command.EditFlightCommandPOST;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * The type Date parser.
+ */
 public class DateParser {
     private static final Logger logger = Logger.getLogger(DateParser.class);
     private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
     private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
+    /**
+     * Instantiates a new Date parser.
+     */
     public DateParser() {
     }
 
-    public Date parseUTC(String dateAsISO8601String) {
+    /**
+     * Parse utc date.
+     *
+     * @param dateAsString the date as string
+     * @return the date
+     */
+    public Date parseUTC(String dateAsString) {
 
         final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         dateFormat.setTimeZone(UTC);
         Date date = null;
         try {
-            date = dateFormat.parse(dateAsISO8601String);
+            date = dateFormat.parse(dateAsString);
         } catch (ParseException e) {
-            logger.error("An exception occurred during parsing: " + dateAsISO8601String, e);
-            // TODO: 28.12.2016 change
+            logger.error("An exception occurred during parsing: " + dateAsString, e);
+            throw new RuntimeException("An exception occurred during parsing: " + dateAsString, e);
         }
         return date;
+    }
+
+    /**
+     * Gets now minus hours.
+     *
+     * @param hours the hours
+     * @return the now minus hours
+     */
+    public static Date getNowMinusHours(int hours) {
+        return new Date(new Date().getTime() - (1000 * 60 * 60 * hours));
     }
 }

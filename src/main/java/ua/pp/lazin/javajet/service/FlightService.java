@@ -2,13 +2,16 @@ package ua.pp.lazin.javajet.service;
 
 import com.google.maps.PendingResult;
 import org.apache.log4j.Logger;
+import ua.pp.lazin.javajet.entity.Airport;
+import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
-import ua.pp.lazin.javajet.persistence.entity.Flight;
-import ua.pp.lazin.javajet.persistence.entity.User;
+import ua.pp.lazin.javajet.entity.Flight;
+import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.AsynchronousTimezoneRetriever;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -20,6 +23,7 @@ public class FlightService {
     private final static Logger logger = Logger.getLogger(FlightService.class);
     private final static FlightDao flightDao = DaoFactoryCreator.getFactory().getFlightDao();
     private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
+    private final static AirportDao airportDao = DaoFactoryCreator.getFactory().getAirportDao();
     private static FlightService INSTANCE = new FlightService();
 
     private FlightService() {
@@ -30,7 +34,11 @@ public class FlightService {
     }
 
     public List<Flight> findAll() {
-        return flightDao.findAll();
+        return flightDao.findAllOrderByDepartureTimeAsc();
+    }
+
+    public List<Flight> findAllLaterThen(Date date) {
+        return flightDao.findAllLaterThen(date);
     }
 
     public Flight create(Flight flight) {
@@ -48,6 +56,14 @@ public class FlightService {
         Flight flight = flightDao.findById(flightId);
         Set<User> crew = userDao.findUsersByFlight(flight);
         flight.setCrew(crew);
+        return flight;
+    }
+
+    public Flight findByIdWithCrewAirports(Long flightId) {
+        Flight flight = flightDao.findById(flightId);
+        flight.setCrew(userDao.findUsersByFlight(flight));
+        flight.setDeparture(airportDao.findByCode(flight.getDeparture().getIataCode()));
+        flight.setDestination(airportDao.findByCode(flight.getDestination().getIataCode()));
         return flight;
     }
 
@@ -83,5 +99,4 @@ public class FlightService {
         AsynchronousTimezoneRetriever resolver = new AsynchronousTimezoneRetriever();
         resolver.retrieveTimezoneWhenCall(flight.getDeparture(), timeZoneCallback);
     }
-
 }
