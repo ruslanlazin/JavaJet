@@ -183,28 +183,6 @@ public class Flight {
         this.version = version;
     }
 
-    /**
-     * Gets distance.
-     *
-     * @return the approximated distance between departure and destinations in km.
-     * return zero if there are incorrect airports GPS coordinates.
-     */
-    public int getDistance() {
-        return 55;
-    }
-
-
-    /**
-     * Get approximated flight time in hours - int.
-     *
-     * @return the int - approximated flight time in hours
-     * return zero if there are incorrect airports GPS coordinates.
-     */
-    // TODO: 12.01.2017 remove
-    public int getFlightTime() {
-        return 4;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
