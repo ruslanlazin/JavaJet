@@ -1,6 +1,7 @@
 <%@ page session="true" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script defer src="<c:url value="/resources/js/distance.js"/>"></script>
 <%--
 Template for view Flight info section
 
@@ -45,8 +46,11 @@ author Ruslan Lazin
                 ${flight.departure.city} ,
                 ${flight.departure.country}<br>
                 GPS coordinates: <br>
-                Latitude: ${flight.departure.latitude},
-                Longitude: ${flight.departure.longitude}
+                Latitude: ${flight.departure.latitude}&deg;,
+                Longitude: ${flight.departure.longitude}&deg;
+                <input type="hidden" id="depart_latitude" value="${flight.departure.latitude}">
+                <input type="hidden" id="depart_longitude" value="${flight.departure.longitude}">
+
             </td>
         </tr>
 
@@ -58,11 +62,13 @@ author Ruslan Lazin
             <td class="col-sm-4">
                 <b>${flight.destination.iataCode}</b><br>
                 ${flight.destination.name} <fmt:message key="shared.airport"></fmt:message>,
-                ${flight.destination.city} <fmt:message key="shared.city"></fmt:message>,
+                ${flight.destination.city} ,
                 ${flight.destination.country}<br>
                 GPS coordinates: <br>
                 Latitude: ${flight.destination.latitude}&deg;,
                 Longitude: ${flight.destination.longitude}&deg;
+                <input type="hidden" id="dest_latitude" value="${flight.destination.latitude}">
+                <input type="hidden" id="dest_longitude" value="${flight.destination.longitude}">
             </td>
         </tr>
 
@@ -94,5 +100,3 @@ author Ruslan Lazin
         </tbody>
     </table>
 </div>
-
-

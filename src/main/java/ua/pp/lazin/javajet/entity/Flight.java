@@ -200,6 +200,7 @@ public class Flight {
      * @return the int - approximated flight time in hours
      * return zero if there are incorrect airports GPS coordinates.
      */
+    // TODO: 12.01.2017 remove
     public int getFlightTime() {
         return 4;
     }

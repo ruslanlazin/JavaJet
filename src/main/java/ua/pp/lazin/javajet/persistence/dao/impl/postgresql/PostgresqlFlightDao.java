@@ -74,6 +74,7 @@ public class PostgresqlFlightDao implements FlightDao {
 
     private static final String INSERT_LINK =
             "INSERT INTO flight_users (flight_id, user_id) VALUES (?, ?)";
+
     private static final RowMapper<Flight> rowMapper = new RowMapper<Flight>() {
 
         @Override

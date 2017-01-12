@@ -91,11 +91,9 @@ public class JdbcTemplate<T> {
         if (logger.isDebugEnabled()) {
             logger.debug("Executing SQL BATCH UPDATE [" + batchQuery + "] with a batch size of " + batchArgs.size());
         }
-        Connection connection = ConnectionManager.getConnection();
+        try (PreparedStatement stmt = txConnection.prepareStatement(batchQuery)) {
 
-        try (PreparedStatement stmt = connection.prepareStatement(batchQuery)) {
-
-            if (connection.getMetaData().supportsBatchUpdates()) {
+            if (txConnection.getMetaData().supportsBatchUpdates()) {
                 for (Object[] rowParams : batchArgs) {
                     for (int i = 0; i < rowParams.length; i++) {
                         stmt.setObject(i + 1, rowParams[i]);

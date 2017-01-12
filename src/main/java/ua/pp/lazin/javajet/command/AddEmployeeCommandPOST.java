@@ -30,7 +30,6 @@ public class AddEmployeeCommandPOST implements Command {
                 .secondName(request.getParameter("secondname"))
                 .email(request.getParameter("email"))
                 .position(positionService.findByTitle(request.getParameter("position")))
-                .airCrew(true)
                 .working(true)
                 .build();
 

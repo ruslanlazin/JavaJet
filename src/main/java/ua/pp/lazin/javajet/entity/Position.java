@@ -1,5 +1,7 @@
 package ua.pp.lazin.javajet.entity;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 /**
  * The Position entity represents User's position in the company.
  *
@@ -8,10 +10,12 @@ package ua.pp.lazin.javajet.entity;
 public class Position {
     private Long id;
     private String title;
+    private Boolean airCrew;
 
     private Position(Builder builder) {
         setId(builder.id);
         setTitle(builder.title);
+        setAirCrew(builder.airCrew);
     }
 
     public static Builder newBuilder() {
@@ -54,6 +58,14 @@ public class Position {
         this.title = title;
     }
 
+    public Boolean getAirCrew() {
+        return airCrew;
+    }
+
+    public void setAirCrew(Boolean airCrew) {
+        this.airCrew = airCrew;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +100,7 @@ public class Position {
     public static final class Builder {
         private Long id;
         private String title;
+        private Boolean airCrew;
 
         private Builder() {
         }
@@ -111,6 +124,17 @@ public class Position {
          */
         public Builder title(String title) {
             this.title = title;
+            return this;
+        }
+
+        /**
+         * Sets the {@code airCrew} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param airCrew the {@code airCrew} to set
+         * @return a reference to this Builder
+         */
+        public Builder airCrew(Boolean airCrew) {
+            this.airCrew = airCrew;
             return this;
         }
 

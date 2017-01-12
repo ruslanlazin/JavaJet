@@ -21,14 +21,17 @@ import java.util.Set;
  */
 public class PostgresqlUserDao implements UserDao {
     private static final TransactionTemplate transactionTemplate = TransactionTemplate.getINSTANCE();
-    private static final Integer START_VERSION = 0;
     private static final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
+    private static final Integer START_VERSION = 0;
+
     private static final RowMapper<User> rowMapper = new RowMapper<User>() {
+
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             Position position = Position.newBuilder()
                     .id(rs.getLong("position_id"))
                     .title(rs.getString("title"))
+                    .airCrew(rs.getBoolean("air_crew"))
                     .build();
             return User.newBuilder()
                     .id(rs.getLong("user_id"))
@@ -38,7 +41,6 @@ public class PostgresqlUserDao implements UserDao {
                     .username(rs.getString("username"))
                     .password(rs.getString("password"))
                     .email(rs.getString("email"))
-                    .airCrew(rs.getBoolean("air_crew"))
                     .working(rs.getBoolean("working"))
                     .version(rs.getInt("version"))
                     .build();
@@ -53,9 +55,8 @@ public class PostgresqlUserDao implements UserDao {
             "password, " +
             "email, " +
             "position_id, " +
-            "air_crew, " +
             "working, " +
-            "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
     @Override
     public Long create(User user) {
@@ -69,7 +70,6 @@ public class PostgresqlUserDao implements UserDao {
                         user.getPassword(),
                         user.getEmail(),
                         user.getPosition().getId(),
-                        user.isAirCrew(),
                         user.isWorking(),
                         START_VERSION);
             }
@@ -80,7 +80,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public User findByID(Long id) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "WHERE u.user_id = ?", id);
 
@@ -89,7 +89,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public User findByUsername(String username) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "WHERE u.username = ?", username);
     }
@@ -97,7 +97,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public User findByEmail(String email) {
         return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "WHERE u.email = ?", email);
     }
@@ -105,7 +105,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public List<User> findAll() {
         return jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "ORDER BY u.second_name");
     }
@@ -113,7 +113,7 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public Set<User> findUsersByFlight(Flight flight) {
         List<User> crew = jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "JOIN flight_users f ON u.user_id = f.user_id " +
                         "WHERE f.flight_id = ?", flight.getId());
@@ -123,10 +123,10 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public List<User> findAllWorkingAirCrewMembers() {
         return jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title FROM users u " +
+                "SELECT u.*, p.title, p.air_crew FROM users u " +
                         "JOIN position p ON u.position_id = p.position_id " +
                         "WHERE u.working = TRUE " +
-                        "AND u.air_crew = TRUE " +
+                        "AND p.air_crew = TRUE " +
                         "ORDER BY u.second_name");
     }
 

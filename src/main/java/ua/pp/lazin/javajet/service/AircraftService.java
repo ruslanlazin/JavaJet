@@ -25,4 +25,12 @@ public class AircraftService {
     public List<Aircraft> findAll() {
         return aircraftDao.findAll();
     }
+
+    public int update(Aircraft aircraft) {
+        return aircraftDao.update(aircraft);
+    }
+
+    public Long create(Aircraft aircraft) {
+        return aircraftDao.create(aircraft);
+    }
 }

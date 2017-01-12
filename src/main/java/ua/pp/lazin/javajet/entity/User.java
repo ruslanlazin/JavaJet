@@ -14,7 +14,6 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private Boolean airCrew;
     private Boolean working;
     private Set<Flight> flights;
     private Set<Role> roles;
@@ -28,7 +27,6 @@ public class User {
         setUsername(builder.username);
         setPassword(builder.password);
         setEmail(builder.email);
-        setAirCrew(builder.airCrew);
         setWorking(builder.working);
         setFlights(builder.flights);
         setRoles(builder.roles);
@@ -96,14 +94,6 @@ public class User {
         this.position = positionByPositionId;
     }
 
-    public Boolean isAirCrew() {
-        return airCrew;
-    }
-
-    public void setAirCrew(Boolean isAirCrew) {
-        this.airCrew = isAirCrew;
-    }
-
     public Boolean isWorking() {
         return working;
     }
@@ -126,10 +116,6 @@ public class User {
 
     public void setFlights(Set<Flight> flights) {
         this.flights = flights;
-    }
-
-    public Boolean getAirCrew() {
-        return airCrew;
     }
 
     public Boolean getWorking() {
@@ -195,7 +181,6 @@ public class User {
         private String username;
         private String password;
         private String email;
-        private Boolean airCrew;
         private Boolean working;
         private Set<Flight> flights;
         private Set<Role> roles;
@@ -278,17 +263,6 @@ public class User {
          */
         public Builder email(String email) {
             this.email = email;
-            return this;
-        }
-
-        /**
-         * Sets the {@code airCrew} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param airCrew the {@code airCrew} to set
-         * @return a reference to this Builder
-         */
-        public Builder airCrew(Boolean airCrew) {
-            this.airCrew = airCrew;
             return this;
         }
 
