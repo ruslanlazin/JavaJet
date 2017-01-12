@@ -8,11 +8,7 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
-
-
-</head>
+  </head>
 
 <body>
 <%--<c:import url="navbar.jsp"/>--%>

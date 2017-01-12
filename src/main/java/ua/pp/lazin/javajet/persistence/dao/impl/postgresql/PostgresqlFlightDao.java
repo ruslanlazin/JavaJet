@@ -46,6 +46,12 @@ public class PostgresqlFlightDao implements FlightDao {
                     "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
                     "ORDER BY departure_time";
 
+    private static final String FIND_ALL_BEFORE_THEN_ORDER_BY_DTIME_ASC =
+            "SELECT * FROM flight f " +
+                    "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
+                    "WHERE departure_time <= ? " +
+                    "ORDER BY departure_time";
+
     private static final String FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC =
             "SELECT * FROM flight f " +
                     "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
@@ -68,7 +74,6 @@ public class PostgresqlFlightDao implements FlightDao {
 
     private static final String INSERT_LINK =
             "INSERT INTO flight_users (flight_id, user_id) VALUES (?, ?)";
-
     private static final RowMapper<Flight> rowMapper = new RowMapper<Flight>() {
 
         @Override
@@ -120,6 +125,12 @@ public class PostgresqlFlightDao implements FlightDao {
     }
 
     @Override
+    public List<Flight> findAllBforeThen(Date date) {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_BEFORE_THEN_ORDER_BY_DTIME_ASC,
+                new Timestamp(date.getTime()));
+    }
+
+    @Override
     public List<Flight> findAllLaterThen(Date date) {
         return jdbcTemplate.findEntities(rowMapper, FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC,
                 new Timestamp(date.getTime()));
@@ -143,11 +154,11 @@ public class PostgresqlFlightDao implements FlightDao {
         });
     }
 
+
     @Override
     public int delete(Flight flight) {
         return 0;
     }
-
 
     @Override
     public Boolean updateWithCrew(Flight flight) {

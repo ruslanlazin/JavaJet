@@ -40,7 +40,7 @@
                         <form action="<c:url value="/edit/flight"/>">
                             <input type="hidden" name="flightId" value="${flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
-                                   value="<fmt:message key="flights.button.edit"/>">
+                                   value="<fmt:message key="shared.edit"/>">
                         </form>
                     </sec:authorize>
                 </h4>
@@ -58,7 +58,7 @@
                         <form action="<c:url value="/edit/crew"/>">
                             <input type="hidden" name="flightId" value="${flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
-                                   value="<fmt:message key="flights.button.edit"/>">
+                                   value="<fmt:message key="shared.edit"/>">
                         </form>
                     </sec:authorize>
                 </h4>

@@ -10,11 +10,6 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
-    <style>body {
-        background-image: url("<c:url value="/resources/images/javajet-tr.png"/>")
-    }</style>
 
 </head>
 
@@ -25,17 +20,9 @@
     <div class="row">
         <div class="col-sm-2 col-sm-offset-3">
             <h4>
-                <fmt:message key="flights.header"/>
+                <fmt:message key="archive.header"/>
             </h4>
         </div>
-        <sec:authorize role="ROLE_ADMIN">
-            <div class="col-sm-1 col-sm-offset-10">
-                <a href="<c:url value="/archive"/>"
-                   class="btn btn-link " role="button">
-                    <fmt:message key="flights.button.archive"/>
-                </a>
-            </div>
-        </sec:authorize>
     </div>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
@@ -63,27 +50,6 @@
                         <td>${aircraft.destination.iataCode}</td>
                         <td>${aircraft.aircraft.model}</td>
                         <td>${aircraft.aircraft.regNumber}</td>
-
-                        <sec:authorize role="ROLE_ADMIN">
-                            <td>
-                                <form action="<c:url value="/edit/flight"/>">
-                                    <input type="hidden" name="flightId" value="${aircraft.id}">
-                                    <input type="submit" class="btn btn-xs  btn-default"
-                                           value="<fmt:message key="shared.edit"/>">
-                                </form>
-                            </td>
-                        </sec:authorize>
-
-                        <sec:authorize role="ROLE_DISPATCHER">
-                            <td>
-                                <form action="<c:url value="/edit/crew"/>">
-                                    <input type="hidden" name="flightId" value="${aircraft.id}">
-                                    <input type="submit" class="btn btn-xs  btn-default"
-                                           value="<fmt:message key="flights.button.crew"/>">
-                                </form>
-                            </td>
-                        </sec:authorize>
-
                         <td>
                             <form action="<c:url value="/flight"/>">
                                 <input type="hidden" name="flightId" value="${aircraft.id}">
@@ -97,16 +63,6 @@
             </table>
         </div>
     </div>
-    <sec:authorize role="ROLE_ADMIN">
-        <div class="row">
-            <div class="col-sm-1 col-sm-offset-10">
-                <a href="<c:url value="/edit/flight"/>"
-                   class="btn btn-default btn-info active" role="button">
-                    <fmt:message key="flights.button.add-flight"/>
-                </a>
-            </div>
-        </div>
-    </sec:authorize>
     <br>
 </div>
 <%--Footer--%>

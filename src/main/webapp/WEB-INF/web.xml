@@ -43,8 +43,9 @@
                 Just authentication required to access
             </description>
             <url-pattern>/main</url-pattern>
-            <url-pattern>/flights</url-pattern>
+            <url-pattern>/schedule</url-pattern>
             <url-pattern>/employees</url-pattern>
+            <url-pattern>/aircrafts</url-pattern>
             <url-pattern>/flight</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -63,7 +64,7 @@
             <description>
                 Pages accessible only for Administrator
             </description>
-            <url-pattern>/add-employee</url-pattern>
+            <url-pattern>/edit/flight</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ROLE_ADMIN</role-name>
@@ -73,23 +74,23 @@
         </auth-constraint>
     </security-constraint>
 
-    <!--<security-constraint>-->
-    <!--<web-resource-collection>-->
-    <!--<description>-->
-    <!--Pages accessible only for Dispatcher-->
-    <!--</description>-->
-    <!--<web-resource-name>-->
-    <!--Dispatcher area-->
-    <!--</web-resource-name>-->
-    <!--<url-pattern>/</url-pattern>-->
-    <!--</web-resource-collection>-->
-    <!--<auth-constraint>-->
+    <security-constraint>
+    <web-resource-collection>
+    <description>
+    Pages accessible only for Dispatcher
+    </description>
+    <web-resource-name>
+    Dispatcher area
+    </web-resource-name>
+    <url-pattern>/edit/crew</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
     <!--<role-name>ROLE_ADMIN</role-name>-->
-    <!--<role-name>ROLE_DISPATCHER</role-name>-->
+    <role-name>ROLE_DISPATCHER</role-name>
     <!--<role-name>ROLE_CREW</role-name>-->
     <!--<role-name>ROLE_AUTHENTICATED</role-name>-->
-    <!--</auth-constraint>-->
-    <!--</security-constraint>-->
+    </auth-constraint>
+    </security-constraint>
 
     <security-role>
         <role-name>ROLE_ADMIN</role-name>

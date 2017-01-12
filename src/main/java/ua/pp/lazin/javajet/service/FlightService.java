@@ -33,6 +33,13 @@ public class FlightService {
         return INSTANCE;
     }
 
+    public Flight create(Flight flight) {
+        Long id = flightDao.create(flight);
+        flight.setId(id);
+        resolveTimezoneWhenWrite(flight);
+        return flight;
+    }
+
     public List<Flight> findAll() {
         return flightDao.findAllOrderByDepartureTimeAsc();
     }
@@ -41,11 +48,8 @@ public class FlightService {
         return flightDao.findAllLaterThen(date);
     }
 
-    public Flight create(Flight flight) {
-        Long id = flightDao.create(flight);
-        flight.setId(id);
-        resolveTimezoneWhenWrite(flight);
-        return flight;
+    public List<Flight> findAllBeforeThen(Date date) {
+        return flightDao.findAllBforeThen(date);
     }
 
     public Flight findById(Long flightId) {

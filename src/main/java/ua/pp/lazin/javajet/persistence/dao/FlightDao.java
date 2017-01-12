@@ -10,6 +10,8 @@ public interface FlightDao {
 
     List<Flight> findAllOrderByDepartureTimeAsc();
 
+    List<Flight> findAllBforeThen(Date date);
+
     List<Flight> findAllLaterThen(Date date);
 
     int update(Flight flight);
