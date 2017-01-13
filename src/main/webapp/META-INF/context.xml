@@ -10,6 +10,15 @@
               url="jdbc:postgresql://192.168.3.99/javajet">
     </Resource>
 
+    <Resource name="jdbc/mysql" auth="Container"
+              type="javax.sql.DataSource"
+              maxIdle="30"
+              username="root"
+              password="root"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/javajet">
+    </Resource>
+
     <Realm className="org.apache.catalina.realm.JAASRealm" appName="JavaJetLoginModule"
            userClassNames="ua.pp.lazin.javajet.jaas.UserPrincipal"
            roleClassNames="ua.pp.lazin.javajet.jaas.RolePrincipal">
