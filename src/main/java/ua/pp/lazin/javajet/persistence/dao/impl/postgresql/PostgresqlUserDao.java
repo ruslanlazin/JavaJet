@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.entity.Role;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.Position;
@@ -12,6 +13,7 @@ import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionTemplate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,12 +60,16 @@ public class PostgresqlUserDao implements UserDao {
             "working, " +
             "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
+
+    private static final String INSERT_LINK =
+            "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
+
     @Override
     public Long create(User user) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             @Override
             public Long doInTransaction(Connection connection) {
-                return jdbcTemplate.insert(connection, CREATE_SQL,
+                Long generatedUserId = jdbcTemplate.insert(connection, CREATE_SQL,
                         user.getFirstName(),
                         user.getSecondName(),
                         user.getUsername(),
@@ -72,6 +78,15 @@ public class PostgresqlUserDao implements UserDao {
                         user.getPosition().getId(),
                         user.isWorking(),
                         START_VERSION);
+
+                List<Object[]> rows = new ArrayList<>();
+                if (user.getRoles() != null) {
+                    for (Role role : user.getRoles()) {
+                        rows.add(new Object[]{generatedUserId, role.getId()});
+                    }
+                    jdbcTemplate.batchUpdate(connection, INSERT_LINK, rows);
+                }
+                return generatedUserId;
             }
         });
     }

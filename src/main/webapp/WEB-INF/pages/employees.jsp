@@ -8,10 +8,6 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
-
-
 </head>
 
 <body>
@@ -29,16 +25,21 @@
                     <th><fmt:message key="shared.secondname"/></th>
                     <th><fmt:message key="shared.position"/></th>
                     <th><fmt:message key="shared.email"/></th>
+                    <th><fmt:message key="shared.working"/></th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${employees}" var="aircraft">
+                <c:forEach items="${employees}" var="employee">
                     <tr>
-                        <td>${aircraft.id}</td>
-                        <td>${aircraft.firstName}</td>
-                        <td>${aircraft.secondName}</td>
-                        <td>${aircraft.position.title}</td>
-                        <td>${aircraft.email}</td>
+                        <td>${employee.id}</td>
+                        <td>${employee.firstName}</td>
+                        <td>${employee.secondName}</td>
+                        <td>${employee.position.title}</td>
+                        <td>${employee.email}</td>
+                        <td>
+                        <c:if test="${employee.working}">
+                            &#10004;
+                        </c:if></td>
                     </tr>
                 </c:forEach>
                 </tbody>

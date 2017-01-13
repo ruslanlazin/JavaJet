@@ -41,6 +41,13 @@ public class PostgresqlRoleDao implements RoleDao {
     }
 
     @Override
+    public Role findById(Long roleId) {
+        return jdbcTemplate.findEntity(rowMapper,
+                "SELECT * FROM role r " +
+                        "WHERE r.role_id = ?", roleId);
+    }
+
+    @Override
     public List<Role> findAll() {
         return jdbcTemplate.findEntities(rowMapper,
                 "SELECT * FROM role " +

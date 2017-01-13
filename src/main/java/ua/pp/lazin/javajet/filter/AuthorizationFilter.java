@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.filters;
+package ua.pp.lazin.javajet.filter;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.entity.User;

@@ -1,8 +1,7 @@
-package ua.pp.lazin.javajet.filters;
+package ua.pp.lazin.javajet.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
 /**

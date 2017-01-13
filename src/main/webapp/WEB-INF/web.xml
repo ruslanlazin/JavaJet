@@ -78,7 +78,7 @@
                 Pages accessible only for Administrator
             </description>
             <url-pattern>/edit/flight</url-pattern>
-            <url-pattern>/employees</url-pattern>
+            <url-pattern>/aircrafts</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>

@@ -1,4 +1,4 @@
-package ua.pp.lazin.javajet.filters;
+package ua.pp.lazin.javajet.filter;
 
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.util.PropertiesLoader;

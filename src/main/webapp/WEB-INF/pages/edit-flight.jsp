@@ -115,11 +115,11 @@
                 </label>
                 <div class="input-group col-sm-4">
                     <select class="form-control js-select" id="aircraft" name="aircraft">
-                        <c:forEach var="aircraft" items="${aircrafts}">
-                            <option <c:if test="${aircraft.id == flight.aircraft.id}">
+                        <c:forEach var="employee" items="${aircrafts}">
+                            <option <c:if test="${employee.id == flight.aircraft.id}">
                                 selected="selected"
                             </c:if>
-                                    value="${aircraft.id}">${aircraft.regNumber} (${aircraft.model})
+                                    value="${employee.id}">${employee.regNumber} (${employee.model})
                             </option>
                         </c:forEach>
                     </select>

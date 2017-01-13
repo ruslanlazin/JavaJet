@@ -27,36 +27,36 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="aircraft" items="${aircrafts}">
+                <c:forEach var="employee" items="${aircrafts}">
                     <form method="POST">
                         <tr>
                             <td>
                                 <input type="hidden" class="form-control"
-                                       id="aircraft${aircraft.id}" required
-                                       name="aircraftId" value="${aircraft.id}"/>
-                                    ${aircraft.id}
+                                       id="aircraft${employee.id}" required
+                                       name="aircraftId" value="${employee.id}"/>
+                                    ${employee.id}
                             </td>
                             <td>
                                 <input type="text" class="form-control" pattern="[\w ]{4,20}"
-                                       id="reg_${aircraft.id}" name="regNumber" disabled
-                                       value="${aircraft.regNumber}" required/>
+                                       id="reg_${employee.id}" name="regNumber" disabled
+                                       value="${employee.regNumber}" required/>
                             </td>
                             <td>
                                 <input type="text" class="form-control" pattern="[\w ]{4,20}"
-                                       id="model_${aircraft.id}" name="model" disabled
-                                       value="${aircraft.model}" required/>
+                                       id="model_${employee.id}" name="model" disabled
+                                       value="${employee.model}" required/>
                             </td>
                             <td>
                                 <sec:authorize role="ROLE_ADMIN">
                                     <input type="button" class="btn-link btn active"
-                                           id="edit_${aircraft.id}"
-                                           onclick="enable(${aircraft.id})"
+                                           id="edit_${employee.id}"
+                                           onclick="enable(${employee.id})"
                                            value="<fmt:message key="shared.edit"/> "/>
                                 </sec:authorize>
                             </td>
                             <td>
                                 <input type="submit" class="btn-link btn active"
-                                       id="submit_${aircraft.id}" style="visibility: hidden"
+                                       id="submit_${employee.id}" style="visibility: hidden"
                                        value="<fmt:message key="shared.button.save"/> "/>
                             </td>
                         </tr>

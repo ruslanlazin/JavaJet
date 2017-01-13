@@ -14,13 +14,14 @@ public interface RoleDao {
 
     Role findByTitle(String title);
 
+    Role findById(Long roleId);
+
     List<Role> findAll();
 
     Set<Role> findRolesOfUser(User user);
 
     int update(Role role);
 
+
     int delete(Role role);
-
-
 }

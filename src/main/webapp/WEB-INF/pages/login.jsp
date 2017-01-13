@@ -19,21 +19,34 @@
 <div class="container-fluid">
     <%@include file="templates/navbar.jsp" %>
 
+    <%--TODO remove after alfa testing--%>
+    <div class="col-sm-2" style="background-color: #d5d5d5">
+        For testing purpose use:<br>
+        a/a Administrator<br>
+        d/d Dispatcher<br>
+        p/p Pilot<br>
+        g/g God
+    </div>
+
     <div class="login-page">
         <div class="form">
+
             <font color="red">
 				<span style="align: center">
-					<c:if test="${not empty param['error']}">
-                        <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
-                    </c:if>
+                        <c:out value="${message}"/>
 				</span>
             </font>
 
             <form id="login-form" class="login-form" method="post" action="<c:url value="/login"/>">
                 <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
-                <input id="login" type="text" name="login" autocomplete="off"
+
+                <%--TODO change patterns after alfa testingg--%>
+                <input type="text" id="login" pattern="[\w]{1,}" required
+                       name="login" autocomplete="off"
                        placeholder="<fmt:message key="shared.username"/>"/>
-                <input type="password" name="password"
+
+                <%--TODO change patterns after alfa testingg--%>
+                <input type="password" pattern="[\w]{1,}" required name="password"
                        placeholder="<fmt:message key="shared.password"/>"/>
                 <fmt:message key="login.button.submit" var="buttonValue"/>
                 <button id="login-button" class="submit" type="submit">${buttonValue}</button>
@@ -41,6 +54,7 @@
         </div>
     </div>
 </div>
+
 <%--Footer--%>
 <%@include file="templates/footer.html" %>
 </body>

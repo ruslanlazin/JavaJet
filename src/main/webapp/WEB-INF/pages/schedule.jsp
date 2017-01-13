@@ -52,22 +52,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${flights}" var="aircraft">
+                <c:forEach items="${flights}" var="employee">
                     <tr>
-                        <td>${aircraft.id}</td>
-                        <td><fmt:formatDate value="${aircraft.departureTime}"
+                        <td>${employee.id}</td>
+                        <td><fmt:formatDate value="${employee.departureTime}"
                                             pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
-                        <td><lt:localTime value="${aircraft.departureTime}" pattern="HH:mm"
-                                          timeZone="${aircraft.departureTimezone}"/></td>
-                        <td>${aircraft.departure.iataCode}</td>
-                        <td>${aircraft.destination.iataCode}</td>
-                        <td>${aircraft.aircraft.model}</td>
-                        <td>${aircraft.aircraft.regNumber}</td>
+                        <td><lt:localTime value="${employee.departureTime}" pattern="HH:mm"
+                                          timeZone="${employee.departureTimezone}"/></td>
+                        <td>${employee.departure.iataCode}</td>
+                        <td>${employee.destination.iataCode}</td>
+                        <td>${employee.aircraft.model}</td>
+                        <td>${employee.aircraft.regNumber}</td>
 
                         <sec:authorize role="ROLE_ADMIN">
                             <td>
                                 <form action="<c:url value="/edit/flight"/>">
-                                    <input type="hidden" name="flightId" value="${aircraft.id}">
+                                    <input type="hidden" name="flightId" value="${employee.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="shared.edit"/>">
                                 </form>
@@ -77,7 +77,7 @@
                         <sec:authorize role="ROLE_DISPATCHER">
                             <td>
                                 <form action="<c:url value="/edit/crew"/>">
-                                    <input type="hidden" name="flightId" value="${aircraft.id}">
+                                    <input type="hidden" name="flightId" value="${employee.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="flights.button.crew"/>">
                                 </form>
@@ -86,7 +86,7 @@
 
                         <td>
                             <form action="<c:url value="/flight"/>">
-                                <input type="hidden" name="flightId" value="${aircraft.id}">
+                                <input type="hidden" name="flightId" value="${employee.id}">
                                 <input type="submit" class="btn btn-xs  btn-default"
                                        value="<fmt:message key="flights.button.view"/>">
                             </form>

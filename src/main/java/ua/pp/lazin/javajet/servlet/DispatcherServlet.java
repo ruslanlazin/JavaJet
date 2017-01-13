@@ -66,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
      * @see CommandResolver
      */
     private void performTask(HttpServletRequest request,
-                             HttpServletResponse response) {
+                             HttpServletResponse response) throws ServletException, IOException {
 
         Command command = CommandResolver.getCommand(request);
         if (command == null) {
@@ -93,7 +93,7 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-    private void redirect(String target, HttpServletRequest request, HttpServletResponse response) {
+    private void redirect(String target, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         target = target.split(REDIRECT_DELIMITER)[1];
         try {
             response.sendRedirect(request.getContextPath() + target);
@@ -105,12 +105,13 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-    private void forward(String target, HttpServletRequest request, HttpServletResponse response) {
+    private void forward(String target, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         target = String.format(VIEW_RESOLVER_PREFIX + "%s" + VIEW_RESOLVER_SUFFIX, target);
         try {
             request.getRequestDispatcher(target).forward(request, response);
         } catch (ServletException | IOException e) {
             logger.error("An error occurred during page " + target + " rendering", e);
+            throw e;
         }
     }
 }

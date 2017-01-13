@@ -8,19 +8,22 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-  </head>
+</head>
 
 <body>
 <%--<c:import url="navbar.jsp"/>--%>
 <div class="container-fluid">
     <%@include file="templates/navbar.jsp" %>
-
+    <%--Page context--%>
     <div class="container">
+
+        <%--Header--%>
         <div class="row">
             <div class="col-sm-offset-2 col-sm-4">
                 <h4><fmt:message key="add-employee.header"/></h4>
             </div>
         </div>
+        <%--Success message--%>
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
@@ -29,6 +32,8 @@
             </c:if>
         </div>
         <form class="form-horizontal" method="POST">
+
+            <%--Username field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="username">
                     <fmt:message key="shared.username"/>:</label>
@@ -43,16 +48,18 @@
                 </c:if>
             </div>
 
+            <%--Password field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd">
                     <fmt:message key="shared.password"/>:
                 </label>
                 <div class="col-sm-4">
                     <input type="password" class="form-control" id="pwd" name="password"
-                           required>
+                           value="${employee.password}" required>
                 </div>
             </div>
 
+            <%--First Name--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="firstname">
                     <fmt:message key="shared.firstname"/>:
@@ -63,6 +70,7 @@
                 </div>
             </div>
 
+            <%--Second name field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="secondname">
                     <fmt:message key="shared.secondname"/>:
@@ -73,6 +81,7 @@
                 </div>
             </div>
 
+            <%--Email field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">
                     <fmt:message key="shared.email"/>:
@@ -88,6 +97,7 @@
                 </c:if>
             </div>
 
+            <%--Position selection field--%>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="position">
                     <fmt:message key="shared.position"/>:
@@ -95,15 +105,48 @@
                 <div class="col-sm-4">
                     <select class="form-control" id="position" name="position">
                         <c:forEach var="position" items="${positions}">
-                            <option  <c:if test="${position.id == employee.position.id}">
-                                selected="selected"
-                            </c:if>
+                            <option value="${position.id}"
+                                    <c:if test="${position.id == employee.position.id}">
+                                        selected="selected"
+                                    </c:if>
                             >${position.title}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
 
+            <%--Roles selection field--%>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="roles">
+                    <fmt:message key="shared.roles"/>:
+                </label>
+                <div class="col-sm-4">
+                    <select multiple required class="form-control" id="roles" name="userRoles">
+                        <c:forEach var="role" items="${roles}">
+                            <option value="${role.id}"
+                                    <c:forEach var="userRole" items="${employee.roles}">
+                                        <c:if test="${role.id == userRole.id}">
+                                            selected="selected"
+                                        </c:if>
+                                    </c:forEach>
+                            >${role.title}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
+            <%--Working now checkbox--%>
+            <div class="checkbox col-sm-2 col-sm-offset-2">
+                <label>
+                    <input type="checkbox" name="working" value="true"
+                    <c:if test="${employee.working}">
+                           checked="checked"
+                    </c:if> >
+                    <fmt:message key="shared.working"/>
+                </label>
+            </div>
+
+            <%--Create button--%>
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-4">
                     <button type="submit" class="btn btn-default btn-info">
@@ -111,9 +154,11 @@
                     </button>
                 </div>
             </div>
+
         </form>
     </div>
 </div>
+
 <%--Footer--%>
 <%@include file="templates/footer.html" %>
 </body>
