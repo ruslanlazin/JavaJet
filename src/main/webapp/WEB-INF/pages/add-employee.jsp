@@ -20,18 +20,49 @@
         <%--Header--%>
         <div class="row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="add-employee.header"/></h4>
+                <c:choose>
+                    <c:when test="${editMode}">
+                        <h4><fmt:message key="edit-employee.header"/></h4>
+                    </c:when>
+                    <c:otherwise>
+                        <h4><fmt:message key="add-employee.header"/></h4>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
+
         <%--Success message--%>
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
-                    <fmt:message key="add-employee.success"/>
+                    <c:choose>
+                        <c:when test="${editMode}">
+                            <fmt:message key="shared.save.success"/>
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:message key="shared.add.success"/>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </c:if>
         </div>
-        <form class="form-horizontal" method="POST">
+
+        <%--Concurrent modification message--%>
+        <div class="row">
+            <c:if test="${concurrent}">
+                <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
+                    <fmt:message key="shared.concurrent"/>
+                </div>
+            </c:if>
+        </div>
+
+        <%--Form--%>
+        <form class="form-horizontal" method="POST"
+                <c:if test="${editMode}">
+                    action="/edit/employee"
+                </c:if>>
+            <input type="hidden" name="userId" value="${employee.id}">
+            <input type="hidden" name="version" value="${employee.version}">
 
             <%--Username field--%>
             <div class="form-group">
@@ -150,7 +181,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-5 col-sm-4">
                     <button type="submit" class="btn btn-default btn-info">
-                        <fmt:message key="shared.button.create"/>
+                        <fmt:message key="shared.button.save"/>
                     </button>
                 </div>
             </div>

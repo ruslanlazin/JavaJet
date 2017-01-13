@@ -10,8 +10,6 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />"></script>--%>
-    <%--<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
     <style>body {
         background-image: url("<c:url value="/resources/images/javajet-tr.png"/>")
     }</style>
@@ -52,22 +50,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${flights}" var="employee">
+                <c:forEach items="${flights}" var="flight">
                     <tr>
-                        <td>${employee.id}</td>
-                        <td><fmt:formatDate value="${employee.departureTime}"
+                        <td>${flight.id}</td>
+                        <td><fmt:formatDate value="${flight.departureTime}"
                                             pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
-                        <td><lt:localTime value="${employee.departureTime}" pattern="HH:mm"
-                                          timeZone="${employee.departureTimezone}"/></td>
-                        <td>${employee.departure.iataCode}</td>
-                        <td>${employee.destination.iataCode}</td>
-                        <td>${employee.aircraft.model}</td>
-                        <td>${employee.aircraft.regNumber}</td>
+                        <td><lt:localTime value="${flight.departureTime}" pattern="HH:mm"
+                                          timeZone="${flight.departureTimezone}"/></td>
+                        <td>${flight.departure.iataCode}</td>
+                        <td>${flight.destination.iataCode}</td>
+                        <td>${flight.aircraft.model}</td>
+                        <td>${flight.aircraft.regNumber}</td>
 
                         <sec:authorize role="ROLE_ADMIN">
                             <td>
                                 <form action="<c:url value="/edit/flight"/>">
-                                    <input type="hidden" name="flightId" value="${employee.id}">
+                                    <input type="hidden" name="flightId" value="${flight.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="shared.edit"/>">
                                 </form>
@@ -77,7 +75,7 @@
                         <sec:authorize role="ROLE_DISPATCHER">
                             <td>
                                 <form action="<c:url value="/edit/crew"/>">
-                                    <input type="hidden" name="flightId" value="${employee.id}">
+                                    <input type="hidden" name="flightId" value="${flight.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="flights.button.crew"/>">
                                 </form>
@@ -86,7 +84,7 @@
 
                         <td>
                             <form action="<c:url value="/flight"/>">
-                                <input type="hidden" name="flightId" value="${employee.id}">
+                                <input type="hidden" name="flightId" value="${flight.id}">
                                 <input type="submit" class="btn btn-xs  btn-default"
                                        value="<fmt:message key="flights.button.view"/>">
                             </form>

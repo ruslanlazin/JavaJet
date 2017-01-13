@@ -14,6 +14,8 @@ public interface UserDao {
 
     int update(User user);
 
+    Boolean updateWithRoles(User user);
+
     int delete(User user);
 
     User findByID(Long id);

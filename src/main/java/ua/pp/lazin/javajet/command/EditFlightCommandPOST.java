@@ -3,16 +3,13 @@ package ua.pp.lazin.javajet.command;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.entity.Flight;
-import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
-import ua.pp.lazin.javajet.service.UserService;
 import ua.pp.lazin.javajet.util.DateParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
 
 /**
  * @author Ruslan Lazin
@@ -22,10 +19,10 @@ public class EditFlightCommandPOST implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final AirportService airportService = AirportService.getINSTANCE();
+    private static final String KEY_SUCCESS = "success";
+    private static final String KEY_CONCURRENT_MODIFICATION = "concurrent";
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String FLIGHT_ATTRIBUTE = "flight";
-    private static final String SUCCESS_ATTRIBUTE = "success";
-    private static final String CONCURRENT_MODIFICATION_ATTRIBUTE = "concurrent";
     private static final String FLIGHT_ID_PARAMETER = "flightId";
     private static final String AIRCRAFT_PARAMETER = "aircraft";
     private static final String FROM_PARAMETER = "from";
@@ -50,7 +47,7 @@ public class EditFlightCommandPOST implements Command {
         String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
         if (flightIdAsString == null || flightIdAsString.isEmpty()) {
             flight = flightService.create(flight);
-            request.setAttribute(SUCCESS_ATTRIBUTE, true);
+            request.setAttribute(KEY_SUCCESS, true);
         } else {
             Long flightId = Long.valueOf(flightIdAsString);
             flight.setId(flightId);
@@ -58,9 +55,9 @@ public class EditFlightCommandPOST implements Command {
 
             Boolean isUpdateSuccessful = flightService.updateFlight(flight);
             if (isUpdateSuccessful) {
-                request.setAttribute(SUCCESS_ATTRIBUTE, true);
+                request.setAttribute(KEY_SUCCESS, true);
             } else {
-                request.setAttribute(CONCURRENT_MODIFICATION_ATTRIBUTE, true);
+                request.setAttribute(KEY_CONCURRENT_MODIFICATION, true);
                 logger.info("Two or more users tried to edit Flight " + flight.getId() + " simultaneously");
             }
         }

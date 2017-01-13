@@ -53,7 +53,7 @@
         <div class="row">
             <c:if test="${success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
-                    <fmt:message key="edit-flight.success"/>
+                    <fmt:message key="shared.save.success"/>
                 </div>
             </c:if>
         </div>
@@ -62,7 +62,7 @@
         <div class="row">
             <c:if test="${concurrent}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
-                    <fmt:message key="edit-flight.concurrent"/>
+                    <fmt:message key="shared.concurrent"/>
                 </div>
             </c:if>
         </div>

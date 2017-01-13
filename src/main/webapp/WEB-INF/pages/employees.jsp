@@ -37,9 +37,19 @@
                         <td>${employee.position.title}</td>
                         <td>${employee.email}</td>
                         <td>
-                        <c:if test="${employee.working}">
-                            &#10004;
-                        </c:if></td>
+                            <c:if test="${employee.working}">
+                                &#10004;
+                            </c:if>
+                        </td>
+                        <sec:authorize role="ROLE_ADMIN">
+                            <td>
+                                <form action="<c:url value="/add-employee"/>">
+                                    <input type="hidden" name="userId" value="${employee.id}">
+                                    <input type="submit" class="btn btn-xs  btn-default"
+                                           value="<fmt:message key="shared.edit"/>">
+                                </form>
+                            </td>
+                        </sec:authorize>
                     </tr>
                 </c:forEach>
                 </tbody>

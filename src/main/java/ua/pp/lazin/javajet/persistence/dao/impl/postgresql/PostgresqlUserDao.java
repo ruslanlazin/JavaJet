@@ -13,6 +13,7 @@ import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionTemplate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -50,15 +51,16 @@ public class PostgresqlUserDao implements UserDao {
     };
 
 
-    private static final String CREATE_SQL = "INSERT INTO users (" +
-            "first_name, " +
-            "second_name, " +
-            "username, " +
-            "password, " +
-            "email, " +
-            "position_id, " +
-            "working, " +
-            "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String CREATE_SQL =
+            "INSERT INTO users (" +
+                    "first_name, " +
+                    "second_name, " +
+                    "username, " +
+                    "password, " +
+                    "email, " +
+                    "position_id, " +
+                    "working, " +
+                    "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
 
     private static final String INSERT_LINK =
@@ -148,6 +150,59 @@ public class PostgresqlUserDao implements UserDao {
     @Override
     public int update(User user) {
         return 0;
+    }
+
+    private static final String UPDATE =
+            "UPDATE users SET " +
+                    "first_name = ?, " +
+                    "second_name = ?, " +
+                    "username = ?, " +
+                    "password = ?, " +
+                    "email = ?,   " +
+                    "position_id = ?,   " +
+                    "working = ?,   " +
+                    "version = ? " +
+                    "WHERE user_id = ? " +
+                    "AND version = ?";
+
+
+    private static final String DELETE_LINKS =
+            "DELETE FROM users_roles WHERE user_id = ?";
+
+
+    @Override
+    public Boolean updateWithRoles(User user) {
+        return transactionTemplate.execute(new TransactionCallback<Boolean>() {
+            @Override
+            public Boolean doInTransaction(Connection connection) {
+                //check version and updateWithRoles user if they match
+                int numberOfUpdatedRows = jdbcTemplate.update(connection, UPDATE,
+                        user.getFirstName(),
+                        user.getSecondName(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getEmail(),
+                        user.getPosition().getId(),
+                        user.isWorking(),
+                        user.getVersion() + 1,
+                        user.getId(),
+                        user.getVersion());
+
+                if (numberOfUpdatedRows != 1) {
+                    return false;
+                }
+                jdbcTemplate.update(connection, DELETE_LINKS, user.getId());
+
+                List<Object[]> rows = new ArrayList<>();
+                if (user.getRoles() != null) {
+                    for (Role role : user.getRoles()) {
+                        rows.add(new Object[]{user.getId(), role.getId()});
+                    }
+                    jdbcTemplate.batchUpdate(connection, INSERT_LINK, rows);
+                }
+                return true;
+            }
+        });
     }
 
     @Override

@@ -166,7 +166,7 @@ public class PostgresqlFlightDao implements FlightDao {
         return transactionTemplate.execute(new TransactionCallback<Boolean>() {
             @Override
             public Boolean doInTransaction(Connection connection) {
-                //check version and update flight if they match
+                //check version and updateWithRoles flight if they match
                 int numberOfUpdatedRows = jdbcTemplate.update(connection, UPDATE,
                         new Timestamp(flight.getDepartureTime().getTime()),
                         flight.getDeparture().getIataCode(),

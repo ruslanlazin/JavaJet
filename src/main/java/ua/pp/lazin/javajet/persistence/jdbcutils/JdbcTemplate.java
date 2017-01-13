@@ -56,7 +56,7 @@ public class JdbcTemplate<T> {
      * Update/delete row in the table
      *
      * @param txConnection the connection. You have to open and close it outside of this method.
-     * @param updateQuery  the update query
+     * @param updateQuery  the updateWithRoles query
      * @param params        the params to set in PreparedStatement
      * @return the int - number of updated rows
      * @throws DataAccessException the data access exception
@@ -79,7 +79,7 @@ public class JdbcTemplate<T> {
 
 
     /**
-     * Batch update
+     * Batch updateWithRoles
      *
      * @param txConnection the connection. You have to open and close it outside of this method.
      * @param batchQuery   the batch query
