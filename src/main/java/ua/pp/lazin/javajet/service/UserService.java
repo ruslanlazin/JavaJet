@@ -65,6 +65,10 @@ public class UserService {
     }
 
     public boolean updateWithRoles(User user) {
+//        check if password was changed
+        if (!user.getPassword().equals(userDao.findByID(user.getId()).getPassword())) {
+            user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
+        }
         return userDao.updateWithRoles(user);
 
     }
