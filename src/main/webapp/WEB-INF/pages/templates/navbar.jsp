@@ -24,6 +24,8 @@
             <sec:authorize role="ROLE_AUTHENTICATED">
                 <li><a href="<c:url value="/common/schedule"/>"><fmt:message key="shared.flights"/></a></li>
                 <li><a href="<c:url value="/common/employees"/>"><fmt:message key="shared.employees"/></a></li>
+            </sec:authorize>
+            <sec:authorize role="ROLE_ADMIN">
                 <li><a href="<c:url value="/admin/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
             </sec:authorize>
             <sec:authorize role="ROLE_CREW">

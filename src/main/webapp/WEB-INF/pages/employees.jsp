@@ -41,9 +41,9 @@
                                 &#10004;
                             </c:if>
                         </td>
-                        <sec:authorize role="ROLE_ADMIN">
+                        <sec:authorize role="ROLE_DISPATCHER">
                             <td>
-                                <form action="<c:url value="/dispatcher/employee"/>">
+                                <form action="<c:url value="/dispatcher/employee/edit"/>">
                                     <input type="hidden" name="userId" value="${employee.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="shared.edit"/>">
@@ -57,12 +57,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-1 col-lg-offset-7">
-            <a href="<c:url value="/dispatcher/employee"/>"
-               class="btn btn-default btn-info active" role="button">
-                <fmt:message key="employees.button.add-employee"/>
-            </a>
-        </div>
+        <sec:authorize role="ROLE_DISPATCHER">
+            <div class="col-lg-1 col-lg-offset-7">
+                <a href="<c:url value="/dispatcher/employee/add"/>"
+                   class="btn btn-default btn-info active" role="button">
+                    <fmt:message key="employees.button.add-employee"/>
+                </a>
+            </div>
+        </sec:authorize>
     </div>
 </div>
 

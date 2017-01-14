@@ -64,23 +64,6 @@
         </auth-constraint>
     </security-constraint>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>-->
-                <!--Administrator POST area-->
-            <!--</web-resource-name>-->
-            <!--<description>-->
-                <!--Pages accessible only for Administrator-->
-            <!--</description>-->
-            <!--<url-pattern>/edit/flight</url-pattern>-->
-            <!--<url-pattern>/aircrafts</url-pattern>-->
-            <!--<http-method>POST</http-method>-->
-        <!--</web-resource-collection>-->
-        <!--<auth-constraint>-->
-            <!--<role-name>ROLE_ADMIN</role-name>-->
-        <!--</auth-constraint>-->
-    <!--</security-constraint>-->
-
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>
@@ -120,13 +103,18 @@
 
     <error-page>
         <error-code>403</error-code>
-        <location>/WEB-INF/pages/errorpages/403.jsp</location>
+        <location>/WEB-INF/pages/error/403.jsp</location>
     </error-page>
-
 
     <resource-ref>
         <description>DB Connection to PostreSQL</description>
         <res-ref-name>jdbc/postgresql</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    <resource-ref>
+        <description>DB Connection to MySQL</description>
+        <res-ref-name>jdbc/mysql</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
