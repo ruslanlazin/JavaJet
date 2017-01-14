@@ -13,15 +13,13 @@
 </head>
 <body>
 <div class="container-fluid">
-<%@include file="templates/navbar.jsp" %>
-<div class="text-center"> We are sorry, but you don't have permission to access this page.
+<%@include file="/WEB-INF/pages/templates/navbar.jsp" %>
+<div class="text-center"> We are sorry, but Requested path doesn't exist.
     <br>
-    Try to use other account <a href="<c:url value="/logout"/>">Logout</a>
-    <br>
-    Or go to the main page <a href="<c:url value="/"/>">Main</a>
+    Main page <a href="<c:url value="/"/>">Main</a>
 </div>
 </div>
 <%--Footer--%>
-<%@include file="templates/footer.html" %>
+<%@include file="/WEB-INF/pages/templates/footer.html" %>
 </body>
 </html>
