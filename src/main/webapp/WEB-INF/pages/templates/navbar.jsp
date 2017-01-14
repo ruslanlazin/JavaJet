@@ -35,8 +35,11 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <form class="form-inline float-xs-right">
-                    <c:if test="${not empty flight}">
+                    <c:if test="${not empty requestScope.flight}">
                         <input type="hidden" name="flightId" value="${flight.id}"/>
+                    </c:if>
+                    <c:if test="${not empty requestScope.employee}">
+                        <input type="hidden" name="userId" value="${employee.id}"/>
                     </c:if>
                     <select id="lang" name="language" onchange="submit()">
                         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
