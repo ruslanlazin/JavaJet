@@ -29,7 +29,7 @@
 
         <%--Back Button--%>
         <div class="row">
-            <a href="<c:url value="/schedule"/>"><fmt:message key="shared.button.back"/></a>
+            <a href="<c:url value="/common/schedule"/>"><fmt:message key="shared.button.back"/></a>
         </div>
 
         <%--Header--%>
@@ -37,7 +37,7 @@
             <div class="col-sm-offset-2 col-sm-4">
                 <h4><fmt:message key="flight.header"/> ${flight.id}
                     <sec:authorize role="ROLE_ADMIN">
-                        <form action="<c:url value="/edit/flight"/>">
+                        <form action="<c:url value="/admin/flight/edit"/>">
                             <input type="hidden" name="flightId" value="${flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
                                    value="<fmt:message key="shared.edit"/>">
@@ -55,7 +55,7 @@
             <div class="col-sm-offset-2 col-sm-4">
                 <h4><fmt:message key="shared.crew-assignment"/>
                     <sec:authorize role="ROLE_DISPATCHER">
-                        <form action="<c:url value="/edit/crew"/>">
+                        <form action="<c:url value="/dispatcher/crew/edit"/>">
                             <input type="hidden" name="flightId" value="${flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
                                    value="<fmt:message key="shared.edit"/>">

@@ -48,7 +48,7 @@ public class AddEmployeeCommandPOST implements Command {
         request.setAttribute(ALL_POSITIONS_ATTRIBUTE, positionService.findAll());
         request.setAttribute(ALL_ROLES_ATTRIBUTE, roleService.findAll());
 
-        return "add-employee";
+        return "employee";
     }
 }
 

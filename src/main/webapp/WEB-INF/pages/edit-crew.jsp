@@ -33,7 +33,7 @@
 
         <%--Back Button--%>
         <div class="row">
-            <a href="<c:url value="/schedule"/>"><fmt:message key="shared.button.back"/></a>
+            <a href="<c:url value="/common/schedule"/>"><fmt:message key="shared.button.back"/></a>
         </div>
 
         <%--Flight info Header--%>

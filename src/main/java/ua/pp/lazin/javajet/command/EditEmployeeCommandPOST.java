@@ -71,7 +71,7 @@ public class EditEmployeeCommandPOST implements Command {
         request.setAttribute(ALL_ROLES_ATTRIBUTE, roleService.findAll());
         request.setAttribute(KEY_EDIT_MODE, true);
 
-        return "add-employee";
+        return "employee";
     }
 }
 

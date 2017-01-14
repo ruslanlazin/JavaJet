@@ -42,11 +42,7 @@
                 Pages for all company's employees.
                 Just authentication required to access
             </description>
-            <url-pattern>/main</url-pattern>
-            <url-pattern>/schedule</url-pattern>
-            <url-pattern>/employees</url-pattern>
-            <url-pattern>/aircrafts</url-pattern>
-            <url-pattern>/flight</url-pattern>
+            <url-pattern>/common/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ROLE_AUTHENTICATED</role-name>
@@ -56,35 +52,34 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>
-                Administrator GET area
+                Administrator area
             </web-resource-name>
             <description>
                 Pages accessible only for Administrator
             </description>
-            <url-pattern>/edit/flight</url-pattern>
-            <http-method>GET</http-method>
+            <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ROLE_ADMIN</role-name>
         </auth-constraint>
     </security-constraint>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>
-                Administrator POST area
-            </web-resource-name>
-            <description>
-                Pages accessible only for Administrator
-            </description>
-            <url-pattern>/edit/flight</url-pattern>
-            <url-pattern>/aircrafts</url-pattern>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ROLE_ADMIN</role-name>
-        </auth-constraint>
-    </security-constraint>
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>-->
+                <!--Administrator POST area-->
+            <!--</web-resource-name>-->
+            <!--<description>-->
+                <!--Pages accessible only for Administrator-->
+            <!--</description>-->
+            <!--<url-pattern>/edit/flight</url-pattern>-->
+            <!--<url-pattern>/aircrafts</url-pattern>-->
+            <!--<http-method>POST</http-method>-->
+        <!--</web-resource-collection>-->
+        <!--<auth-constraint>-->
+            <!--<role-name>ROLE_ADMIN</role-name>-->
+        <!--</auth-constraint>-->
+    <!--</security-constraint>-->
 
     <security-constraint>
         <web-resource-collection>
@@ -94,7 +89,7 @@
             <description>
                 Pages accessible only for Dispatcher
             </description>
-            <url-pattern>/edit/crew</url-pattern>
+            <url-pattern>/dispatcher/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>ROLE_DISPATCHER</role-name>
@@ -125,7 +120,7 @@
 
     <error-page>
         <error-code>403</error-code>
-        <location>/WEB-INF/pages/403.jsp</location>
+        <location>/WEB-INF/pages/errorpages/403.jsp</location>
     </error-page>
 
 

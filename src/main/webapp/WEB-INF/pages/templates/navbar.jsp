@@ -22,12 +22,12 @@
         </div>
         <ul class="nav navbar-nav">
             <sec:authorize role="ROLE_AUTHENTICATED">
-                <li><a href="<c:url value="/schedule"/>"><fmt:message key="shared.flights"/></a></li>
-                <li><a href="<c:url value="/employees"/>"><fmt:message key="shared.employees"/></a></li>
-                <li><a href="<c:url value="/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
+                <li><a href="<c:url value="/common/schedule"/>"><fmt:message key="shared.flights"/></a></li>
+                <li><a href="<c:url value="/common/employees"/>"><fmt:message key="shared.employees"/></a></li>
+                <li><a href="<c:url value="/admin/aircrafts"/>"><fmt:message key="shared.aircrafts"/></a></li>
             </sec:authorize>
             <sec:authorize role="ROLE_CREW">
-                <li><a href="<c:url value="/mySchedule"/>"><fmt:message key="navbar.link.myschedule"/></a></li>
+                <li><a href="<c:url value="/crew/mySchedule"/>"><fmt:message key="navbar.link.myschedule"/></a></li>
             </sec:authorize>
         </ul>
         <ul class="nav navbar-nav navbar-right">

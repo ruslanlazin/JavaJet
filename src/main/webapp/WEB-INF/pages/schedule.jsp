@@ -33,7 +33,7 @@
         </div>
         <sec:authorize role="ROLE_ADMIN">
             <div class="col-sm-1 col-sm-offset-10">
-                <a href="<c:url value="/archive"/>"
+                <a href="<c:url value="/admin/archive"/>"
                    class="btn btn-link " role="button">
                     <fmt:message key="flights.button.archive"/>
                 </a>
@@ -69,7 +69,7 @@
 
                         <sec:authorize role="ROLE_ADMIN">
                             <td>
-                                <form action="<c:url value="/edit/flight"/>">
+                                <form action="<c:url value="/admin/flight/edit"/>">
                                     <input type="hidden" name="flightId" value="${flight.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="shared.edit"/>">
@@ -79,7 +79,7 @@
 
                         <sec:authorize role="ROLE_DISPATCHER">
                             <td>
-                                <form action="<c:url value="/edit/crew"/>">
+                                <form action="<c:url value="/dispatcher/crew/edit"/>">
                                     <input type="hidden" name="flightId" value="${flight.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="flights.button.crew"/>">
@@ -88,7 +88,7 @@
                         </sec:authorize>
 
                         <td>
-                            <form action="<c:url value="/flight"/>">
+                            <form action="<c:url value="/common/flight"/>">
                                 <input type="hidden" name="flightId" value="${flight.id}">
                                 <input type="submit" class="btn btn-xs  btn-default"
                                        value="<fmt:message key="flights.button.view"/>">
@@ -103,7 +103,7 @@
     <sec:authorize role="ROLE_ADMIN">
         <div class="row">
             <div class="col-sm-1 col-sm-offset-10">
-                <a href="<c:url value="/edit/flight"/>"
+                <a href="<c:url value="/admin/flight/edit"/>"
                    class="btn btn-default btn-info active" role="button">
                     <fmt:message key="flights.button.add-flight"/>
                 </a>

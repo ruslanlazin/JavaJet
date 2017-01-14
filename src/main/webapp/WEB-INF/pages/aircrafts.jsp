@@ -13,7 +13,6 @@
 
 <body>
 <div class="container-fluid">
-    <%--<c:import url="navbar.jsp"/>--%>
     <%@include file="templates/navbar.jsp" %>
 
     <div class="row">

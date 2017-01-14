@@ -43,7 +43,7 @@
                         </td>
                         <sec:authorize role="ROLE_ADMIN">
                             <td>
-                                <form action="<c:url value="/add-employee"/>">
+                                <form action="<c:url value="/dispatcher/employee"/>">
                                     <input type="hidden" name="userId" value="${employee.id}">
                                     <input type="submit" class="btn btn-xs  btn-default"
                                            value="<fmt:message key="shared.edit"/>">
@@ -58,7 +58,7 @@
     </div>
     <div class="row">
         <div class="col-lg-1 col-lg-offset-7">
-            <a href="<c:url value="/add-employee"/>"
+            <a href="<c:url value="/dispatcher/employee"/>"
                class="btn btn-default btn-info active" role="button">
                 <fmt:message key="employees.button.add-employee"/>
             </a>

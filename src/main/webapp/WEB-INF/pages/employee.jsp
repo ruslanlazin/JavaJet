@@ -59,7 +59,7 @@
         <%--Form--%>
         <form class="form-horizontal" method="POST"
                 <c:if test="${editMode}">
-                    action="/edit/employee"
+                    action="/admin/employee/edit"
                 </c:if>>
             <input type="hidden" name="userId" value="${employee.id}">
             <input type="hidden" name="version" value="${employee.version}">

@@ -39,20 +39,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${flights}" var="employee">
+                <c:forEach items="${flights}" var="flight">
                     <tr>
-                        <td>${employee.id}</td>
-                        <td><fmt:formatDate value="${employee.departureTime}"
+                        <td>${flight.id}</td>
+                        <td><fmt:formatDate value="${flight.departureTime}"
                                             pattern="yyyy-MMM-dd HH:mm" timeZone="UTC"/></td>
-                        <td><lt:localTime value="${employee.departureTime}" pattern="HH:mm"
-                                          timeZone="${employee.departureTimezone}"/></td>
-                        <td>${employee.departure.iataCode}</td>
-                        <td>${employee.destination.iataCode}</td>
-                        <td>${employee.aircraft.model}</td>
-                        <td>${employee.aircraft.regNumber}</td>
+                        <td><lt:localTime value="${flight.departureTime}" pattern="HH:mm"
+                                          timeZone="${flight.departureTimezone}"/></td>
+                        <td>${flight.departure.iataCode}</td>
+                        <td>${flight.destination.iataCode}</td>
+                        <td>${flight.aircraft.model}</td>
+                        <td>${flight.aircraft.regNumber}</td>
                         <td>
-                            <form action="<c:url value="/flight"/>">
-                                <input type="hidden" name="flightId" value="${employee.id}">
+                            <form action="<c:url value="/common/flight"/>">
+                                <input type="hidden" name="flightId" value="${flight.id}">
                                 <input type="submit" class="btn btn-xs  btn-default"
                                        value="<fmt:message key="flights.button.view"/>">
                             </form>
