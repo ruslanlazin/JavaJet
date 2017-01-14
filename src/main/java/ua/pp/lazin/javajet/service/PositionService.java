@@ -10,20 +10,25 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class PositionService {
-    private static final PositionDao POSITION_DAO = DaoFactoryCreator.getFactory().getPositionDao();
+    private static final PositionDao positionDao = DaoFactoryCreator.getFactory().getPositionDao();
     private static final PositionService INSTANCE = new PositionService();
 
     private PositionService() {
     }
 
-    public static PositionService getINSTANCE(){
+    public static PositionService getINSTANCE() {
         return INSTANCE;
     }
+
     public List<Position> findAll() {
-        return POSITION_DAO.findAll();
+        return positionDao.findAll();
     }
 
     public Position findByTitle(String title) {
-        return POSITION_DAO.findByTitle(title);
+        return positionDao.findByTitle(title);
+    }
+
+    public Long create(Position position) {
+        return positionDao.create(position);
     }
 }

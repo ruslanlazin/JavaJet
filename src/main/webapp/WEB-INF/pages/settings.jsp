@@ -20,24 +20,26 @@
         <div class="col-sm-5 col-sm-offset-1">
 
             <%--Roles section--%>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th><fmt:message key="shared.roles"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="role" items="${roles}">
+            <form class="form-inline" method="POST">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td> ${role.id} </td>
-                        <td> ${role.title} </td>
+                        <th>#</th>
+                        <th><fmt:message key="shared.roles"/></th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-                <tr>
-                    <form class="form-inline" method="POST">
+                    </thead>
+                    <tbody>
+                    <c:forEach var="role" items="${roles}">
+                        <tr>
+                            <td> ${role.id} </td>
+                            <td> ${role.title} </td>
+                            <td></td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
                         <td>
-                            # <input type="hidden" name="set" value="role">
+                            # <input type="hidden" name="type" value="role">
                         </td>
                         <td>
                             <input type="text" class="form-control"
@@ -47,36 +49,44 @@
                             <input type="submit" class="btn-link btn active"
                                    value="<fmt:message key="shared.button.create"/> "/>
                         </td>
-                    <%--</form>--%>
-                </tr>
-                </tbody>
-            </table>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
             <br><br>
 
             <%--Position Section--%>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th><fmt:message key="shared.position"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="position" items="${positions}">
+            <form class="form-inline" method="POST">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td> ${position.id} </td>
-                        <td> ${position.title} </td>
+                        <th>#</th>
+                        <th><fmt:message key="shared.position"/></th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-                <tr>
-                    <form class="form-inline" method="POST">
+                    </thead>
+                    <tbody>
+                    <c:forEach var="position" items="${positions}">
+                        <tr>
+                            <td> ${position.id} </td>
+                            <td> ${position.title} </td>
+                            <td> <c:if test="${position.airCrew}">
+                                &#10004;
+                            </c:if>
+                             </td>
+                            <td></td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
                         <td>
-                            # <input type="hidden" name="setType" value="position">
+                            # <input type="hidden" name="type" value="position">
                         </td>
                         <td>
                             <input type="text" class="form-control"
                                    name="title" required/>
-
+                        </td>
+                        <td>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="aircrew" value="true">
@@ -89,10 +99,10 @@
                             <input type="submit" class="btn-link btn active"
                                    value="<fmt:message key="shared.button.create"/> "/>
                         </td>
-                    </form>
-                </tr>
-                </tbody>
-            </table>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>

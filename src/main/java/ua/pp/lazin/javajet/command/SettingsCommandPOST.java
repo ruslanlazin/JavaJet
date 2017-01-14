@@ -17,25 +17,29 @@ public class SettingsCommandPOST implements Command {
     private static final RoleService roleService = RoleService.getINSTANCE();
     private static final String ROLES_ATTRIBUTE = "roles";
     private static final String POSITIONS_ATTRIBUTE = "positions";
+    private static final String TYPE_PARAMETER = "type";
+    private static final String TITLE_PARAMETER = "title";
+    private static final String AIRCREW_PARAMETER = "aircrew";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String type = request.getParameter("setType");
+        String type = request.getParameter(TYPE_PARAMETER);
 
         if ("role".equals(type)) {
-            Role role = Role.newBuilder().title(request.getParameter("title")).build();
+            Role role = Role.newBuilder().title(request.getParameter(TITLE_PARAMETER)).build();
             roleService.create(role);
 
         } else if ("position".equals(type)) {
             Position position = ua.pp.lazin.javajet.entity.Position.newBuilder()
-                    .title(request.getParameter("title"))
-                    .airCrew(Boolean.valueOf(request.getParameter("aircrew"))).build();
+                    .title(request.getParameter(TITLE_PARAMETER))
+                    .airCrew(Boolean.valueOf(request.getParameter(AIRCREW_PARAMETER))).build();
+            positionService.create(position);
         }
-
 
         request.setAttribute(ROLES_ATTRIBUTE, roleService.findAll());
         request.setAttribute(POSITIONS_ATTRIBUTE, positionService.findAll());
+
         return "settings";
     }
 }

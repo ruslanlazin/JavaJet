@@ -1,11 +1,15 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.dao.RoleDao;
 import ua.pp.lazin.javajet.entity.Role;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
+import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionCallback;
+import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionTemplate;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -17,6 +21,8 @@ import java.util.Set;
  */
 public class PostgresqlRoleDao implements RoleDao {
     private static final JdbcTemplate<Role> jdbcTemplate = new JdbcTemplate<>();
+    private static final TransactionTemplate transactionTemplate = TransactionTemplate.getINSTANCE();
+
     private static final RowMapper<Role> rowMapper = new RowMapper<Role>() {
         @Override
         public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -27,11 +33,20 @@ public class PostgresqlRoleDao implements RoleDao {
         }
     };
 
+    private static final String CREATE =
+            "INSERT INTO role (title) VALUES(?);";
 
     @Override
     public Long create(Role role) {
-        return null;
+        return transactionTemplate.execute(new TransactionCallback<Long>() {
+            @Override
+            public Long doInTransaction(Connection connection) {
+                return jdbcTemplate.insert(connection, CREATE,
+                        role.getTitle());
+            }
+        });
     }
+
 
     @Override
     public Role findByTitle(String title) {

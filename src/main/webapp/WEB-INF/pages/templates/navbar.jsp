@@ -44,7 +44,7 @@
                 </form>
             </li>
             <sec:authorize role="ROLE_ADMIN">
-                <li><a href="/settings">Settings</a></li>
+                <li><a href="<c:url value="/admin/settings"/>">Settings</a></li>
             </sec:authorize>
             <sec:authorize role="ROLE_AUTHENTICATED">
                 <li><a href="<c:url value="/logout"/>"><fmt:message key="navbar.link.logout"/></a></li>
