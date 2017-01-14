@@ -22,9 +22,14 @@
     <%@include file="templates/navbar.jsp" %>
     <div class="row">
         <div class="col-sm-2 col-sm-offset-3">
-            <h4>
-                <fmt:message key="flights.header"/>
-            </h4>
+            <c:choose>
+                <c:when test="${myMode}">
+                    <h4><fmt:message key="flights.my.header"/></h4>
+                </c:when>
+                <c:otherwise>
+                    <h4><fmt:message key="flights.header"/></h4>
+                </c:otherwise>
+            </c:choose>
         </div>
         <sec:authorize role="ROLE_ADMIN">
             <div class="col-sm-1 col-sm-offset-10">

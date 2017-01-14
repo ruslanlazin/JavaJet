@@ -2,7 +2,7 @@ package ua.pp.lazin.javajet.filter;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.entity.User;
-import ua.pp.lazin.javajet.service.AuthService;
+import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,8 +23,7 @@ import java.io.IOException;
 @WebFilter(filterName = "AuthFilter")
 public class AuthFilter implements Filter {
     private final static Logger logger = Logger.getLogger(AuthFilter.class);
-    private final static AuthService authService = AuthService.getINSTANCE();
-    private final static String USER_ATTRIBUTE = "user";
+    private final static UserService userService = UserService.getINSTANCE();
     private final static String LOGIN_URI = "/login";
     private final static String RESOURCES_URI_PREFIX = "/resources/";
 
@@ -39,17 +38,11 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        if (path.startsWith(RESOURCES_URI_PREFIX) || authService.isAuthenticated(request.getSession())
+        if (path.startsWith(RESOURCES_URI_PREFIX) || userService.isUserCachedInSession(request.getSession())
                 || path.equals(LOGIN_URI)) {
             if (logger.isDebugEnabled()) {
-                User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
+                User user = userService.getCurrentUser(request.getSession());
                 logger.debug("Request from user: " + user + " to: " + path + " - accepted");
-
-                if (user != null) {
-                    System.out.println(user.getRoles());
-                }
-
-
             }
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

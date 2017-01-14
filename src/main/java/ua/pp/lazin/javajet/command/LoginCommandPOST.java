@@ -1,7 +1,7 @@
 package ua.pp.lazin.javajet.command;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.service.AuthService;
+import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginCommandPOST implements Command {
     private static final Logger logger = Logger.getLogger(LoginCommandPOST.class);
+    private static final UserService userService = UserService.getINSTANCE();
     private static final String USERNAME_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String WRONGLOGIN_ATTRIBUTE = "wronglogin";
-    private static final AuthService authService = AuthService.getINSTANCE();
 
     @Override
 
@@ -26,7 +26,9 @@ public class LoginCommandPOST implements Command {
 
         try {
             request.login(username, password);
+
             logger.info(username + " successfully authorized ");
+            userService.cacheUserInSession(username, request.getSession());
             return "redirect:main";
 
         } catch (ServletException e) {

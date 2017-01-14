@@ -7,6 +7,7 @@ import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
 import ua.pp.lazin.javajet.util.DateParser;
+import ua.pp.lazin.javajet.util.EntityParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,36 +24,24 @@ public class EditFlightCommandPOST implements Command {
     private static final String KEY_CONCURRENT_MODIFICATION = "concurrent";
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String FLIGHT_ATTRIBUTE = "flight";
-    private static final String FLIGHT_ID_PARAMETER = "flightId";
-    private static final String AIRCRAFT_PARAMETER = "aircraft";
-    private static final String FROM_PARAMETER = "from";
-    private static final String TO_PARAMETER = "to";
-    private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
-    private static final String VERSION_PARAMETER = "version";
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        Aircraft aircraft = Aircraft.newBuilder()
-                .id(Long.valueOf(request.getParameter(AIRCRAFT_PARAMETER))).build();
-
-        Flight flight = Flight.newBuilder()
-                .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
-                .departure(airportService.findByCode(request.getParameter(FROM_PARAMETER)))
-                .destination(airportService.findByCode(request.getParameter(TO_PARAMETER)))
-                .aircraft(aircraft)
-                .build();
+        Flight flight = EntityParser.parseFlightWithAirports(request);
+        flight.setDeparture(airportService.findByCode(flight.getDeparture().getIataCode()));
+        flight.setDestination(airportService.findByCode(flight.getDestination().getIataCode()));
 
         // TODO: 29.12.2016 validate
-        String flightIdAsString = request.getParameter(FLIGHT_ID_PARAMETER);
-        if (flightIdAsString == null || flightIdAsString.isEmpty()) {
+
+        // IF Flight was just entered
+        if (flight.getId() == null) {
             flight = flightService.create(flight);
             request.setAttribute(KEY_SUCCESS, true);
-        } else {
-            Long flightId = Long.valueOf(flightIdAsString);
-            flight.setId(flightId);
-            flight.setVersion(Integer.valueOf(request.getParameter(VERSION_PARAMETER)));
 
+        } else {
+            // IF we are editing existing Flight
             Boolean isUpdateSuccessful = flightService.updateFlight(flight);
             if (isUpdateSuccessful) {
                 request.setAttribute(KEY_SUCCESS, true);

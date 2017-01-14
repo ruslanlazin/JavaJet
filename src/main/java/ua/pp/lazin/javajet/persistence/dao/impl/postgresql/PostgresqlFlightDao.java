@@ -97,7 +97,14 @@ public class PostgresqlFlightDao implements FlightDao {
                     .build();
         }
     };
-
+    private static final String FIND_ALL_BY_USER_LATER_THEN_ORDER_BY_DTIME_ASC =
+            "SELECT * FROM flight f " +
+                    "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
+                    "JOIN flight_users u ON f.flight_id = u.flight_id " +
+                    "WHERE u.user_id = ? AND " +
+                    "departure_time >= ? " +
+                    "ORDER BY departure_time";
+    ;
 
     @Override
     public Long create(Flight flight) {
@@ -191,5 +198,13 @@ public class PostgresqlFlightDao implements FlightDao {
                 return true;
             }
         });
+    }
+
+    @Override
+    public List<Flight> findAllByUserLaterThen(User user, Date date) {
+        return jdbcTemplate.findEntities(rowMapper,
+                FIND_ALL_BY_USER_LATER_THEN_ORDER_BY_DTIME_ASC,
+                user.getId(),
+                new Timestamp(date.getTime()));
     }
 }

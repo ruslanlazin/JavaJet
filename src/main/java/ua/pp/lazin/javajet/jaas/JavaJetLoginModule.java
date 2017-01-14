@@ -3,7 +3,7 @@ package ua.pp.lazin.javajet.jaas;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.entity.Role;
 import ua.pp.lazin.javajet.entity.User;
-import ua.pp.lazin.javajet.service.AuthService;
+import ua.pp.lazin.javajet.service.UserService;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.*;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class JavaJetLoginModule implements LoginModule {
 
     private static final Logger logger = Logger.getLogger(JavaJetLoginModule.class);
-    private static final AuthService authService = AuthService.getINSTANCE();
+    private static final UserService userService = UserService.getINSTANCE();
     private CallbackHandler handler;
     private Subject subject;
     private String username;
@@ -72,13 +72,13 @@ public class JavaJetLoginModule implements LoginModule {
             }
 
             // Validate  if there is user with these username and password
-            User user = authService.login(username, password);
-            if (user == null) {
+            isAuthenticated = userService.check(username, password);
+            if (!isAuthenticated) {
                 throw new LoginException("Authentication failed");
             }
+
             // Assign the user roles to temporary field and save authentication result
-            userRoles = this.getRoles(user);
-            isAuthenticated = true;
+            userRoles = this.getRoles(userService.findByUsernameWithRoles(username));
             return true;
 
         } catch (IOException | UnsupportedCallbackException e) {

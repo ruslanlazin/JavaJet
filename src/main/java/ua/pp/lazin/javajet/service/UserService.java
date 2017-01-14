@@ -14,7 +14,7 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class UserService {
-    private final static String USER_ATTRIBUTE = "user";
+    private final static String CURRENT_USER_ATTRIBUTE = "currentUser";
     private final static Logger logger = Logger.getLogger(UserService.class);
     private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
     private final static RoleDao roleDao = DaoFactoryCreator.getFactory().getRoleDao();
@@ -27,9 +27,34 @@ public class UserService {
         return INSTANCE;
     }
 
-    public User getCurrentUser(HttpSession session) {
-        return (User) session.getAttribute(USER_ATTRIBUTE);
+    public User findByUsernameWithRoles(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return null;
+        }
+        user.setRoles(roleDao.findRolesOfUser(user));
+        return user;
     }
+
+
+    public boolean check(String login, String password) {
+        User user = userDao.findByUsername(login);
+        return user != null && PasswordEncoder.check(password, user.getPassword());
+    }
+
+    public boolean isUserCachedInSession(HttpSession session) {
+        return session.getAttribute(CURRENT_USER_ATTRIBUTE) != null;
+    }
+
+    public User getCurrentUser(HttpSession session) {
+        return (User) session.getAttribute(CURRENT_USER_ATTRIBUTE);
+    }
+
+
+    public void removeCurentUserFromSession(HttpSession session) {
+        session.removeAttribute(CURRENT_USER_ATTRIBUTE);
+    }
+
 
     public User create(User user) {   // TODO: 08.01.2017 is I need id assignment
         user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
@@ -70,6 +95,9 @@ public class UserService {
             user.setPassword(PasswordEncoder.getSaltedHash(user.getPassword()));
         }
         return userDao.updateWithRoles(user);
+    }
 
+    public void cacheUserInSession(String username, HttpSession session) {
+        session.setAttribute(CURRENT_USER_ATTRIBUTE, findByUsernameWithRoles(username));
     }
 }

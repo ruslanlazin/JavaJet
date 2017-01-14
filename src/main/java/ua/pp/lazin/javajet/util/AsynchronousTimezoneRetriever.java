@@ -36,5 +36,13 @@ public class AsynchronousTimezoneRetriever {
         logger.debug("Retrieving TimeZone for Airport " + airport.getName());
     }
 
+    public String retrieveTimezone(Airport airport) {
+
+        LatLng coordinates = new LatLng(airport.getLatitude(), airport.getLongitude());
+        TimeZone timeZone = TimeZoneApi.getTimeZone(GEO_API_CONTEXT, coordinates).awaitIgnoreError();
+        logger.debug("Retrieving TimeZone for Airport " + airport.getName());
+        return timeZone.getID();
+    }
+
 
 }

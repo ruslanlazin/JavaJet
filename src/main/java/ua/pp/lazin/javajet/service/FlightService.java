@@ -2,7 +2,6 @@ package ua.pp.lazin.javajet.service;
 
 import com.google.maps.PendingResult;
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.entity.Airport;
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
@@ -10,6 +9,7 @@ import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import ua.pp.lazin.javajet.util.AsynchronousTimezoneRetriever;
+import ua.pp.lazin.javajet.util.TimeZoneManager;
 
 import java.util.Date;
 import java.util.List;
@@ -34,9 +34,10 @@ public class FlightService {
     }
 
     public Flight create(Flight flight) {
+        flight.setDepartureTimezone(TimeZoneManager.getTimeZoneForFlight(flight, "SYNC"));
+
         Long id = flightDao.create(flight);
         flight.setId(id);
-        resolveTimezoneWhenWrite(flight);
         return flight;
     }
 
@@ -76,37 +77,19 @@ public class FlightService {
     }
 
     public boolean updateFlight(Flight flight) {
+
+        flight.setDepartureTimezone(TimeZoneManager.getTimeZoneForFlight(flight, "SYNC"));
         int updatedRowsNumber = flightDao.update(flight);
-        if (flight.getDepartureTimezone() == null) {     // TODO: 08.01.2017 think
-            resolveTimezoneWhenWrite(flight);
-        }
+
+//        if (flight.getDepartureTimezone() == null) {     // TODO: 08.01.2017 think
+
         return updatedRowsNumber == 1;
 
     }
 
-    // TODO: 11.01.2017 move
-    private void resolveTimezoneWhenWrite(Flight flight) {
-        PendingResult.Callback<TimeZone> timeZoneCallback = new PendingResult.Callback<TimeZone>() {
-            @Override
-            public void onResult(TimeZone result) {
-                logger.debug("TimeZone for Flight " + flight.getId() + ", Airport " +
-                        flight.getDeparture().getName() + " resolved. It's " +
-                        result.getID() + " Calling saving to db method");
-                // TODO: 04.01.2017 tx start
-                System.out.println(Thread.currentThread().getId());
-                Flight freshFlight = flightDao.findById(flight.getId());
-                freshFlight.setDepartureTimezone(result.getID());
-                flightDao.update(freshFlight);
-                //tx commit
-            }
 
-            @Override
-            public void onFailure(Throwable e) {
-                logger.error("Cannot resolve TimeZone for Flight " + flight, e);
-            }
-        };
-
-        AsynchronousTimezoneRetriever resolver = new AsynchronousTimezoneRetriever();
-        resolver.retrieveTimezoneWhenCall(flight.getDeparture(), timeZoneCallback);
+    public List<Flight> getAllUsersFlightsLaterThen(User user, Date date) {
+        return flightDao.findAllByUserLaterThen(user, date);
     }
 }
+

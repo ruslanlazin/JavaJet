@@ -1,9 +1,8 @@
 package ua.pp.lazin.javajet.util;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.entity.Position;
-import ua.pp.lazin.javajet.entity.Role;
-import ua.pp.lazin.javajet.entity.User;
+import ua.pp.lazin.javajet.entity.*;
+import ua.pp.lazin.javajet.service.AirportService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
@@ -26,6 +25,14 @@ public class EntityParser {
     private static final String WORKING_PARAMETER = "working";
     private static final String VERSION_PARAMETER = "version";
     private static final String USER_ROLES_PARAMETER = "userRoles";
+
+    private static final String FLIGHT_ID_PARAMETER = "flightId";
+    private static final String AIRCRAFT_PARAMETER = "aircraft";
+    private static final String FROM_PARAMETER = "from";
+    private static final String TO_PARAMETER = "to";
+    private static final String DEPARTURE_TIME_PARAMETER = "departureTime";
+    private static final String TIMEZONE_PARAMETER = "timeZone";
+
 
     private EntityParser() {
     }
@@ -59,6 +66,24 @@ public class EntityParser {
 
         return user;
     }
+
+    /**
+     * @param request to parse
+     * @return Flight entity. All fields absent in the request will be null
+     */
+    public static Flight parseFlightWithAirports(HttpServletRequest request) {
+
+        return Flight.newBuilder()
+                .id(parseLong(request.getParameter(FLIGHT_ID_PARAMETER)))
+                .departureTime(new DateParser().parseUTC(request.getParameter(DEPARTURE_TIME_PARAMETER)))
+                .departure(Airport.newBuilder().iataCode(request.getParameter(FROM_PARAMETER)).build())
+                .destination(Airport.newBuilder().iataCode(request.getParameter(TO_PARAMETER)).build())
+                .departureTimezone(request.getParameter(TIMEZONE_PARAMETER))
+                .aircraft(Aircraft.newBuilder().id(parseLong(request.getParameter(AIRCRAFT_PARAMETER))).build())
+                .version(parseInteger(request.getParameter(VERSION_PARAMETER)))
+                .build();
+    }
+
 
     /**
      * @param string to parse

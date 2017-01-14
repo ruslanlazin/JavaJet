@@ -1,7 +1,6 @@
 package ua.pp.lazin.javajet.command;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.service.AuthService;
 import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.ServletException;
@@ -14,20 +13,19 @@ import javax.servlet.http.HttpSession;
  */
 public class LogoutCommandGET implements Command {
     private static final Logger logger = Logger.getLogger(LogoutCommandGET.class);
-    private static final AuthService authService = AuthService.getINSTANCE();
     private static final UserService userService = UserService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = request.getSession();
-//        logger.info(userService.getCurrentUser(session).getUsername() + " is logging out");
+        logger.info(request.getUserPrincipal().getName() + " is logging out");
         try {
             request.logout();
+            userService.removeCurentUserFromSession(request.getSession());
         } catch (ServletException e) {
-            logger.error("logout fails", e);
+            logger.error("Logout fails", e);
         }
-        authService.logout(session);
+
         return "redirect:login";
     }
 }
