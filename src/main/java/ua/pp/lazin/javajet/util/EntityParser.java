@@ -91,7 +91,7 @@ public class EntityParser {
      * Returns null if it's imposable to parse that string
      */
     private static Long parseLong(String string) {
-        if (string != null) {
+        if (string != null && !string.isEmpty()) {
             try {
                 return Long.valueOf(string);
             } catch (NumberFormatException e) {
@@ -108,7 +108,7 @@ public class EntityParser {
      * Returns null if it's imposable to parse that string
      */
     private static Integer parseInteger(String string) {
-        if (string != null) {
+        if (string != null && !string.isEmpty()) {
             try {
                 return Integer.valueOf(string);
             } catch (NumberFormatException e) {

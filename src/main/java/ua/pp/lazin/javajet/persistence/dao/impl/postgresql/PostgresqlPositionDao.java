@@ -1,6 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.entity.Aircraft;
+import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.persistence.dao.PositionDao;
 import ua.pp.lazin.javajet.entity.Position;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
@@ -53,6 +54,15 @@ public class PostgresqlPositionDao implements PositionDao {
 
     private static final String FIND_ALL =
             "SELECT * FROM position ORDER BY title";
+
+    private static PositionDao INSTANCE = new PostgresqlPositionDao();
+
+    private PostgresqlPositionDao() {
+    }
+
+    public static PositionDao getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(Position position) {

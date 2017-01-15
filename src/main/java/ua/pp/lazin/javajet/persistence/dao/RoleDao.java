@@ -12,18 +12,17 @@ import java.util.Set;
 public interface RoleDao {
     Long create(Role role);
 
-    int deleteCascade(Role role);
+    int update(Role role);
 
-    Role findByTitle(String title);
+    int delete(Role role);
+
+    int deleteCascade(Role role);
 
     Role findById(Long roleId);
 
-    List<Role> findAll();
+    Role findByTitle(String title);
 
     Set<Role> findRolesOfUser(User user);
 
-    int update(Role role);
-
-
-    int delete(Role role);
+    List<Role> findAll();
 }

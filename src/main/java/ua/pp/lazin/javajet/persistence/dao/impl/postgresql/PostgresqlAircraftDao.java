@@ -4,6 +4,7 @@ import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.entity.User;
+import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
 import ua.pp.lazin.javajet.persistence.jdbcutils.RowMapper;
 import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionCallback;
@@ -54,6 +55,15 @@ public class PostgresqlAircraftDao implements AircraftDao {
 
     private static final String FIND_ALL =
             "SELECT * FROM aircraft ORDER BY aircraft_id";
+
+    private static AircraftDao INSTANCE = new PostgresqlAircraftDao();
+
+    private PostgresqlAircraftDao() {
+    }
+
+    public static AircraftDao getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(Aircraft aircraft) {

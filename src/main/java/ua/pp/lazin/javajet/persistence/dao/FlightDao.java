@@ -9,19 +9,19 @@ import java.util.List;
 public interface FlightDao {
     Long create(Flight flight);
 
-    List<Flight> findAllOrderByDepartureTimeAsc();
-
-    List<Flight> findAllBforeThen(Date date);
-
-    List<Flight> findAllLaterThen(Date date);
-
     int update(Flight flight);
+
+    Boolean updateWithCrew(Flight flight);
 
     int delete(Flight flight);
 
     Flight findById(Long flightId);
 
-    Boolean updateWithCrew(Flight flight);
+    List<Flight> findAllOrderByDepartureTimeAsc();
+
+    List<Flight> findAllBeforeThen(Date date);
+
+    List<Flight> findAllLaterThen(Date date);
 
     List<Flight> findAllByUserLaterThen(User user, Date date);
 }

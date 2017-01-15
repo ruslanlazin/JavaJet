@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.entity.Airport;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
@@ -63,6 +64,14 @@ public class PostgresqlAirportDao implements AirportDao {
     private static final String FIND_ALL =
             "SELECT * FROM airport";
 
+    private static AirportDao INSTANCE = new PostgresqlAirportDao();
+
+    private PostgresqlAirportDao() {
+    }
+
+    public static AirportDao getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(Airport airport) {

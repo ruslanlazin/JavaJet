@@ -10,13 +10,13 @@ import java.util.List;
 public interface AirportDao {
     Long create(Airport airport);
 
-    Airport findByCode(String iataCode);
-
-    List<Airport> findAll();
-
     int update(Airport airport);
 
     int delete(Airport airport);
 
     int deleteCascade(Airport airportt);
+
+    Airport findByCode(String iataCode);
+
+    List<Airport> findAll();
 }

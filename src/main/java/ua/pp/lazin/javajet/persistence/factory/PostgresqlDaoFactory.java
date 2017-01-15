@@ -13,31 +13,31 @@ class PostgresqlDaoFactory implements DaoFactory {
 
     @Override
     public AircraftDao getAircraftDao() {
-        return new PostgresqlAircraftDao();
+        return PostgresqlAircraftDao.getINSTANCE();
     }
 
     @Override
     public AirportDao getAirportDao() {
-        return new PostgresqlAirportDao();
+        return PostgresqlAirportDao.getINSTANCE();
     }
 
     @Override
     public FlightDao getFlightDao() {
-        return new PostgresqlFlightDao();
+        return PostgresqlFlightDao.getINSTANCE();
     }
 
     @Override
     public PositionDao getPositionDao() {
-        return new PostgresqlPositionDao();
+        return PostgresqlPositionDao.getINSTANCE();
     }
 
     @Override
     public UserDao getUserDao() {
-        return new PostgresqlUserDao();
+        return PostgresqlUserDao.getINSTANCE();
     }
 
     @Override
     public RoleDao getRoleDao() {
-        return new PostgresqlRoleDao();
+        return PostgresqlRoleDao.getINSTANCE();
     }
 }

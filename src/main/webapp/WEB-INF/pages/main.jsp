@@ -19,9 +19,9 @@
     <div>
 
         <%--Greatings--%>
-        <fmt:message key="main.hello"/>
-        ${sessionScope.currentUser.firstName}
-        ${sessionScope.currentUser.secondName},
+        <fmt:message key="main.hello"/>,
+       <b> ${sessionScope.currentUser.firstName}
+        ${sessionScope.currentUser.secondName}</b>,
         ${sessionScope.currentUser.position.title}
         <br>
         <fmt:message key="main.pleasure"/>

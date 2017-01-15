@@ -1,6 +1,7 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
 import ua.pp.lazin.javajet.entity.Role;
+import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.Position;
@@ -116,6 +117,15 @@ public class PostgresqlUserDao implements UserDao {
                     "WHERE u.working = TRUE " +
                     "AND p.air_crew = TRUE " +
                     "ORDER BY u.second_name";
+
+    private static UserDao INSTANCE = new PostgresqlUserDao();
+
+    private PostgresqlUserDao() {
+    }
+
+    public static UserDao getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(User user) {

@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.persistence.dao.RoleDao;
 import ua.pp.lazin.javajet.entity.Role;
 import ua.pp.lazin.javajet.entity.User;
@@ -60,6 +61,14 @@ public class PostgresqlRoleDao implements RoleDao {
                     "JOIN users_roles u ON r.role_id = u.role_id " +
                     "WHERE u.user_id = ?";
 
+    private static RoleDao INSTANCE = new PostgresqlRoleDao();
+
+    private PostgresqlRoleDao() {
+    }
+
+    public static RoleDao getINSTANCE() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(Role role) {

@@ -1,6 +1,5 @@
 package ua.pp.lazin.javajet.service;
 
-import com.google.maps.PendingResult;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
@@ -8,13 +7,11 @@ import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
-import ua.pp.lazin.javajet.util.AsynchronousTimezoneRetriever;
 import ua.pp.lazin.javajet.util.TimeZoneManager;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 /**
  * @author Ruslan Lazin
@@ -50,7 +47,7 @@ public class FlightService {
     }
 
     public List<Flight> findAllBeforeThen(Date date) {
-        return flightDao.findAllBforeThen(date);
+        return flightDao.findAllBeforeThen(date);
     }
 
     public Flight findById(Long flightId) {

@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.persistence.dao.AircraftDao;
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
 import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.entity.Airport;
@@ -109,6 +110,15 @@ public class PostgresqlFlightDao implements FlightDao {
                     "departure_time >= ? " +
                     "ORDER BY departure_time";
 
+    private static FlightDao INSTANCE = new PostgresqlFlightDao();
+
+    private PostgresqlFlightDao() {
+    }
+
+    public static FlightDao getINSTANCE() {
+        return INSTANCE;
+    }
+
     @Override
     public Long create(Flight flight) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
@@ -198,7 +208,7 @@ public class PostgresqlFlightDao implements FlightDao {
 
 
     @Override
-    public List<Flight> findAllBforeThen(Date date) {
+    public List<Flight> findAllBeforeThen(Date date) {
         return jdbcTemplate.findEntities(rowMapper, FIND_ALL_BEFORE_THEN_ORDER_BY_DTIME_ASC,
                 new Timestamp(date.getTime()));
     }
