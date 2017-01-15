@@ -1,6 +1,6 @@
 # JavaJet Airlines
 
-### Specification
+### Task
 
 AirCompany has a list of flights.
 An administrator manages the flights.
@@ -20,18 +20,18 @@ Other  options such as login/password to db available in context.xml.
 
 All context paths are supported
 
-# Features
+## Features
 
 - Adding/editing flights
 - Adding/editing employees
 - Adding/editing aircrafts
 - Adding/editing positions
 - Adding/editing roles
-- Build-in db for 9300 real airports
 - Authentication/Authorization
 - English/French/Russian UI
+- Works with real airports/cites/timezones/distances, etc
 
-# Technologies
+## Technologies
 
 - Servlets
 - JSP
