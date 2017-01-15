@@ -1,6 +1,7 @@
 package ua.pp.lazin.javajet.persistence.factory;
 
 import ua.pp.lazin.javajet.persistence.dao.*;
+import ua.pp.lazin.javajet.persistence.dao.impl.mysql.*;
 
 /**
  * @author Ruslan Lazin
@@ -12,31 +13,31 @@ public class MysqlDaoFactory implements DaoFactory {
 
     @Override
     public AircraftDao getAircraftDao() {
-        return null;
+        return MysqlAircraftDao.getINSTANCE();
     }
 
     @Override
     public AirportDao getAirportDao() {
-        return null;
+        return MysqlAirportDao.getINSTANCE();
     }
 
     @Override
     public FlightDao getFlightDao() {
-        return null;
+        return MysqlFlightDao.getINSTANCE();
     }
 
     @Override
     public PositionDao getPositionDao() {
-        return null;
+        return MysqlPositionDao.getINSTANCE();
     }
 
     @Override
     public UserDao getUserDao() {
-        return null;
+        return MysqlUserDao.getINSTANCE();
     }
 
     @Override
     public RoleDao getRoleDao() {
-        return null;
+        return MysqlRoleDao.getINSTANCE();
     }
 }

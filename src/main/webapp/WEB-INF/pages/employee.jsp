@@ -57,10 +57,7 @@
         </div>
 
         <%--Form--%>
-        <form class="form-horizontal" method="POST"
-                <c:if test="${editMode}">
-                    action="/admin/employee/edit"
-                </c:if>>
+        <form class="form-horizontal" method="POST">
             <input type="hidden" name="userId" value="${employee.id}">
             <input type="hidden" name="version" value="${employee.version}">
 

@@ -25,7 +25,6 @@ public class EditFlightCommandPOST implements Command {
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String FLIGHT_ATTRIBUTE = "flight";
 
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 

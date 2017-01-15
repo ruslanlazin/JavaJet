@@ -15,8 +15,10 @@
               maxIdle="30"
               username="root"
               password="root"
-              driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost/javajet">
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost/javajet?useUnicode=true&amp;
+              serverTimezone=UTC&amp;
+              useSSL=false">
     </Resource>
 
     <Realm className="org.apache.catalina.realm.JAASRealm" appName="JavaJetLoginModule"
