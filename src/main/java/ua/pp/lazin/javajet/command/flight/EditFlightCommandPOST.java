@@ -1,12 +1,11 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.flight;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.entity.Aircraft;
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
-import ua.pp.lazin.javajet.util.DateParser;
 import ua.pp.lazin.javajet.util.EntityParser;
 
 import javax.servlet.http.HttpServletRequest;

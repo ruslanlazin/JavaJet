@@ -1,5 +1,6 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.settings;
 
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.service.PositionService;
 import ua.pp.lazin.javajet.service.RoleService;
 

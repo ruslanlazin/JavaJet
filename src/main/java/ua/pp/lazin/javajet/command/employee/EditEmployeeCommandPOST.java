@@ -1,8 +1,7 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.employee;
 
 import org.apache.log4j.Logger;
-import ua.pp.lazin.javajet.entity.Position;
-import ua.pp.lazin.javajet.entity.Role;
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.PositionService;
 import ua.pp.lazin.javajet.service.RoleService;
@@ -11,8 +10,6 @@ import ua.pp.lazin.javajet.util.EntityParser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Ruslan Lazin

@@ -1,5 +1,6 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.employee;
 
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.service.UserService;
 

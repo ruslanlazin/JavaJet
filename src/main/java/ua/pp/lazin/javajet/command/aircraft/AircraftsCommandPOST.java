@@ -1,5 +1,6 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.aircraft;
 
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.service.AircraftService;
 

@@ -1,6 +1,7 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.login;
 
 import org.apache.log4j.Logger;
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.ServletException;

@@ -1,12 +1,12 @@
-package ua.pp.lazin.javajet.command;
+package ua.pp.lazin.javajet.command.login;
 
 import org.apache.log4j.Logger;
+import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Ruslan Lazin

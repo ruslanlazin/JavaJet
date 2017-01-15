@@ -5,9 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import ua.pp.lazin.javajet.command.flight.EditFlightCommandGET;
 
 /**
  * @author Ruslan Lazin
