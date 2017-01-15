@@ -12,6 +12,8 @@ import java.util.Set;
 public interface RoleDao {
     Long create(Role role);
 
+    int deleteCascade(Role role);
+
     Role findByTitle(String title);
 
     Role findById(Long roleId);

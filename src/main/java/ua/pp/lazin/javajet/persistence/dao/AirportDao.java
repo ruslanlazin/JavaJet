@@ -17,4 +17,6 @@ public interface AirportDao {
     int update(Airport airport);
 
     int delete(Airport airport);
+
+    int deleteCascade(Airport airportt);
 }

@@ -10,6 +10,8 @@ import java.util.List;
 public interface PositionDao {
     Long create(Position position);
 
+    int deleteCascade(Position position);
+
     Position findByTitle(String title);
 
     List<Position> findAll();

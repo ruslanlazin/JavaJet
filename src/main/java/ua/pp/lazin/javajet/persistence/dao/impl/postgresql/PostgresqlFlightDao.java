@@ -27,6 +27,29 @@ public class PostgresqlFlightDao implements FlightDao {
     private static final JdbcTemplate<Flight> jdbcTemplate = new JdbcTemplate<>();
     private static final TransactionTemplate transactionTemplate = TransactionTemplate.getINSTANCE();
     private static final Integer START_VERSION = 0;
+
+    private static final RowMapper<Flight> rowMapper = new RowMapper<Flight>() {
+        @Override
+        public Flight mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            Aircraft aircraft = Aircraft.newBuilder()
+                    .id(rs.getLong("aircraft_id"))
+                    .model(rs.getString("model"))
+                    .regNumber(rs.getString("reg_number")).build();
+            Airport airportFrom = Airport.newBuilder().iataCode(rs.getString("departure")).build();
+            Airport airportTo = Airport.newBuilder().iataCode(rs.getString("destination")).build();
+            return Flight.newBuilder()
+                    .aircraft(aircraft)
+                    .departure(airportFrom)
+                    .destination(airportTo)
+                    .departureTime(rs.getTimestamp("departure_time"))
+                    .departureTimezone(rs.getString("departure_timezone"))
+                    .id(rs.getLong("flight_id"))
+                    .version(rs.getInt("version"))
+                    .build();
+        }
+    };
+
     private static final String CREATE =
             "INSERT INTO flight (" +
                     "departure_time, " +
@@ -35,6 +58,26 @@ public class PostgresqlFlightDao implements FlightDao {
                     "departure, " +
                     "destination, " +
                     "version) VALUES (?, ?, ?, ?, ?, ?);";
+
+    private static final String UPDATE =
+            "UPDATE flight SET " +
+                    "departure_time = ?, " +
+                    "departure = ?, " +
+                    "destination = ?, " +
+                    "aircraft_id = ?, " +
+                    "departure_timezone = ?,   " +
+                    "version = ? " +
+                    "WHERE flight_id = ? " +
+                    "AND version = ?";
+
+    private static final String DELETE_LINKS =
+            "DELETE FROM flight_users WHERE flight_id = ?";
+
+    private static final String INSERT_LINK =
+            "INSERT INTO flight_users (flight_id, user_id) VALUES (?, ?)";
+
+    private static final String DELETE =
+            "DELETE FROM flight WHERE flight_id = ?";
 
     private static final String FIND_BY_ID =
             "SELECT * FROM flight f " +
@@ -58,45 +101,6 @@ public class PostgresqlFlightDao implements FlightDao {
                     "WHERE departure_time >= ? " +
                     "ORDER BY departure_time";
 
-    private static final String UPDATE =
-            "UPDATE flight SET " +
-                    "departure_time = ?, " +
-                    "departure = ?, " +
-                    "destination = ?, " +
-                    "aircraft_id = ?, " +
-                    "departure_timezone = ?,   " +
-                    "version = ? " +
-                    "WHERE flight_id = ? " +
-                    "AND version = ?";
-
-    private static final String DELETE_LINKS =
-            "DELETE FROM flight_users WHERE flight_id = ?";
-
-    private static final String INSERT_LINK =
-            "INSERT INTO flight_users (flight_id, user_id) VALUES (?, ?)";
-
-    private static final RowMapper<Flight> rowMapper = new RowMapper<Flight>() {
-
-        @Override
-        public Flight mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            Aircraft aircraft = Aircraft.newBuilder()
-                    .id(rs.getLong("aircraft_id"))
-                    .model(rs.getString("model"))
-                    .regNumber(rs.getString("reg_number")).build();
-            Airport airportFrom = Airport.newBuilder().iataCode(rs.getString("departure")).build();
-            Airport airportTo = Airport.newBuilder().iataCode(rs.getString("destination")).build();
-            return Flight.newBuilder()
-                    .aircraft(aircraft)
-                    .departure(airportFrom)
-                    .destination(airportTo)
-                    .departureTime(rs.getTimestamp("departure_time"))
-                    .departureTimezone(rs.getString("departure_timezone"))
-                    .id(rs.getLong("flight_id"))
-                    .version(rs.getInt("version"))
-                    .build();
-        }
-    };
     private static final String FIND_ALL_BY_USER_LATER_THEN_ORDER_BY_DTIME_ASC =
             "SELECT * FROM flight f " +
                     "JOIN aircraft a ON f.aircraft_id = a.aircraft_id " +
@@ -104,7 +108,6 @@ public class PostgresqlFlightDao implements FlightDao {
                     "WHERE u.user_id = ? AND " +
                     "departure_time >= ? " +
                     "ORDER BY departure_time";
-    ;
 
     @Override
     public Long create(Flight flight) {
@@ -123,28 +126,6 @@ public class PostgresqlFlightDao implements FlightDao {
     }
 
     @Override
-    public Flight findById(Long flightId) {
-        return jdbcTemplate.findEntity(rowMapper, FIND_BY_ID, flightId);
-    }
-
-    @Override
-    public List<Flight> findAllOrderByDepartureTimeAsc() {
-        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_ORDER_BY_DTIME_ASC);
-    }
-
-    @Override
-    public List<Flight> findAllBforeThen(Date date) {
-        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_BEFORE_THEN_ORDER_BY_DTIME_ASC,
-                new Timestamp(date.getTime()));
-    }
-
-    @Override
-    public List<Flight> findAllLaterThen(Date date) {
-        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC,
-                new Timestamp(date.getTime()));
-    }
-
-    @Override
     public int update(Flight flight) {
         return transactionTemplate.execute(new TransactionCallback<Integer>() {
             @Override
@@ -160,12 +141,6 @@ public class PostgresqlFlightDao implements FlightDao {
                         flight.getVersion());
             }
         });
-    }
-
-
-    @Override
-    public int delete(Flight flight) {
-        return 0;
     }
 
     @Override
@@ -198,6 +173,40 @@ public class PostgresqlFlightDao implements FlightDao {
                 return true;
             }
         });
+    }
+
+    @Override
+    public int delete(Flight flight) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, DELETE,
+                        flight.getId());
+            }
+        });
+    }
+
+    @Override
+    public Flight findById(Long flightId) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_ID, flightId);
+    }
+
+    @Override
+    public List<Flight> findAllOrderByDepartureTimeAsc() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_ORDER_BY_DTIME_ASC);
+    }
+
+
+    @Override
+    public List<Flight> findAllBforeThen(Date date) {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_BEFORE_THEN_ORDER_BY_DTIME_ASC,
+                new Timestamp(date.getTime()));
+    }
+
+    @Override
+    public List<Flight> findAllLaterThen(Date date) {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_LATER_THEN_ORDER_BY_DTIME_ASC,
+                new Timestamp(date.getTime()));
     }
 
     @Override

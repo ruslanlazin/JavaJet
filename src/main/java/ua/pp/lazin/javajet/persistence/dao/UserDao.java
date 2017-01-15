@@ -18,6 +18,8 @@ public interface UserDao {
 
     int delete(User user);
 
+    int deleteCascade(User user);
+
     User findByID(Long id);
 
     User findByUsername(String username);

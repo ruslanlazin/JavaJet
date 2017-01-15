@@ -1,6 +1,5 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
-import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.dao.RoleDao;
 import ua.pp.lazin.javajet.entity.Role;
 import ua.pp.lazin.javajet.entity.User;
@@ -36,6 +35,32 @@ public class PostgresqlRoleDao implements RoleDao {
     private static final String CREATE =
             "INSERT INTO role (title) VALUES(?);";
 
+    private static final String UPDATE =
+            "UPDATE role SET " +
+                    "title = ?, " +
+                    "WHERE role_id= ?";
+
+    private static final String DELETE_LINKS =
+            "DELETE FROM users_roles WHERE role_id = ?";
+
+    private static final String DELETE =
+            "DELETE FROM role WHERE role_id = ?";
+
+    private static final String FIND_BY_TITLE =
+            "SELECT * FROM role r WHERE r.title = ?";
+
+    private static final String FIND_BY_ID =
+            "SELECT * FROM role r WHERE r.role_id = ?";
+
+    private static final String FIND_ALL =
+            "SELECT * FROM role ORDER BY title";
+
+    private static final String FIND_BY_USER =
+            "SELECT * FROM role r " +
+                    "JOIN users_roles u ON r.role_id = u.role_id " +
+                    "WHERE u.user_id = ?";
+
+
     @Override
     public Long create(Role role) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
@@ -47,45 +72,61 @@ public class PostgresqlRoleDao implements RoleDao {
         });
     }
 
-
-    @Override
-    public Role findByTitle(String title) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT * FROM role r " +
-                        "WHERE r.title = ?", title);
-    }
-
-    @Override
-    public Role findById(Long roleId) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT * FROM role r " +
-                        "WHERE r.role_id = ?", roleId);
-    }
-
-    @Override
-    public List<Role> findAll() {
-        return jdbcTemplate.findEntities(rowMapper,
-                "SELECT * FROM role " +
-                        "ORDER BY title");
-    }
-
-    @Override
-    public Set<Role> findRolesOfUser(User user) {
-        List<Role> roles = jdbcTemplate.findEntities(rowMapper,
-                "SELECT * FROM role r " +
-                        "JOIN users_roles u ON r.role_id = u.role_id " +
-                        "WHERE u.user_id = ?", user.getId());
-        return new HashSet<Role>(roles);
-    }
-
     @Override
     public int update(Role role) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, UPDATE,
+                        role.getTitle(),
+                        role.getId());
+            }
+        });
     }
 
     @Override
     public int delete(Role role) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, DELETE,
+                        role.getId());
+            }
+        });
     }
 
+    @Override
+    public int deleteCascade(Role role) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+
+                jdbcTemplate.update(connection, DELETE_LINKS, role.getId());
+
+                return jdbcTemplate.update(connection, DELETE,
+                        role.getId());
+            }
+        });
+    }
+
+    @Override
+    public Role findByTitle(String title) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_TITLE, title);
+    }
+
+    @Override
+    public Role findById(Long roleId) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_ID, roleId);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL);
+    }
+
+    @Override
+    public Set<Role> findRolesOfUser(User user) {
+        List<Role> roles = jdbcTemplate.findEntities(rowMapper, FIND_BY_USER, user.getId());
+        return new HashSet<Role>(roles);
+    }
 }

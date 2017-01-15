@@ -22,6 +22,16 @@ public class PostgresqlAircraftDao implements AircraftDao {
     private static final JdbcTemplate<Aircraft> jdbcTemplate = new JdbcTemplate<>();
     private static final TransactionTemplate transactionTemplate = TransactionTemplate.getINSTANCE();
 
+    private static final RowMapper<Aircraft> rowMapper = new RowMapper<Aircraft>() {
+        @Override
+        public Aircraft mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return Aircraft.newBuilder()
+                    .id(rs.getLong("aircraft_id"))
+                    .model(rs.getString("model"))
+                    .regNumber(rs.getString("reg_number")).build();
+        }
+    };
+
     private static final String CREATE =
             "INSERT INTO aircraft (" +
                     "reg_number, " +
@@ -33,17 +43,17 @@ public class PostgresqlAircraftDao implements AircraftDao {
                     "model = ? " +
                     "WHERE aircraft_id= ?";
 
-    private static final RowMapper<Aircraft> rowMapper = new RowMapper<Aircraft>() {
+    private static final String DELETE_LINKS =
+            "DELETE FROM flight WHERE aircraft_id = ?";
 
-        @Override
-        public Aircraft mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private static final String DELETE =
+            "DELETE FROM aircraft WHERE aircraft_id = ?";
 
-            return Aircraft.newBuilder()
-                    .id(rs.getLong("aircraft_id"))
-                    .model(rs.getString("model"))
-                    .regNumber(rs.getString("reg_number")).build();
-        }
-    };
+    private static final String FIND_BY_ID =
+            "SELECT * FROM aircraft WHERE aircraft_id= ?";
+
+    private static final String FIND_ALL =
+            "SELECT * FROM aircraft ORDER BY aircraft_id";
 
     @Override
     public Long create(Aircraft aircraft) {
@@ -56,7 +66,6 @@ public class PostgresqlAircraftDao implements AircraftDao {
             }
         });
     }
-
 
     @Override
     public int update(Aircraft aircraft) {
@@ -71,20 +80,38 @@ public class PostgresqlAircraftDao implements AircraftDao {
         });
     }
 
+    @Override
+    public int delete(Aircraft aircraft) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, DELETE,
+                        aircraft.getId());
+            }
+        });
+    }
 
     @Override
-    public User findById(Long id) {
-        return null;
+    public int deleteCascade(Aircraft aircraft) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+
+                jdbcTemplate.update(connection, DELETE_LINKS, aircraft.getId());
+
+                return jdbcTemplate.update(connection, DELETE,
+                        aircraft.getId());
+            }
+        });
+    }
+
+    @Override
+    public Aircraft findById(Long aircraftId) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_ID, aircraftId);
     }
 
     @Override
     public List<Aircraft> findAll() {
-        return jdbcTemplate.findEntities(rowMapper, "SELECT * FROM aircraft " +
-                "ORDER BY aircraft_id");
-    }
-
-    @Override
-    public int delete(Aircraft aircraft) {
-        return 0;
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL);
     }
 }

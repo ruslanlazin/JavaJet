@@ -13,7 +13,6 @@ import ua.pp.lazin.javajet.persistence.jdbcutils.TransactionTemplate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +27,6 @@ public class PostgresqlUserDao implements UserDao {
     private static final Integer START_VERSION = 0;
 
     private static final RowMapper<User> rowMapper = new RowMapper<User>() {
-
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             Position position = Position.newBuilder()
@@ -50,7 +48,6 @@ public class PostgresqlUserDao implements UserDao {
         }
     };
 
-
     private static final String CREATE_SQL =
             "INSERT INTO users (" +
                     "first_name, " +
@@ -62,9 +59,63 @@ public class PostgresqlUserDao implements UserDao {
                     "working, " +
                     "version ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
+    private static final String UPDATE =
+            "UPDATE users SET " +
+                    "first_name = ?, " +
+                    "second_name = ?, " +
+                    "username = ?, " +
+                    "password = ?, " +
+                    "email = ?,   " +
+                    "position_id = ?,   " +
+                    "working = ?,   " +
+                    "version = ? " +
+                    "WHERE user_id = ? " +
+                    "AND version = ?";
+
+    private static final String DELETE_LINKS_TO_ROLES =
+            "DELETE FROM users_roles WHERE user_id = ?";
+
+   private static final String DELETE_LINKS_TO_FLIGHTS =
+            "DELETE FROM flight_users WHERE user_id = ?";
+
+   private static final String DELETE =
+            "DELETE FROM users WHERE user_id = ?";
 
     private static final String INSERT_LINK =
             "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
+
+
+    private final static String FIND_BY_ID =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "WHERE u.user_id = ?";
+
+    private final static String FIND_BY_USERNAME =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "WHERE u.username = ?";
+
+    private final static String FIND_BY_EMAIL =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "WHERE u.email = ?";
+    private final static String FIND_BY_ALL =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "ORDER BY u.second_name";
+
+    private final static String FIND_BY_FLIGHT =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "JOIN flight_users f ON u.user_id = f.user_id " +
+                    "WHERE f.flight_id = ?";
+
+    private final static String FIND_ALL_WORKING_AIR_CREW_MEMBERS =
+            "SELECT u.*, p.title, p.air_crew FROM users u " +
+                    "JOIN position p ON u.position_id = p.position_id " +
+                    "WHERE u.working = TRUE " +
+                    "AND p.air_crew = TRUE " +
+                    "ORDER BY u.second_name";
 
     @Override
     public Long create(User user) {
@@ -93,82 +144,26 @@ public class PostgresqlUserDao implements UserDao {
         });
     }
 
-
-    @Override
-    public User findByID(Long id) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "WHERE u.user_id = ?", id);
-
-    }
-
-    @Override
-    public User findByUsername(String username) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "WHERE u.username = ?", username);
-    }
-
-    @Override
-    public User findByEmail(String email) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "WHERE u.email = ?", email);
-    }
-
-    @Override
-    public List<User> findAll() {
-        return jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "ORDER BY u.second_name");
-    }
-
-    @Override
-    public Set<User> findUsersByFlight(Flight flight) {
-        List<User> crew = jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "JOIN flight_users f ON u.user_id = f.user_id " +
-                        "WHERE f.flight_id = ?", flight.getId());
-        return new HashSet<User>(crew);
-    }
-
-    @Override
-    public List<User> findAllWorkingAirCrewMembers() {
-        return jdbcTemplate.findEntities(rowMapper,
-                "SELECT u.*, p.title, p.air_crew FROM users u " +
-                        "JOIN position p ON u.position_id = p.position_id " +
-                        "WHERE u.working = TRUE " +
-                        "AND p.air_crew = TRUE " +
-                        "ORDER BY u.second_name");
-    }
-
     @Override
     public int update(User user) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                //check version and updateWithRoles user if they match
+                return jdbcTemplate.update(connection, UPDATE,
+                        user.getFirstName(),
+                        user.getSecondName(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getEmail(),
+                        user.getPosition().getId(),
+                        user.isWorking(),
+                        user.getVersion() + 1,
+                        user.getId(),
+                        user.getVersion());
+            }
+        });
     }
-
-    private static final String UPDATE =
-            "UPDATE users SET " +
-                    "first_name = ?, " +
-                    "second_name = ?, " +
-                    "username = ?, " +
-                    "password = ?, " +
-                    "email = ?,   " +
-                    "position_id = ?,   " +
-                    "working = ?,   " +
-                    "version = ? " +
-                    "WHERE user_id = ? " +
-                    "AND version = ?";
-
-
-    private static final String DELETE_LINKS =
-            "DELETE FROM users_roles WHERE user_id = ?";
-
 
     @Override
     public Boolean updateWithRoles(User user) {
@@ -191,7 +186,7 @@ public class PostgresqlUserDao implements UserDao {
                 if (numberOfUpdatedRows != 1) {
                     return false;
                 }
-                jdbcTemplate.update(connection, DELETE_LINKS, user.getId());
+                jdbcTemplate.update(connection, DELETE_LINKS_TO_ROLES, user.getId());
 
                 List<Object[]> rows = new ArrayList<>();
                 if (user.getRoles() != null) {
@@ -207,6 +202,59 @@ public class PostgresqlUserDao implements UserDao {
 
     @Override
     public int delete(User user) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, DELETE,
+                        user.getId());
+            }
+        });
+    }
+
+    @Override
+    public int deleteCascade(User user) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+
+                jdbcTemplate.update(connection, DELETE_LINKS_TO_ROLES, user.getId());
+                jdbcTemplate.update(connection, DELETE_LINKS_TO_FLIGHTS, user.getId());
+
+                return jdbcTemplate.update(connection, DELETE,
+                        user.getId());
+            }
+        });
+    }
+
+    @Override
+    public User findByID(Long id) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_ID, id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_USERNAME, username);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_EMAIL, email);
+    }
+
+
+    @Override
+    public List<User> findAll() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_BY_ALL);
+    }
+
+    @Override
+    public Set<User> findUsersByFlight(Flight flight) {
+        List<User> crew = jdbcTemplate.findEntities(rowMapper, FIND_BY_FLIGHT, flight.getId());
+        return new HashSet<User>(crew);
+    }
+
+    @Override
+    public List<User> findAllWorkingAirCrewMembers() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL_WORKING_AIR_CREW_MEMBERS);
     }
 }

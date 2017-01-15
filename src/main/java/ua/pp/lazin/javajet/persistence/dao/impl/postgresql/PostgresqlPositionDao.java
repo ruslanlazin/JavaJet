@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.persistence.dao.impl.postgresql;
 
+import ua.pp.lazin.javajet.entity.Aircraft;
 import ua.pp.lazin.javajet.persistence.dao.PositionDao;
 import ua.pp.lazin.javajet.entity.Position;
 import ua.pp.lazin.javajet.persistence.jdbcutils.JdbcTemplate;
@@ -30,12 +31,28 @@ public class PostgresqlPositionDao implements PositionDao {
         }
     };
 
-
     private static final String CREATE =
             "INSERT INTO position (" +
                     "title, " +
                     "air_crew) VALUES(?, ?);";
 
+    private static final String UPDATE =
+            "UPDATE position SET " +
+                    "title = ?, " +
+                    "air_crew = ? " +
+                    "WHERE position_id= ?";
+
+    private static final String DELETE_LINKS =
+            "DELETE FROM users WHERE position_id = ?";
+
+    private static final String DELETE =
+            "DELETE FROM position WHERE position_id = ?";
+
+    private static final String FIND_BY_TITLE =
+            "SELECT * FROM position p WHERE p.title = ?";
+
+    private static final String FIND_ALL =
+            "SELECT * FROM position ORDER BY title";
 
     @Override
     public Long create(Position position) {
@@ -50,26 +67,50 @@ public class PostgresqlPositionDao implements PositionDao {
     }
 
     @Override
-    public Position findByTitle(String title) {
-        return jdbcTemplate.findEntity(rowMapper,
-                "SELECT * FROM position p " +
-                        "WHERE p.title = ?", title);
-    }
-
-    @Override
-    public List<Position> findAll() {
-        return jdbcTemplate.findEntities(rowMapper,
-                "SELECT * FROM position " +
-                        "ORDER BY title");
-    }
-
-    @Override
     public int update(Position position) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, UPDATE,
+                        position.getTitle(),
+                        position.getAirCrew(),
+                        position.getId());
+            }
+        });
     }
 
     @Override
     public int delete(Position position) {
-        return 0;
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+                return jdbcTemplate.update(connection, DELETE,
+                        position.getId());
+            }
+        });
+    }
+
+    @Override
+    public int deleteCascade(Position position) {
+        return transactionTemplate.execute(new TransactionCallback<Integer>() {
+            @Override
+            public Integer doInTransaction(Connection connection) {
+
+                jdbcTemplate.update(connection, DELETE_LINKS, position.getId());
+
+                return jdbcTemplate.update(connection, DELETE,
+                        position.getId());
+            }
+        });
+    }
+
+    @Override
+    public Position findByTitle(String title) {
+        return jdbcTemplate.findEntity(rowMapper, FIND_BY_TITLE, title);
+    }
+
+    @Override
+    public List<Position> findAll() {
+        return jdbcTemplate.findEntities(rowMapper, FIND_ALL);
     }
 }

@@ -11,11 +11,13 @@ import java.util.List;
 public interface AircraftDao {
     Long create(Aircraft aircraft);
 
-    User findById(Long id);
-
-    List<Aircraft> findAll();
-
     int update(Aircraft aircraft);
 
     int delete(Aircraft aircraft);
+
+    int deleteCascade(Aircraft aircraft);
+
+    Aircraft findById(Long id);
+
+    List<Aircraft> findAll();
 }
