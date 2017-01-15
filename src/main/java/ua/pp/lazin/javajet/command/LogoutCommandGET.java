@@ -26,7 +26,7 @@ public class LogoutCommandGET implements Command {
             logger.error("Logout fails", e);
         }
 
-        return "redirect:login";
+        return "redirect:/login";
     }
 }
 

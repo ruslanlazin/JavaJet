@@ -29,7 +29,7 @@ public class LoginCommandPOST implements Command {
 
             logger.info(username + " successfully authorized ");
             userService.cacheUserInSession(username, request.getSession());
-            return "redirect:common/";
+            return "redirect:/common/";
 
         } catch (ServletException e) {
             logger.info(username + " unsuccessfully tried to authorize");

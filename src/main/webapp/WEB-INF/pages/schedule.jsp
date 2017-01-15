@@ -10,10 +10,6 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-    <style>body {
-        background-image: url("<c:url value="/resources/images/javajet-tr.png"/>")
-    }</style>
-
 </head>
 
 <body>
@@ -35,7 +31,7 @@
             <div class="col-sm-1 col-sm-offset-10">
                 <a href="<c:url value="/admin/archive"/>"
                    class="btn btn-link " role="button">
-                    <fmt:message key="flights.button.archive"/>
+                    <fmt:message key="shared.archive"/>
                 </a>
             </div>
         </sec:authorize>

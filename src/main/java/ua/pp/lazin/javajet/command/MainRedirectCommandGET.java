@@ -10,7 +10,7 @@ public class MainRedirectCommandGET implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return "redirect:common/";
+        return "redirect:/common/";
     }
 }
 

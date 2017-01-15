@@ -61,7 +61,7 @@
             <div class="col-lg-1 col-lg-offset-7">
                 <a href="<c:url value="/dispatcher/employee/add"/>"
                    class="btn btn-default btn-info active" role="button">
-                    <fmt:message key="employees.button.add-employee"/>
+                    <fmt:message key="shared.add-employee"/>
                 </a>
             </div>
         </sec:authorize>
