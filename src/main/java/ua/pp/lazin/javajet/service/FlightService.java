@@ -7,21 +7,24 @@ import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
+import ua.pp.lazin.javajet.util.GoogleMapsTimezoneRetriever;
 import ua.pp.lazin.javajet.util.TimeZoneManager;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * @author Ruslan Lazin
  */
 public class FlightService {
-    private final static Logger logger = Logger.getLogger(FlightService.class);
-    private final static FlightDao flightDao = DaoFactoryCreator.getFactory().getFlightDao();
-    private final static UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
-    private final static AirportDao airportDao = DaoFactoryCreator.getFactory().getAirportDao();
-    private static FlightService INSTANCE = new FlightService();
+    private static final Logger logger = Logger.getLogger(FlightService.class);
+    private static final FlightDao flightDao = DaoFactoryCreator.getFactory().getFlightDao();
+    private static final UserDao userDao = DaoFactoryCreator.getFactory().getUserDao();
+    private static final AirportDao airportDao = DaoFactoryCreator.getFactory().getAirportDao();
+    private static final TimeZoneManager timeZoneManager = new TimeZoneManager(new GoogleMapsTimezoneRetriever());
+    private static final FlightService INSTANCE = new FlightService();
 
     private FlightService() {
     }
@@ -30,9 +33,9 @@ public class FlightService {
         return INSTANCE;
     }
 
-    public Flight create(Flight flight) {
-        flight.setDepartureTimezone(TimeZoneManager.getTimeZoneForFlight(flight, "SYNC"));
-
+    public Flight create(final Flight flight) {
+        TimeZone timeZone = timeZoneManager.getTimeZone(flight.getDeparture());
+        flight.setDepartureTimezone(timeZone.getID());
         Long id = flightDao.create(flight);
         flight.setId(id);
         return flight;
@@ -74,16 +77,11 @@ public class FlightService {
     }
 
     public boolean updateFlight(Flight flight) {
-
-        flight.setDepartureTimezone(TimeZoneManager.getTimeZoneForFlight(flight, "SYNC"));
+        TimeZone timeZone = timeZoneManager.getTimeZone(flight.getDeparture());
+        flight.setDepartureTimezone(timeZone.getID());
         int updatedRowsNumber = flightDao.update(flight);
-
-//        if (flight.getDepartureTimezone() == null) {     // TODO: 08.01.2017 think
-
         return updatedRowsNumber == 1;
-
     }
-
 
     public List<Flight> getAllUsersFlightsLaterThen(User user, Date date) {
         return flightDao.findAllByUserLaterThen(user, date);
