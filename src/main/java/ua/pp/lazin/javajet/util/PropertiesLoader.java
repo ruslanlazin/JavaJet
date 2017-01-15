@@ -14,7 +14,6 @@ public class PropertiesLoader {
     private static final Properties dbProperties;
     private static final Properties mappingGET;
     private static final Properties mappingPOST;
-    private static final Properties securityProperties;
 
     static {
         // Load Database properties
@@ -25,9 +24,6 @@ public class PropertiesLoader {
 
         // Load  application's POST paths
         mappingPOST = loadPropertiesFromFile("POSTMapping.properties");
-
-        // Load  application's security properties
-        securityProperties = loadPropertiesFromFile("POSTMapping.properties");
     }
 
     private PropertiesLoader() {
@@ -45,15 +41,11 @@ public class PropertiesLoader {
         return mappingPOST;
     }
 
-    public static Properties getSecurityProperties() {
-        return securityProperties;
-    }
-
 
     /*
     * Method loads properties from file to java.util.Properties INSTANCE
     */
-    private static Properties loadPropertiesFromFile(String filename) {
+    public static Properties loadPropertiesFromFile(String filename) {
 
         Properties properties = new Properties();
         try {

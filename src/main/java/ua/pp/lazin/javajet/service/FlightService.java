@@ -1,5 +1,6 @@
 package ua.pp.lazin.javajet.service;
 
+import com.google.maps.PendingResult;
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.persistence.dao.AirportDao;
 import ua.pp.lazin.javajet.persistence.dao.FlightDao;
@@ -7,8 +8,8 @@ import ua.pp.lazin.javajet.persistence.dao.UserDao;
 import ua.pp.lazin.javajet.entity.Flight;
 import ua.pp.lazin.javajet.entity.User;
 import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
-import ua.pp.lazin.javajet.util.GoogleMapsTimezoneRetriever;
-import ua.pp.lazin.javajet.util.TimeZoneManager;
+import ua.pp.lazin.javajet.util.timezone.GoogleMapsTimezoneRetriever;
+import ua.pp.lazin.javajet.util.timezone.TimeZoneManager;
 
 import java.util.Date;
 import java.util.List;
@@ -85,6 +86,33 @@ public class FlightService {
 
     public List<Flight> getAllUsersFlightsLaterThen(User user, Date date) {
         return flightDao.findAllByUserLaterThen(user, date);
+    }
+
+    private static void resolveTimezoneWhenWrite(Flight flight) {
+        PendingResult.Callback<TimeZone> timeZoneCallback = new PendingResult.Callback<TimeZone>() {
+            @Override
+            public void onResult(TimeZone result) {
+                logger.debug("TimeZone for Flight " + flight.getId() + ", Airport " +
+                        flight.getDeparture().getName() + " resolved. It's " +
+                        result.getID() + " Calling saving to db method");
+
+                Flight freshFlight = flightDao.findById(flight.getId());
+                freshFlight.setDepartureTimezone(result.getID());
+                int rowsUpdated = flightDao.update(freshFlight);
+                if (rowsUpdated == 1) {
+                    logger.debug("... Saved successfully");
+                } else {
+                    logger.debug("Concurrent modification of Flight " + flight.getId() + "detected");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                logger.error("Cannot resolve TimeZone for Flight " + flight, e);
+            }
+        };
+        GoogleMapsTimezoneRetriever resolver = new GoogleMapsTimezoneRetriever();
+        resolver.retrieveTimezoneWhenCall(flight.getDeparture(), timeZoneCallback);
     }
 }
 
