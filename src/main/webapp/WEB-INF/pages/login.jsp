@@ -36,7 +36,7 @@
 				</span>
             </font>
 
-            <form id="login-form" class="login-form" method="POST">
+            <form id="login-form" class="login-form" method="post" action="<c:url value="/login"/>">
                 <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
 
                 <%--TODO change patterns after alfa testingg--%>
