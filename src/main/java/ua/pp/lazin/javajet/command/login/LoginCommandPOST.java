@@ -28,7 +28,7 @@ public class LoginCommandPOST implements Command {
         try {
             request.login(username, password);
 
-            logger.info(username + " successfully authorized ");
+            logger.info(username + " successfully authorized from "+ request.getRemoteAddr());
             userService.cacheUserInSession(username, request.getSession());
             return "redirect:/common/";
 

@@ -1,7 +1,5 @@
 package ua.pp.lazin.javajet.entity;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 /**
  * The Position entity represents User's position in the company.
  *

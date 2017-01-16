@@ -5,7 +5,7 @@
 <%@ taglib prefix="lt" uri="http://lazin.pp.ua/localtime" %>
 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
-<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">
+<%--<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">--%>
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : 'en'}"
