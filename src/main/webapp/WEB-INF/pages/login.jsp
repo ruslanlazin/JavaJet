@@ -12,7 +12,6 @@
     <style>body {
         background-image: url("<c:url value="/resources/images/javajet.jpg"/>")
     }</style>
-
 </head>
 
 <body>
@@ -37,7 +36,7 @@
 				</span>
             </font>
 
-            <form id="login-form" class="login-form" method="post" action="<c:url value="/login"/>">
+            <form id="login-form" class="login-form" method="POST">
                 <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
 
                 <%--TODO change patterns after alfa testingg--%>
