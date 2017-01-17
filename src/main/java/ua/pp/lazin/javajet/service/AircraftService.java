@@ -33,4 +33,8 @@ public class AircraftService {
     public Long create(Aircraft aircraft) {
         return aircraftDao.create(aircraft);
     }
+
+    public Aircraft findById(Long aircraftId) {
+        return aircraftDao.findById(aircraftId);
+    }
 }

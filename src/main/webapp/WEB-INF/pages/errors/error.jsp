@@ -13,10 +13,10 @@
 </head>
 <body>
 <div class="container-fluid">
-<%@include file="templates/navbar.jsp" %>
+<%@include file="../templates/navbar.jsp" %>
 <div class="text-center"> We are sorry, but ${message}</div>
 </div>
 <%--Footer--%>
-<%@include file="templates/footer.html" %>
+<%@include file="../templates/footer.html" %>
 </body>
 </html>

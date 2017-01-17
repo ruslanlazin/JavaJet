@@ -21,7 +21,7 @@ import java.io.IOException;
 @WebServlet
 public class DispatcherServlet extends HttpServlet {
     private static final String ERROR_MESSAGE_ATTRIBUTE = "message";
-    private static final String ERROR_PAGE = "error";
+    private static final String ERROR_PAGE = "errors/error";
     private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/pages/";
     private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
     private static final String REDIRECT_PREFIX = "redirect:";

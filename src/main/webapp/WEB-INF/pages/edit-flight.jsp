@@ -61,6 +61,18 @@
             </c:if>
         </div>
 
+        <%--Errors messages--%>
+        <div class="row">
+            <c:if test="${not empty requestScope.errors}">
+                <c:forEach var="error" items="${errors.allErrors}">
+                    <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
+                        <fmt:message key="${error.bundleKey}"/>
+                         ( ${error.basicMessage} )
+                    </div>
+                </c:forEach>
+            </c:if>
+        </div>
+
         <%--Flight form--%>
         <form class="form-horizontal" method="POST">
             <input type="hidden" name="flightId" value="${flight.id}"/>

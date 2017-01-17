@@ -7,6 +7,8 @@ import ua.pp.lazin.javajet.service.AircraftService;
 import ua.pp.lazin.javajet.service.AirportService;
 import ua.pp.lazin.javajet.service.FlightService;
 import ua.pp.lazin.javajet.util.EntityParser;
+import ua.pp.lazin.javajet.validation.Errors;
+import ua.pp.lazin.javajet.validation.ValidationManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,10 +32,22 @@ public class EditFlightCommandPOST implements Command {
         Flight flight = EntityParser.parseFlightWithAirports(request);
         flight.setDeparture(airportService.findByCode(flight.getDeparture().getIataCode()));
         flight.setDestination(airportService.findByCode(flight.getDestination().getIataCode()));
+        flight.setAircraft(aircraftService.findById(flight.getAircraft().getId()));
 
-        // TODO: 29.12.2016 validate
 
-        // IF Flight was just entered
+        // Validating flight for matching business rules. Returns to page if
+        // they are don't match, and show list of errors.
+        ValidationManager validationManager = new ValidationManager();
+        Errors errors = validationManager.validate(flight);
+        if (errors.hasErrors()) {
+            request.setAttribute("errors", errors);
+            request.setAttribute(FLIGHT_ATTRIBUTE, flight);
+            request.setAttribute(AIRCRAFTS_ATTRIBUTE, aircraftService.findAll());
+            return "edit-flight";
+        }
+
+
+        // IF validation OK, and Flight was just entered
         if (flight.getId() == null) {
             flight = flightService.create(flight);
             request.setAttribute(KEY_SUCCESS, true);
