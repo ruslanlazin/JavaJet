@@ -35,10 +35,10 @@
         <%--Header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="flight.header"/> ${flight.id}
+                <h4><fmt:message key="flight.header"/> ${requestScope.flight.id}
                     <sec:authorize role="ROLE_ADMIN">
                         <form action="<c:url value="/admin/flight/edit"/>">
-                            <input type="hidden" name="flightId" value="${flight.id}">
+                            <input type="hidden" name="flightId" value="${requestScope.flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
                                    value="<fmt:message key="shared.edit"/>">
                         </form>
@@ -56,7 +56,7 @@
                 <h4><fmt:message key="shared.crew-assignment"/>
                     <sec:authorize role="ROLE_DISPATCHER">
                         <form action="<c:url value="/dispatcher/crew/edit"/>">
-                            <input type="hidden" name="flightId" value="${flight.id}">
+                            <input type="hidden" name="flightId" value="${requestScope.flight.id}">
                             <input type="submit" class="btn btn-xs  btn-link"
                                    value="<fmt:message key="shared.edit"/>">
                         </form>

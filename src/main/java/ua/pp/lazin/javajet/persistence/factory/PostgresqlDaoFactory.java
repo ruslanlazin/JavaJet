@@ -4,6 +4,8 @@ import ua.pp.lazin.javajet.persistence.dao.*;
 import ua.pp.lazin.javajet.persistence.dao.impl.postgresql.*;
 
 /**
+ * The type Postgresql dao factory.
+ *
  * @author Ruslan Lazin
  */
 class PostgresqlDaoFactory implements DaoFactory {

@@ -18,7 +18,7 @@
     <br>
     Try to use other account <a href="<c:url value="/logout"/>">Logout</a>
     <br>
-    Or go to the main page <a href="<c:url value="/"/>">Main</a>
+    Or go to the main page <a href="<c:url value="/common/"/>">Main</a>
 </div>
 </div>
 <%--Footer--%>

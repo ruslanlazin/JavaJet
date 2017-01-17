@@ -2,13 +2,14 @@ package ua.pp.lazin.javajet.util;
 
 import org.apache.log4j.Logger;
 import ua.pp.lazin.javajet.entity.*;
-import ua.pp.lazin.javajet.service.AirportService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * The Entity parser parse Entities from request.
+ *
  * @author Ruslan Lazin
  */
 public class EntityParser {
@@ -38,6 +39,8 @@ public class EntityParser {
     }
 
     /**
+     * Parse user with roles user.
+     *
      * @param request to parse
      * @return User entity. All fields absent in the request will be null
      */
@@ -68,6 +71,8 @@ public class EntityParser {
     }
 
     /**
+     * Parse flight with airports.
+     *
      * @param request to parse
      * @return Flight entity. All fields absent in the request will be null
      */

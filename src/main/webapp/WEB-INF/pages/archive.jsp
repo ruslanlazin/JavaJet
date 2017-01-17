@@ -10,13 +10,13 @@
     <title>JavaJet</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet"/>
-
 </head>
 
 <body>
 <div class="container-fluid">
-    <%--<c:import url="navbar.jsp"/>--%>
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
+    <%--Page context--%>
     <div class="row">
         <div class="col-sm-2 col-sm-offset-3">
             <h4>
@@ -24,6 +24,7 @@
             </h4>
         </div>
     </div>
+    <%--Table header--%>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             <table class="table table-hover">
@@ -38,8 +39,10 @@
                     <th><fmt:message key="shared.aircraft.number"/></th>
                 </tr>
                 </thead>
+
+                <%--Table rows--%>
                 <tbody>
-                <c:forEach items="${flights}" var="flight">
+                <c:forEach items="${requestScope.flights}" var="flight">
                     <tr>
                         <td>${flight.id}</td>
                         <td><fmt:formatDate value="${flight.departureTime}"
@@ -65,8 +68,8 @@
     </div>
     <br>
 </div>
+
 <%--Footer--%>
 <%@include file="templates/footer.html" %>
 </body>
-
 </html>

@@ -5,10 +5,10 @@
 <%@ taglib prefix="lt" uri="http://lazin.pp.ua/localtime" %>
 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>
-<%--<link rel="icon" type="image/png" href="<c:url value="/resources/images/favicon.ico" />">--%>
 
+<%--Language selector init --%>
 <c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : 'en'}"
+       value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="i18n.messages"/>
@@ -34,12 +34,13 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
+                <%--Language selector--%>
                 <form class="form-inline float-xs-right">
                     <c:if test="${not empty requestScope.flight}">
-                        <input type="hidden" name="flightId" value="${flight.id}"/>
+                        <input type="hidden" name="flightId" value="${requestScope.flight.id}"/>
                     </c:if>
                     <c:if test="${not empty requestScope.employee}">
-                        <input type="hidden" name="userId" value="${employee.id}"/>
+                        <input type="hidden" name="userId" value="${requestScope.employee.id}"/>
                     </c:if>
                     <select id="lang" name="language" onchange="submit()">
                         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Jdbc template.
+ * The Jdbc template encapsulates all repeated code in Dao.
  *
  * @param <T> the type parameter
  * @author Ruslan Lazin

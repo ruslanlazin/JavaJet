@@ -11,9 +11,10 @@
 </head>
 
 <body>
-<%--<c:import url="navbar.jsp"/>--%>
+<%--Navbar. Also contains shared Locale Init Section--%>
 <div class="container-fluid">
     <%@include file="templates/navbar.jsp" %>
+
     <%--Page context--%>
     <div class="container">
 
@@ -21,7 +22,7 @@
         <div class="row">
             <div class="col-sm-offset-2 col-sm-4">
                 <c:choose>
-                    <c:when test="${editMode}">
+                    <c:when test="${requestScope.editMode}">
                         <h4><fmt:message key="edit-employee.header"/></h4>
                     </c:when>
                     <c:otherwise>
@@ -33,10 +34,10 @@
 
         <%--Success message--%>
         <div class="row">
-            <c:if test="${success}">
+            <c:if test="${requestScope.success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
                     <c:choose>
-                        <c:when test="${editMode}">
+                        <c:when test="${requestScope.editMode}">
                             <fmt:message key="shared.save.success"/>
                         </c:when>
                         <c:otherwise>
@@ -49,7 +50,7 @@
 
         <%--Concurrent modification message--%>
         <div class="row">
-            <c:if test="${concurrent}">
+            <c:if test="${requestScope.concurrent}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
                     <fmt:message key="shared.concurrent"/>
                 </div>
@@ -58,8 +59,8 @@
 
         <%--Form--%>
         <form class="form-horizontal" method="POST">
-            <input type="hidden" name="userId" value="${employee.id}">
-            <input type="hidden" name="version" value="${employee.version}">
+            <input type="hidden" name="userId" value="${requestScope.employee.id}">
+            <input type="hidden" name="version" value="${requestScope.employee.version}">
 
             <%--Username field--%>
             <div class="form-group">
@@ -67,9 +68,9 @@
                     <fmt:message key="shared.username"/>:</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="username" name="username"
-                           value="${employee.username}" required>
+                           value="${requestScope.employee.username}" required>
                 </div>
-                <c:if test="${wrongusername}">
+                <c:if test="${requestScope.wrongusername}">
                     <span class="text-danger">
                         <fmt:message key="add-employee.wrong.username"/>
                     </span>
@@ -83,7 +84,7 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="password" class="form-control" id="pwd" name="password"
-                           value="${employee.password}" required>
+                           value="${requestScope.employee.password}" required>
                 </div>
             </div>
 
@@ -94,7 +95,7 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="firstname" name="firstname"
-                           value="${employee.firstName}" required>
+                           value="${requestScope.employee.firstName}" required>
                 </div>
             </div>
 
@@ -105,7 +106,7 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="secondname" name="secondname"
-                           value="${employee.secondName}" required>
+                           value="${requestScope.employee.secondName}" required>
                 </div>
             </div>
 
@@ -116,9 +117,9 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="email" class="form-control" id="email" name="email"
-                           value="${employee.email}" autocomplete="off" required>
+                           value="${requestScope.employee.email}" autocomplete="off" required>
                 </div>
-                <c:if test="${wrongemail}">
+                <c:if test="${requestScope.wrongemail}">
                     <span class="text-danger">
                         <fmt:message key="add-employee.wrong.email"/>
                     </span>
@@ -132,9 +133,9 @@
                 </label>
                 <div class="col-sm-4">
                     <select class="form-control" id="position" name="position">
-                        <c:forEach var="position" items="${positions}">
+                        <c:forEach var="position" items="${requestScope.positions}">
                             <option value="${position.id}"
-                                    <c:if test="${position.id == employee.position.id}">
+                                    <c:if test="${position.id == requestScope.employee.position.id}">
                                         selected="selected"
                                     </c:if>
                             >${position.title}</option>
@@ -150,9 +151,9 @@
                 </label>
                 <div class="col-sm-4">
                     <select multiple required class="form-control" id="roles" name="userRoles">
-                        <c:forEach var="role" items="${roles}">
+                        <c:forEach var="role" items="${requestScope.roles}">
                             <option value="${role.id}"
-                                    <c:forEach var="userRole" items="${employee.roles}">
+                                    <c:forEach var="userRole" items="${requestScope.employee.roles}">
                                         <c:if test="${role.id == userRole.id}">
                                             selected="selected"
                                         </c:if>
@@ -167,7 +168,7 @@
             <div class="checkbox col-sm-2 col-sm-offset-2">
                 <label>
                     <input type="checkbox" name="working" value="true"
-                    <c:if test="${employee.working}">
+                    <c:if test="${requestScope.employee.working}">
                            checked="checked"
                     </c:if> >
                     <fmt:message key="shared.working"/>

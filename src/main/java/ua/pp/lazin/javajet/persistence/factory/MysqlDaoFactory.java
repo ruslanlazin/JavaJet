@@ -4,10 +4,15 @@ import ua.pp.lazin.javajet.persistence.dao.*;
 import ua.pp.lazin.javajet.persistence.dao.impl.mysql.*;
 
 /**
+ * The type Mysql dao factory.
+ *
  * @author Ruslan Lazin
  */
-public class MysqlDaoFactory implements DaoFactory {
+class MysqlDaoFactory implements DaoFactory {
 
+    /**
+     * Instantiates a new Mysql dao factory.
+     */
     MysqlDaoFactory() {
     }
 

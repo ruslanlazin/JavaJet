@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.TimeZone;
 
 /**
+ * The Flight service.
+ *
  * @author Ruslan Lazin
  */
 public class FlightService {
@@ -30,10 +32,21 @@ public class FlightService {
     private FlightService() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static FlightService getINSTANCE() {
         return INSTANCE;
     }
 
+    /**
+     * Create flight.
+     *
+     * @param flight the flight
+     * @return the flight
+     */
     public Flight create(final Flight flight) {
         TimeZone timeZone = timeZoneManager.getTimeZone(flight.getDeparture());
         flight.setDepartureTimezone(timeZone.getID());
@@ -42,22 +55,51 @@ public class FlightService {
         return flight;
     }
 
+    /**
+     * Find all flights.
+     *
+     * @return the list of Flight
+     */
     public List<Flight> findAll() {
         return flightDao.findAllOrderByDepartureTimeAsc();
     }
 
+    /**
+     * Find all flihts later then some date.
+     *
+     * @param date the date
+     * @return the list of Flight
+     */
     public List<Flight> findAllLaterThen(Date date) {
         return flightDao.findAllLaterThen(date);
     }
 
+    /**
+     * Find all before then list.
+     *
+     * @param date the date
+     * @return the list of Flight
+     */
     public List<Flight> findAllBeforeThen(Date date) {
         return flightDao.findAllBeforeThen(date);
     }
 
+    /**
+     * Find flight by id .
+     *
+     * @param flightId the flight id
+     * @return the flight
+     */
     public Flight findById(Long flightId) {
         return flightDao.findById(flightId);
     }
 
+    /**
+     * Find flight by id with crew .
+     *
+     * @param flightId the flight id
+     * @return the flight
+     */
     public Flight findByIdWithCrew(Long flightId) {
         Flight flight = flightDao.findById(flightId);
         Set<User> crew = userDao.findUsersByFlight(flight);
@@ -65,6 +107,12 @@ public class FlightService {
         return flight;
     }
 
+    /**
+     * Find flight by id with crew and airports .
+     *
+     * @param flightId the flight id
+     * @return the flight
+     */
     public Flight findByIdWithCrewAirports(Long flightId) {
         Flight flight = flightDao.findById(flightId);
         flight.setCrew(userDao.findUsersByFlight(flight));
@@ -73,10 +121,24 @@ public class FlightService {
         return flight;
     }
 
+    /**
+     * Update flight and crew boolean.
+     * Make update only if version of instance matches version in db.
+     *
+     * @param flight the flight
+     * @return the boolean  - true if update was successful
+     */
     public boolean updateFlightAndCrew(Flight flight) {
         return flightDao.updateWithCrew(flight);
     }
 
+    /**
+     * Update flight boolean.
+     * Make update only if version of instance matches version in db.
+     *
+     * @param flight the flight
+     * @return the boolean  - true if update was successful
+     */
     public boolean updateFlight(Flight flight) {
         TimeZone timeZone = timeZoneManager.getTimeZone(flight.getDeparture());
         flight.setDepartureTimezone(timeZone.getID());
@@ -84,10 +146,23 @@ public class FlightService {
         return updatedRowsNumber == 1;
     }
 
+    /**
+     * Gets all flights where that user was/is in crew  later then.
+     *
+     * @param user the user
+     * @param date the date
+     * @return the all users flights later then
+     */
     public List<Flight> getAllUsersFlightsLaterThen(User user, Date date) {
         return flightDao.findAllByUserLaterThen(user, date);
     }
 
+    /**
+     * Method for asynchronous resolve TimeZone for flight. Write resolved TimeZone
+     * value directly in db.
+     *
+     * @param flight for resolve its departure TimeZone
+     */
     private static void resolveTimezoneWhenWrite(Flight flight) {
         PendingResult.Callback<TimeZone> timeZoneCallback = new PendingResult.Callback<TimeZone>() {
             @Override

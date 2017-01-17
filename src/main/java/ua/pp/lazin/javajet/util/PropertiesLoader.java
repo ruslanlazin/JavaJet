@@ -7,6 +7,8 @@ import java.io.UncheckedIOException;
 import java.util.Properties;
 
 /**
+ * The type Properties loader.
+ *
  * @author Ruslan Lazin
  */
 public class PropertiesLoader {
@@ -16,33 +18,54 @@ public class PropertiesLoader {
     private static final Properties mappingPOST;
 
     static {
-        // Load Database properties
+        // Load Database properties and cache it
         dbProperties = loadPropertiesFromFile("database.properties");
 
-        // Load  application's GET paths
+        // Load  application's GET paths and cache it
         mappingGET = loadPropertiesFromFile("GETMapping.properties");
 
-        // Load  application's POST paths
+        // Load  application's POST paths and cache it
         mappingPOST = loadPropertiesFromFile("POSTMapping.properties");
     }
 
     private PropertiesLoader() {
     }
 
+    /**
+     * Gets db properties.
+     *
+     * @return the db properties
+     */
     public static Properties getDBProperties() {
         return dbProperties;
     }
 
+    /**
+     * Gets mapping get.
+     *
+     * @return the mapping get
+     */
     public static Properties getMappingGET() {
         return mappingGET;
     }
 
+    /**
+     * Gets mapping post.
+     *
+     * @return the mapping post
+     */
     public static Properties getMappingPOST() {
         return mappingPOST;
     }
 
 
-    /*
+    /**
+     * Load properties from file .properties.
+     *
+     * @param filename the filename
+     * @return the properties
+     */
+/*
     * Method loads properties from file to java.util.Properties INSTANCE
     */
     public static Properties loadPropertiesFromFile(String filename) {

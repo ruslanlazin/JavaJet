@@ -21,6 +21,7 @@ public class EditFlightCommandPOST implements Command {
     private static final FlightService flightService = FlightService.getINSTANCE();
     private static final AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final AirportService airportService = AirportService.getINSTANCE();
+    private static final ValidationManager validationManager = ValidationManager.getINSTANCE();
     private static final String KEY_SUCCESS = "success";
     private static final String KEY_CONCURRENT_MODIFICATION = "concurrent";
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
@@ -37,7 +38,6 @@ public class EditFlightCommandPOST implements Command {
 
         // Validating flight for matching business rules. Returns to page if
         // they are don't match, and show list of errors.
-        ValidationManager validationManager = new ValidationManager();
         Errors errors = validationManager.validate(flight);
         if (errors.hasErrors()) {
             request.setAttribute("errors", errors);

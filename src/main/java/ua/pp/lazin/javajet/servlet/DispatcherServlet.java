@@ -16,7 +16,7 @@ import java.io.IOException;
  * It's only servlet on the project.
  *
  * @author Ruslan Lazin
- * @see HttpServlet#HttpServlet() HttpServlet#HttpServlet()
+ * @see HttpServlet#HttpServlet() HttpServlet#HttpServlet()HttpServlet#HttpServlet()
  */
 @WebServlet
 public class DispatcherServlet extends HttpServlet {
@@ -93,6 +93,15 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * Send redirect to browser
+     * @param target path to redirect
+     * @param request request
+     * @param response response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void redirect(String target, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         target = target.split(REDIRECT_DELIMITER)[1];
         try {
@@ -105,6 +114,14 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @param target name of view page
+     * @param request request
+     * @param response response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void forward(String target, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         target = String.format(VIEW_RESOLVER_PREFIX + "%s" + VIEW_RESOLVER_SUFFIX, target);
         try {

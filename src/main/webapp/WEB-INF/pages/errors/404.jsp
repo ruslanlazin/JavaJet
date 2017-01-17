@@ -16,7 +16,7 @@
 <%@include file="/WEB-INF/pages/templates/navbar.jsp" %>
 <div class="text-center"> We are sorry, but Requested path doesn't exist.
     <br>
-    Main page <a href="<c:url value="/"/>">Main</a>
+    Main page <a href="<c:url value="/common/"/>">Main</a>
 </div>
 </div>
 <%--Footer--%>

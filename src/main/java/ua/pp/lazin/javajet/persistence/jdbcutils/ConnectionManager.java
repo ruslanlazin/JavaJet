@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
+ * The type Connection manager. Reads db.properties and creates datasource
+ * depends of its parameters. Load properties only once - when starts.
+ *
  * @author Ruslan Lazin
  */
 public class ConnectionManager {
@@ -52,10 +55,20 @@ public class ConnectionManager {
     }
 
 
+    /**
+     * Gets data source.
+     *
+     * @return the data source
+     */
     public static DataSource getDataSource() {
         return dataSource;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public static Connection getConnection() {
         try {
             return dataSource.getConnection();

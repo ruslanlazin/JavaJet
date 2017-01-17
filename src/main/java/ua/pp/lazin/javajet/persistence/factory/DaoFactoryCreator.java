@@ -6,6 +6,8 @@ import ua.pp.lazin.javajet.util.PropertiesLoader;
 import java.util.Properties;
 
 /**
+ * The Daofactory creator.
+ *
  * @author Ruslan Lazin
  */
 public class DaoFactoryCreator {
@@ -20,6 +22,11 @@ public class DaoFactoryCreator {
     private DaoFactoryCreator() {
     }
 
+    /**
+     * Gets factory.
+     *
+     * @return the factory
+     */
     public static synchronized DaoFactory getFactory() {
         if (daoFactory == null) {
             daoFactory = createFactory();
@@ -27,6 +34,10 @@ public class DaoFactoryCreator {
         return daoFactory;
     }
 
+    /**
+     *
+     * @return DaoFactory of type selected in db.properties
+     */
     private static DaoFactory createFactory() {
         Properties properties = PropertiesLoader.getDBProperties();
         String dbName = properties.getProperty(DB_PROPERTY).toLowerCase();

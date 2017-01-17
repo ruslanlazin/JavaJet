@@ -14,7 +14,7 @@ public class UserPrincipal implements Principal {
     /**
      * Initializer
      *
-     * @param name
+     * @param name meaning User's username
      */
     public UserPrincipal(String name) {
         super();
@@ -24,7 +24,7 @@ public class UserPrincipal implements Principal {
     /**
      * Set the name of the user
      *
-     * @param name
+     * @param name meaning User's username
      */
     public void setName(String name) {
         this.name = name;
@@ -33,7 +33,7 @@ public class UserPrincipal implements Principal {
     /**
      * Get the name of the user
      *
-     * @return
+     * @return Name meaning User's username
      */
     @Override
     public String getName() {

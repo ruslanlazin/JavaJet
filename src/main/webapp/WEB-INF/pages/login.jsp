@@ -16,6 +16,7 @@
 
 <body>
 <div class="container-fluid">
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
 
     <%--TODO remove after alfa testing--%>
@@ -30,14 +31,12 @@
     <div class="login-page">
         <div class="form">
 
-            <font color="red">
-				<span style="align: center">
-                        <c:out value="${message}"/>
-				</span>
-            </font>
+				<span style="align-content: center">
+                        <c:out value="${requestScope.message}"/>
+                </span>
 
             <form id="login-form" class="login-form" method="post" action="<c:url value="/login"/>">
-                <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
+                <c:if test="${requestScope.wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
 
                 <%--TODO change patterns after alfa testingg--%>
                 <input type="text" id="login" pattern="[\w]{1,}" required

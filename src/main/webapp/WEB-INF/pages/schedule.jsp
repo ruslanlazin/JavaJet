@@ -14,12 +14,14 @@
 
 <body>
 <div class="container-fluid">
-    <%--<c:import url="navbar.jsp"/>--%>
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
+
+    <%--Page context--%>
     <div class="row">
         <div class="col-sm-2 col-sm-offset-3">
             <c:choose>
-                <c:when test="${myMode}">
+                <c:when test="${requestScope.myMode}">
                     <h4><fmt:message key="flights.my.header"/></h4>
                 </c:when>
                 <c:otherwise>
@@ -51,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${flights}" var="flight">
+                <c:forEach items="${requestScope.flights}" var="flight">
                     <tr>
                         <td>${flight.id}</td>
                         <td><fmt:formatDate value="${flight.departureTime}"

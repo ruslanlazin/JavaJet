@@ -12,7 +12,7 @@
 
 <body>
 <div class="container-fluid">
-    <%--<c:import url="navbar.jsp"/>--%>
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
 
     <div class="row">
@@ -29,7 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${employees}" var="employee">
+                <c:forEach items="${requestScope.employees}" var="employee">
                     <tr>
                         <td>${employee.id}</td>
                         <td>${employee.firstName}</td>

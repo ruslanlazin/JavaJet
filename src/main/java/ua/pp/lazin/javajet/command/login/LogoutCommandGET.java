@@ -21,7 +21,7 @@ public class LogoutCommandGET implements Command {
         logger.info(request.getUserPrincipal().getName() + " is logging out");
         try {
             request.logout();
-            userService.removeCurentUserFromSession(request.getSession());
+            userService.removeCurrentUserFromSession(request.getSession());
         } catch (ServletException e) {
             logger.error("Logout fails", e);
         }

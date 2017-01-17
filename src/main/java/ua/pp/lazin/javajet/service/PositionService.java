@@ -7,6 +7,8 @@ import ua.pp.lazin.javajet.persistence.factory.DaoFactoryCreator;
 import java.util.List;
 
 /**
+ * The type Position service.
+ *
  * @author Ruslan Lazin
  */
 public class PositionService {
@@ -16,19 +18,41 @@ public class PositionService {
     private PositionService() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static PositionService getINSTANCE() {
         return INSTANCE;
     }
 
-    public List<Position> findAll() {
-        return positionDao.findAll();
+    /**
+     * Create.
+     *
+     * @param position the position
+     * @return the long - Position id
+     */
+    public Long create(Position position) {
+        return positionDao.create(position);
     }
 
+    /**
+     * Find position  by title
+     *
+     * @param title the title
+     * @return the Position
+     */
     public Position findByTitle(String title) {
         return positionDao.findByTitle(title);
     }
 
-    public Long create(Position position) {
-        return positionDao.create(position);
+    /**
+     * Find all.
+     *
+     * @return the list of Position
+     */
+    public List<Position> findAll() {
+        return positionDao.findAll();
     }
 }

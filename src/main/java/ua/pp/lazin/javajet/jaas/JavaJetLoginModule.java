@@ -17,6 +17,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Java jet login module.
+ *
+ * @author Ruslan Lazin
+ * @see LoginModule
+ */
 public class JavaJetLoginModule implements LoginModule {
 
     private static final Logger logger = Logger.getLogger(JavaJetLoginModule.class);
@@ -30,6 +36,9 @@ public class JavaJetLoginModule implements LoginModule {
     private boolean commitSucceeded = false;
 
 
+    /**
+     * Instantiates a new Java jet login module.
+     */
     public JavaJetLoginModule() {
         super();
     }
@@ -93,7 +102,7 @@ public class JavaJetLoginModule implements LoginModule {
      * @return true if commit was successful
      */
     @Override
-    public boolean commit() throws LoginException{
+    public boolean commit() throws LoginException {
 
         if (!isAuthenticated) {
             cleanTemporaryVariables();
@@ -115,7 +124,6 @@ public class JavaJetLoginModule implements LoginModule {
 
     /**
      * Abort authentication and clean temporary values.
-     *
      */
     @Override
     public boolean abort() throws LoginException {

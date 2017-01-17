@@ -19,7 +19,7 @@ author Ruslan Lazin
                 <fmt:message key="shared.time"/>:
             </td>
             <td class="col-sm-4">
-                <fmt:formatDate value="${flight.departureTime}"
+                <fmt:formatDate value="${requestScope.flight.departureTime}"
                                 pattern="dd-MMM-yyyy HH:mm" timeZone="UTC"/>
             </td>
         </tr>
@@ -30,8 +30,8 @@ author Ruslan Lazin
                 <fmt:message key="shared.localtime"/>:
             </td>
             <td class="col-sm-4">
-                <lt:localTime value="${flight.departureTime}" pattern="dd-MMM-yyyy HH:mm"
-                              timeZone="${flight.departureTimezone}" locale="${language}"/>
+                <lt:localTime value="${requestScope.flight.departureTime}" pattern="dd-MMM-yyyy HH:mm"
+                              timeZone="${requestScope.flight.departureTimezone}" locale="${language}"/>
             </td>
         </tr>
 
@@ -41,15 +41,15 @@ author Ruslan Lazin
                 <fmt:message key="shared.from"/>:
             </td>
             <td class="col-sm-4">
-                <b>${flight.departure.iataCode}</b><br>
-                ${flight.departure.name} <fmt:message key="shared.airport"></fmt:message>,
-                ${flight.departure.city} ,
-                ${flight.departure.country}<br>
+                <b>${requestScope.flight.departure.iataCode}</b><br>
+                ${requestScope.flight.departure.name} <fmt:message key="shared.airport"/>,
+                ${requestScope.flight.departure.city} ,
+                ${requestScope.flight.departure.country}<br>
                 GPS coordinates: <br>
-                Latitude: ${flight.departure.latitude}&deg;,
-                Longitude: ${flight.departure.longitude}&deg;
-                <input type="hidden" id="depart_latitude" value="${flight.departure.latitude}">
-                <input type="hidden" id="depart_longitude" value="${flight.departure.longitude}">
+                Latitude: ${requestScope.flight.departure.latitude}&deg;,
+                Longitude: ${requestScope.flight.departure.longitude}&deg;
+                <input type="hidden" id="depart_latitude" value="${requestScope.flight.departure.latitude}">
+                <input type="hidden" id="depart_longitude" value="${requestScope.flight.departure.longitude}">
 
             </td>
         </tr>
@@ -60,15 +60,15 @@ author Ruslan Lazin
                 <fmt:message key="shared.to"/>:
             </td>
             <td class="col-sm-4">
-                <b>${flight.destination.iataCode}</b><br>
-                ${flight.destination.name} <fmt:message key="shared.airport"></fmt:message>,
-                ${flight.destination.city} ,
-                ${flight.destination.country}<br>
+                <b>${requestScope.flight.destination.iataCode}</b><br>
+                ${requestScope.flight.destination.name} <fmt:message key="shared.airport"/>,
+                ${requestScope.flight.destination.city} ,
+                ${requestScope.flight.destination.country}<br>
                 GPS coordinates: <br>
-                Latitude: ${flight.destination.latitude}&deg;,
-                Longitude: ${flight.destination.longitude}&deg;
-                <input type="hidden" id="dest_latitude" value="${flight.destination.latitude}">
-                <input type="hidden" id="dest_longitude" value="${flight.destination.longitude}">
+                Latitude: ${requestScope.flight.destination.latitude}&deg;,
+                Longitude: ${requestScope.flight.destination.longitude}&deg;
+                <input type="hidden" id="dest_latitude" value="${requestScope.flight.destination.latitude}">
+                <input type="hidden" id="dest_longitude" value="${requestScope.flight.destination.longitude}">
             </td>
         </tr>
 
@@ -78,7 +78,7 @@ author Ruslan Lazin
                 <fmt:message key="shared.aircraft"/>:
             </td>
             <td class="col-sm-4">
-                ${flight.aircraft.regNumber} (${flight.aircraft.model})
+                ${requestScope.flight.aircraft.regNumber} (${requestScope.flight.aircraft.model})
             </td>
         </tr>
 

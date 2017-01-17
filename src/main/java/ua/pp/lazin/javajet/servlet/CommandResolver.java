@@ -5,6 +5,7 @@ import ua.pp.lazin.javajet.command.Command;
 import ua.pp.lazin.javajet.util.PropertiesLoader;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -63,6 +64,6 @@ class CommandResolver {
                 logger.error("Cannot create instance of " + className, e);
             }
         }
-        return mapping;
+        return Collections.unmodifiableMap(mapping);
     }
 }

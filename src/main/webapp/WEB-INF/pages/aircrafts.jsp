@@ -13,8 +13,10 @@
 
 <body>
 <div class="container-fluid">
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
 
+    <%--Page context--%>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-1">
             <table class="table table-hover">
@@ -26,7 +28,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="employee" items="${aircrafts}">
+                <%--View existing aircrafts section--%>
+                <c:forEach var="employee" items="${requestScope.aircrafts}">
                     <form method="POST">
                         <tr>
                             <td>
@@ -61,6 +64,7 @@
                         </tr>
                     </form>
                 </c:forEach>
+                <%--Add Aircraft section--%>
                 <sec:authorize role="ROLE_ADMIN">
                     <form method="POST">
                         <tr>

@@ -3,9 +3,11 @@ package ua.pp.lazin.javajet.validation;
 import ua.pp.lazin.javajet.entity.Flight;
 
 /**
+ * The Airports present validator check if flight's airports present in our db
+ *
  * @author Ruslan Lazin
  */
-public class AirportsPresentValidator extends AbstractValidator<Flight> {
+class AirportsPresentValidator extends AbstractValidator<Flight> {
 
     @Override
     public Errors validate(Flight flight, Errors errors) {

@@ -12,7 +12,7 @@
 
 <body>
 <div class="container-fluid">
-    <%--<c:import url="navbar.jsp"/>--%>
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
 
     <%--Page context--%>
@@ -30,7 +30,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="role" items="${roles}">
+                    <c:forEach var="role" items="${requestScope.roles}">
                         <tr>
                             <td> ${role.id} </td>
                             <td> ${role.title} </td>
@@ -67,7 +67,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="position" items="${positions}">
+                    <c:forEach var="position" items="${requestScope.positions}">
                         <tr>
                             <td> ${position.id} </td>
                             <td> ${position.title} </td>

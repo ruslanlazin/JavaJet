@@ -12,7 +12,7 @@ public class RolePrincipal implements Principal {
     /**
      * Initializer
      *
-     * @param name
+     * @param name meaning Role title
      */
     public RolePrincipal(String name) {
         super();
@@ -22,7 +22,7 @@ public class RolePrincipal implements Principal {
     /**
      * Set the role name
      *
-     * @param name
+     * @param name meaning Role title
      */
     public void setName(String name) {
         this.name = name;
@@ -31,7 +31,7 @@ public class RolePrincipal implements Principal {
     /**
      * Get the role name
      *
-     * @return
+     * @return Name meaning Role title
      */
     @Override
     public String getName() {

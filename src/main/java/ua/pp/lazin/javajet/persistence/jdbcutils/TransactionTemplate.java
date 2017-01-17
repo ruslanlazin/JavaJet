@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * The Transaction template encapsulates all repeated code
+ * for starting and committing transactions
+ *
  * @author Ruslan Lazin
  */
 public class TransactionTemplate {
@@ -20,11 +23,23 @@ public class TransactionTemplate {
     private TransactionTemplate() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static TransactionTemplate getINSTANCE() {
         return INSTANCE;
     }
 
 
+    /**
+     * Execute
+     *
+     * @param <T>    the type parameter
+     * @param action the action
+     * @return the t
+     */
     public <T> T execute(TransactionCallback<T> action) {
         Connection txConnection = ConnectionManager.getConnection();
 

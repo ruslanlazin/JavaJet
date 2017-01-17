@@ -25,7 +25,7 @@
 
     <!-- Values passed to javascript -->
     <input type="hidden" id="departureTime" value="<fmt:formatDate
-    pattern="yyyy-MM-dd'T'HH:mm" timeZone="UTC" value="${flight.departureTime}"/>"/>
+    pattern="yyyy-MM-dd'T'HH:mm" timeZone="UTC" value="${requestScope.flight.departureTime}"/>"/>
     <input type="hidden" id="language" value="${language}"/>
 
     <%--Page Content--%>
@@ -39,7 +39,7 @@
         <%--Flight info Header--%>
         <div class=" row">
             <div class="col-sm-offset-2 col-sm-4">
-                <h4><fmt:message key="edit-flight.header"/> ${flight.id}</h4>
+                <h4><fmt:message key="edit-flight.header"/> ${requestScope.flight.id}</h4>
             </div>
         </div>
         <%--Crew assigntment header--%>
@@ -51,7 +51,7 @@
 
         <%--Success message--%>
         <div class="row">
-            <c:if test="${success}">
+            <c:if test="${requestScope.success}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-success">
                     <fmt:message key="shared.save.success"/>
                 </div>
@@ -60,7 +60,7 @@
 
         <%--Concurrent modification message--%>
         <div class="row">
-            <c:if test="${concurrent}">
+            <c:if test="${requestScope.concurrent}">
                 <div class="col-sm-offset-2 col-sm-4 alert alert-warning">
                     <fmt:message key="shared.concurrent"/>
                 </div>
@@ -69,8 +69,8 @@
 
         <%--Flight form--%>
         <form class="form-horizontal" method="POST">
-            <input type="hidden" name="flightId" value="${flight.id}"/>
-            <input type="hidden" name="version" value="${flight.version}"/>
+            <input type="hidden" name="flightId" value="${requestScope.flight.id}"/>
+            <input type="hidden" name="version" value="${requestScope.flight.version}"/>
 
             <%--Crew table--%>
             <%@include file="templates/crew.edit.template.jsp" %>

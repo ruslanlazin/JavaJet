@@ -15,13 +15,14 @@
 
 <body>
 <div class="container-fluid">
+    <%--Navbar. Also contains shared Locale Init Section--%>
     <%@include file="templates/navbar.jsp" %>
-    <div>
 
-        <%--Greatings--%>
+    <%--Greatings--%>
+    <div>
         <fmt:message key="main.hello"/>,
-       <b> ${sessionScope.currentUser.firstName}
-        ${sessionScope.currentUser.secondName}</b>,
+        <b> ${sessionScope.currentUser.firstName}
+            ${sessionScope.currentUser.secondName}</b>,
         ${sessionScope.currentUser.position.title}
         <br>
         <fmt:message key="main.pleasure"/>
