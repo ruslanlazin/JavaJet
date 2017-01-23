@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class AddEmployeeCommandGET implements Command {
-    private static final PositionService positionService = PositionService.getINSTANCE();
-    private static final RoleService roleService = RoleService.getINSTANCE();
-
     private static final String POSITIONS_ATTRIBUTE = "positions";
     private static final String ROLES_ATTRIBUTE = "roles";
+
+    private PositionService positionService = PositionService.getINSTANCE();
+    private RoleService roleService = RoleService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

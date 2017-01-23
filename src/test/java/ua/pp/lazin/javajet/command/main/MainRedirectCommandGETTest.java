@@ -28,7 +28,7 @@ public class MainRedirectCommandGETTest {
     private MainRedirectCommandGET underTest;
 
     @Test
-    public void execute() throws Exception {
+    public void execute_Ok_Redirect() throws Exception {
 
         //use
         String viewName = underTest.execute(request, response);

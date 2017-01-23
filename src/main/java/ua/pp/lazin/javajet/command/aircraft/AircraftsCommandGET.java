@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class AircraftsCommandGET implements Command {
-    private AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
+
+    private AircraftService aircraftService = AircraftService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

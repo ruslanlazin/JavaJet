@@ -12,8 +12,9 @@ import java.util.List;
  * @author Ruslan Lazin
  */
 public class EmployeesCommandGET implements Command {
-    private static final UserService userService = UserService.getINSTANCE();
     private static final String EMPLOYEES_ATTRIBUTE = "employees";
+
+    private UserService userService = UserService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

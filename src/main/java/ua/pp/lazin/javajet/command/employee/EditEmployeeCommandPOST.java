@@ -15,10 +15,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class EditEmployeeCommandPOST implements Command {
-    private static final PositionService positionService = PositionService.getINSTANCE();
-    private static final UserService userService = UserService.getINSTANCE();
-    private static final RoleService roleService = RoleService.getINSTANCE();
     private static final Logger logger = Logger.getLogger(EditEmployeeCommandPOST.class);
+
     private static final String KEY_USERNAME_ERROR = "wrongusername";
     private static final String KEY_EMAIL_ERROR = "wrongemail";
     private static final String KEY_SUCCESS = "success";
@@ -27,6 +25,10 @@ public class EditEmployeeCommandPOST implements Command {
     private static final String ALL_POSITIONS_ATTRIBUTE = "positions";
     private static final String EMPLOYEE_ATTRIBUTE = "employee";
     private static final String ALL_ROLES_ATTRIBUTE = "roles";
+
+    private PositionService positionService = PositionService.getINSTANCE();
+    private UserService userService = UserService.getINSTANCE();
+    private RoleService roleService = RoleService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

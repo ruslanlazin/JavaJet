@@ -28,7 +28,7 @@ public class LoginCommandGETTest {
     private LoginCommandGET underTest;
 
     @Test
-    public void execute() throws Exception {
+    public void execute_OK_ViewName() throws Exception {
 
         //use
         String viewName = underTest.execute(request, response);

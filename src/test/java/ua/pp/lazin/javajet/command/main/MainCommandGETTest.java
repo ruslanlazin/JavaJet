@@ -28,7 +28,7 @@ public class MainCommandGETTest {
     private MainCommandGET underTest;
 
     @Test
-    public void execute() throws Exception {
+    public void execute_Ok_viewName() throws Exception {
 
         //use
         String viewName = underTest.execute(request, response);

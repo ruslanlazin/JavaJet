@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class LoginCommandPOST implements Command {
-    private UserService userService = UserService.getINSTANCE();
     private static final Logger logger = Logger.getLogger(LoginCommandPOST.class);
     private static final String USERNAME_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String WRONGLOGIN_ATTRIBUTE = "wronglogin";
+
+    private UserService userService = UserService.getINSTANCE();
 
     @Override
 

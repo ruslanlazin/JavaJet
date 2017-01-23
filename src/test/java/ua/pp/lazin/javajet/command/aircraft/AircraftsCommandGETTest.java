@@ -43,7 +43,7 @@ public class AircraftsCommandGETTest {
     }
 
     @Test
-    public void execute() throws Exception {
+    public void execute_Ok_ViewName() throws Exception {
 
         //use
         String viewName = underTest.execute(request, response);
