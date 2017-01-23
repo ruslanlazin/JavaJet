@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LogoutCommandGET implements Command {
     private static final Logger logger = Logger.getLogger(LogoutCommandGET.class);
-    private static final UserService userService = UserService.getINSTANCE();
+    private UserService userService = UserService.getINSTANCE();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

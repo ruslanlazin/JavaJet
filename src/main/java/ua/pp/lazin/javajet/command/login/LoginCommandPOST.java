@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class LoginCommandPOST implements Command {
+    private UserService userService = UserService.getINSTANCE();
     private static final Logger logger = Logger.getLogger(LoginCommandPOST.class);
-    private static final UserService userService = UserService.getINSTANCE();
     private static final String USERNAME_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String WRONGLOGIN_ATTRIBUTE = "wronglogin";
@@ -28,7 +28,7 @@ public class LoginCommandPOST implements Command {
         try {
             request.login(username, password);
 
-            logger.info(username + " successfully authorized from "+ request.getRemoteAddr());
+            logger.info(username + " successfully authorized from " + request.getRemoteAddr());
             userService.cacheUserInSession(username, request.getSession());
             return "redirect:/common/";
 

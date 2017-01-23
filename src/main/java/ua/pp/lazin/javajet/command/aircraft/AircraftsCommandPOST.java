@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ruslan Lazin
  */
 public class AircraftsCommandPOST implements Command {
-    private static final AircraftService aircraftService = AircraftService.getINSTANCE();
+    private AircraftService aircraftService = AircraftService.getINSTANCE();
     private static final String AIRCRAFTS_ATTRIBUTE = "aircrafts";
     private static final String AIRCRAFT_ID_PARAMETER = "aircraftId";
     private static final String REG_NUMBER_PARAMETER = "regNumber";
