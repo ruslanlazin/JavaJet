@@ -79,7 +79,7 @@ public class DispatcherServlet extends HttpServlet {
         try {
             viewName = command.execute(request, response);
             logger.debug("command: " + command + " viewName: " + viewName);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("An exception occurred during command " + command + " executing", e);
             request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, "Internal server error has occurred. " +
                     "See server log for detail");

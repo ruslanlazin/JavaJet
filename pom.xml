@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.8</java-version>
         <javax-javaee-web-api-version>7.0</javax-javaee-web-api-version>
+        <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <jstl-version>1.2</jstl-version>
         <mysql-connector-version>6.0.5</mysql-connector-version>
         <postgresql-version>9.4.1212</postgresql-version>
@@ -20,17 +21,20 @@
         <google-maps-services-version>0.1.17</google-maps-services-version>
         <junit-version>4.12</junit-version>
         <powermock.version>1.6.6</powermock.version>
+        <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
+        <tomcat7-maven-plugin-version>2.2</tomcat7-maven-plugin-version>
+        <jacoco-maven-plugin-version>0.7.8</jacoco-maven-plugin-version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api-version}</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -89,7 +93,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven-compiler-plugin-version}</version>
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
@@ -99,7 +103,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${tomcat7-maven-plugin-version}</version>
                 <configuration>
                     <path>/</path>
                 </configuration>
@@ -107,7 +111,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.8</version>
+                <version>${jacoco-maven-plugin-version}</version>
                 <configuration>
                     <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
                     <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
